@@ -1,21 +1,15 @@
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
 import { ToastContainer, toast } from "react-toastify";
 
 import { registerSchema } from "@/libs/hookform";
+import useSelectedValuesFromHookForm from "@/hooks/useSelectedValuesFromHookForm";
 
 import PrimaryInput from "@/components/atom/PrimaryInput";
 import PrimaryButton from "@/components/atom/PrimaryButton";
 import SecondaryButton from "@/components/atom/SecondaryButton";
 
 const register = () => {
-	const {
-		register,
-		handleSubmit,
-		clearErrors,
-		formState: { errors },
-	} = useForm({ resolver: zodResolver(registerSchema), shouldFocusError: false, reValidateMode: "onSubmit" });
+	const { register, handleSubmit } = useSelectedValuesFromHookForm(registerSchema);
 	function registerUser(data: any) {
 		const { password, cpassword } = data;
 		if (password !== cpassword) {
@@ -26,13 +20,8 @@ const register = () => {
 		// Send data to server
 	}
 
-	useEffect(() => {
-		let keys = Array.from(Object.keys(errors));
-		let err: any = errors[keys[0]]?.message;
-		if (keys.length > 0) {
-			toast.error(err, { autoClose: 1500 });
-		}
-	}, [errors]);
+	// Create toastify to notify errors
+
 	return (
 		<main className="w-full h-screen flex items-center justify-center px-4">
 			<form action="" className="w-full max-w-[720px] h-auto flex flex-col items-center justify-center" onSubmit={handleSubmit(registerUser)}>
