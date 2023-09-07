@@ -2,7 +2,14 @@
 module.exports = {
 	content: ["./src/**/**.tsx", "./src/**/**/**.tsx"],
 	theme: {
-		extend: {},
+		extend: {
+			fontFamily: {
+				playfair: ["'Playfair Display', serif"],
+			},
+			maxWidth: {
+				"6xl": "1024px",
+			},
+		},
 	},
 	plugins: [],
 };
