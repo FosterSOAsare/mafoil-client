@@ -7,18 +7,20 @@ type primaryButtonType = {
 	href?: string;
 	sx?: string;
 	type?: "submit" | "button" | "reset" | undefined;
+	disabled?: boolean;
 };
 
-const PrimaryButton = ({ text, handleClick, href, sx = "", type = "button" }: primaryButtonType) => {
+const PrimaryButton = ({ text, handleClick, href, sx = "", type = "button", disabled = false }: primaryButtonType) => {
 	return (
 		<>
 			{!href && (
 				<button
 					type={type}
-					className={`${sx} w-full h-12 bg-black mb-4 opacity-90 hover:opacity-100 text-white`}
+					className={`${sx} ${disabled ? "opacity-40" : "opacity-90 hover:opacity-100"}  w-full h-12 bg-black mb-4  text-white`}
 					onClick={() => {
 						if (handleClick) handleClick();
-					}}>
+					}}
+					disabled={disabled}>
 					{text}
 				</button>
 			)}

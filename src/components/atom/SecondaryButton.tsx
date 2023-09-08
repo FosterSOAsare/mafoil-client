@@ -5,9 +5,10 @@ type secondaryButtonType = {
 	text: string;
 	handleClick?: any;
 	href?: any;
+	disabled?: boolean;
 };
 
-const SecondaryButton = ({ text, handleClick, href }: secondaryButtonType) => {
+const SecondaryButton = ({ text, handleClick, href, disabled = false }: secondaryButtonType) => {
 	return (
 		<>
 			{!href && (
@@ -15,7 +16,8 @@ const SecondaryButton = ({ text, handleClick, href }: secondaryButtonType) => {
 					className="w-full h-12 border-black border-[1px] mb-4 text-black hover:bg-black hover:text-white"
 					onClick={() => {
 						if (handleClick) handleClick();
-					}}>
+					}}
+					disabled={disabled}>
 					{text}
 				</button>
 			)}

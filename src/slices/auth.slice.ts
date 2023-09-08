@@ -7,7 +7,7 @@ type authSliceType = {
     balance: number,
     id: string
   },
-  isLaoding: boolean,
+  isLoading: boolean,
   error: null | string
 }
 
@@ -18,7 +18,7 @@ const initialState: authSliceType = {
     balance: 0.00,
     id: ''
   },
-  isLaoding: true,
+  isLoading: true,
   error: null
 }
 const authSlice = createSlice({
@@ -38,7 +38,7 @@ const authSlice = createSlice({
       state.error = action.payload
     },
     setIsLoading: (state, action) => {
-      state.isLaoding = action.payload
+      state.isLoading = action.payload
     }
   }
 })
