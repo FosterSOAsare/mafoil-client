@@ -16,7 +16,7 @@ const authApi = createApi({
     verifyUserEmailRequest: builder.mutation({
       query: ({ code, email, mode }) => ({
         method: 'POST',
-        url: '/login',
+        url: '/verifyEmail',
         body: { code, email, mode }
       }),
 
@@ -25,7 +25,7 @@ const authApi = createApi({
       query: ({ email, mode }: { email: string, mode: string }) => ({
         method: 'POST',
         url: '/resendEmail',
-        data: { email, mode }
+        body: { email, mode }
       })
     }),
     logoutRequest: builder.query({

@@ -35,7 +35,7 @@ const register = () => {
 
 	useEffect(() => {
 		if (!data) return;
-		push(`/auth/verify?mode=verifyemail&email=${data.email}`);
+		push(`/auth/verify?mode=accountverification&email=${data.email}`);
 	}, [data]);
 	useEffect(() => {
 		reset({
