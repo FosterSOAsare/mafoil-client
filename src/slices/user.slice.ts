@@ -1,18 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-type authSliceType = {
+type userSliceType = {
+  isLoading: boolean,
   user: {
     email: string,
     fullname: string,
     balance: number,
     subscribed: boolean,
     id: string
-  },
-  isLoading: boolean,
-  error: null | string
+  }, error: null | string
 }
 
-const initialState: authSliceType = {
+const initialState: userSliceType = {
   user: {
     email: '',
     fullname: '',
@@ -23,13 +22,11 @@ const initialState: authSliceType = {
   isLoading: true,
   error: null
 }
-const authSlice = createSlice({
-  name: 'auth',
+const userSlice = createSlice({
+  name: 'user',
   initialState,
   reducers: {
     setData: (state, action) => {
-
-
       state.user = { ...state.user, ...action.payload }
     },
     logout: () => {
@@ -38,16 +35,17 @@ const authSlice = createSlice({
     setBalance: (state, action) => {
       state.user.balance = action.payload
     },
-    setError: (state, action) => {
-      state.error = action.payload
-    },
     setIsLoading: (state, action) => {
       state.isLoading = action.payload
+    },
+    setError: (state, action) => {
+      state.error = action.payload
     }
+
   }
 })
 
-export const useAuthSlice = (state: any) => state.auth
-export const { setData, logout, setError, setIsLoading } = authSlice.actions
+export const useUserSlice = (state: any) => state.user
+export const { setData, logout, setIsLoading, setError } = userSlice.actions
 
-export default authSlice.reducer
+export default userSlice.reducer

@@ -1,7 +1,7 @@
 import { useEffect, ReactNode, Fragment } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { useAuthSlice } from "@/slices/auth.slice";
+import { useUserSlice } from "@/slices/user.slice";
 
 import Loading from "@/components/Loading";
 
@@ -12,22 +12,23 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children, registerRequired = false }: ProtectedRouteProps) => {
 	const router = useRouter();
-	const { isLoading, user, error } = useSelector(useAuthSlice);
+	const { isLoading, error, user } = useSelector(useUserSlice);
 
 	useEffect(() => {
-		if (!isLoading && !registerRequired && !error && user._id) {
+		if (!isLoading && !registerRequired && !error && user?.id) {
 			router.replace("/app");
 		}
-		if (!isLoading && registerRequired && (!user._id || error)) {
+		if (!isLoading && registerRequired && (!user?.id || error)) {
 			router.replace("/auth/login");
 		}
-	}, [router, isLoading, error, user._id]);
+	}, [router, isLoading, error, user?.id]);
+
 	return (
 		<>
 			{isLoading && <Loading />}
-			{!isLoading && registerRequired && !error && user._id && <>{children}</>}
+			{!isLoading && registerRequired && !error && user?.id && <>{children}</>}
 
-			{!isLoading && !registerRequired && !user._id && <>{children}</>}
+			{!isLoading && !registerRequired && !user?.id && <>{children}</>}
 		</>
 	);
 };
