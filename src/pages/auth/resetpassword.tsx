@@ -59,7 +59,7 @@ const login = () => {
 						<PrimaryInput name="email" placeholder="example@gmail.com" label="Email" register={register} />
 
 						<div className="flex items-center justify-between mt-4 gap-12 w-full">
-							<PrimaryButton text="SUBMIT" type="submit" sx="!m-0" />
+							<PrimaryButton text="SUBMIT" type="submit" sx="!m-0" disabled={isLoading} />
 							<Link href="/auth/login" className="h-12 flex items-center justify-center w-full underline">
 								Cancel
 							</Link>
@@ -71,7 +71,7 @@ const login = () => {
 					<h3 className="text-2xl font-playfair font-semibold mb-6">New customer?</h3>
 					<p className="text-md opacity-80 text-xl mb-4">Sign up for early Sale access plus tailored new arrivals, trends and promotions. To opt out, click unsubscribe in our emails.</p>
 					<div className="w-full md:w-1/4">
-						<PrimaryButton text="REGISTER" href="/auth/register" disabled={isLoading} />
+						<PrimaryButton text="REGISTER" href="/auth/register" />
 					</div>
 				</div>
 			</div>
