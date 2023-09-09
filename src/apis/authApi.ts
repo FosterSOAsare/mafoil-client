@@ -28,6 +28,13 @@ const authApi = createApi({
         body: { email, mode }
       })
     }),
+    loginRequest: builder.mutation({
+      query: ({ email, password }) => ({
+        url: '/login',
+        method: 'POST',
+        body: { email, password }
+      }),
+    }),
     logoutRequest: builder.query({
       query: () => '/logout'
     }),
@@ -35,10 +42,32 @@ const authApi = createApi({
       query: () => ({
         url: '/changePassword'
       })
+    }),
+    requestPasswordResetRequest: builder.mutation({
+      query: (email) => ({
+        method: 'POST',
+        url: '/resetPassword',
+        body: { email: email }
+      })
+    }),
+    confirmPasswordResetRequest: builder.mutation({
+      query: ({ code, newPassword, email }) => ({
+        method: 'POST',
+        url: '/confirmReset',
+        body: { code, newPassword, email }
+      })
     })
   })
 })
 
-export const { useRegisterUserRequestMutation, useResendEmailRequestMutation, useVerifyUserEmailRequestMutation, useLogoutRequestQuery } = authApi
+export const {
+  useRegisterUserRequestMutation,
+  useResendEmailRequestMutation,
+  useVerifyUserEmailRequestMutation,
+  useLoginRequestMutation,
+  useLogoutRequestQuery,
+  useRequestPasswordResetRequestMutation,
+  useConfirmPasswordResetRequestMutation
+} = authApi
 
 export default authApi

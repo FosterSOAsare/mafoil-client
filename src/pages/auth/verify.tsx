@@ -50,9 +50,9 @@ const verifiy = () => {
 
 	useEffect(() => {
 		if (!verifyEmailData) return;
-		toast.success("Email verification was successful. Redirecting to login", { autoClose: 1500 });
+		toast.success(`Email verification was successful. ${verifyEmailData?.code ? "Continuing to creating new password" : "Redirecting to login"}`, { autoClose: 1500 });
 		setTimeout(() => {
-			replace("/auth/login");
+			replace(`${verifyEmailData?.code ? `/auth/resetpassword?email=${email}&code=${verifyEmailData?.code}` : "/auth/login"}`);
 		}, 1500);
 	}, [verifyEmailData]);
 

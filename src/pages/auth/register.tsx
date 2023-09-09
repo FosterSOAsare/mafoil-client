@@ -14,7 +14,7 @@ import PrimaryButton from "@/components/atom/PrimaryButton";
 import SecondaryButton from "@/components/atom/SecondaryButton";
 
 const register = () => {
-	const { register, handleSubmit, reset } = useSelectedValuesFromHookForm(registerSchema);
+	const { register, handleSubmit } = useSelectedValuesFromHookForm(registerSchema);
 	const user = useSelector(useAuthSlice);
 	const [registerUserRequest, { error, data, isLoading }] = useRegisterUserRequestMutation();
 	const { push } = useRouter();
@@ -37,14 +37,6 @@ const register = () => {
 		if (!data) return;
 		push(`/auth/verify?mode=accountverification&email=${data.email}`);
 	}, [data]);
-	useEffect(() => {
-		reset({
-			email: "asare4ster@gmail.com",
-			password: "Asare4ster$...",
-			fullname: "Asare Foster",
-			cpassword: "Asare4ster$...",
-		});
-	}, []);
 
 	return (
 		<main className="w-full h-screen flex items-center justify-center px-4">

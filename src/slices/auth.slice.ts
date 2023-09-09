@@ -3,8 +3,9 @@ import { createSlice } from '@reduxjs/toolkit'
 type authSliceType = {
   user: {
     email: string,
-    username: string,
+    fullname: string,
     balance: number,
+    subscribed: boolean,
     id: string
   },
   isLoading: boolean,
@@ -14,8 +15,9 @@ type authSliceType = {
 const initialState: authSliceType = {
   user: {
     email: '',
-    username: '',
+    fullname: '',
     balance: 0.00,
+    subscribed: false,
     id: ''
   },
   isLoading: true,
@@ -26,7 +28,9 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setData: (state, action) => {
-      return { ...state, ...action.payload }
+
+
+      state.user = { ...state.user, ...action.payload }
     },
     logout: () => {
       return initialState

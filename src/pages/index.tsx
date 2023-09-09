@@ -1,6 +1,9 @@
+import { useAuthSlice } from "@/slices/auth.slice";
 import Head from "next/head";
+import { useSelector } from "react-redux";
 
 export default function Home() {
+	const { user } = useSelector(useAuthSlice);
 	return (
 		<>
 			<Head>

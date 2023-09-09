@@ -1,23 +1,52 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 
 import { loginSchema } from "@/libs/hookform";
+import useSelectedValuesFromHookForm from "@/hooks/useSelectedValuesFromHookForm";
+import { useLoginRequestMutation } from "@/apis/authApi";
+import useCreateErrorFromApiRequest from "@/hooks/useCreateErrorFromApiRequest";
+import { setData } from "@/slices/auth.slice";
 
 import PrimaryInput from "@/components/atom/PrimaryInput";
 import PrimaryButton from "@/components/atom/PrimaryButton";
-import useSelectedValuesFromHookForm from "@/hooks/useSelectedValuesFromHookForm";
 
 const login = () => {
-	const { register, handleSubmit } = useSelectedValuesFromHookForm(loginSchema);
-	function loginUser(data: any) {
-		console.log(data);
+	const { register, handleSubmit, getValues } = useSelectedValuesFromHookForm(loginSchema);
+	const [loginRequest, { data, error, isLoading }]: any = useLoginRequestMutation();
+	const dispatch = useDispatch();
+	const { push } = useRouter();
 
-		try {
-		} catch (error) {
-			console.log(error);
-		}
+	function loginUser(data: any) {
+		loginRequest(data);
 	}
+
+	// Create error message from api
+	useCreateErrorFromApiRequest(error);
+
+	useEffect(() => {
+		if (!data) return;
+		toast.success("Login was successful. Redirecting...", { autoClose: 1500 });
+
+		// Store data in redux
+		dispatch(setData(data));
+
+		// Redirect;
+		setTimeout(() => {
+			push("/");
+		}, 1500);
+	}, [data]);
+
+	useEffect(() => {
+		if (!error) return;
+		let err: any = error?.data?.error as any;
+		if (err == "Email is not verified , redirecting you to verify your email address") {
+			toast.error(err, { autoClose: 1500 });
+			push(`/auth/verify?mode=accountverification&email=${getValues().email}`);
+		}
+	}, [error]);
 
 	return (
 		<main className="w-full h-screen px-4 flex items-center justify-center flex-col">
@@ -32,13 +61,13 @@ const login = () => {
 						Lost your password?
 					</Link>
 
-					<PrimaryButton text="SIGN IN" type="submit" />
+					<PrimaryButton text="SIGN IN" type="submit" disabled={isLoading} />
 				</form>
 				<div className="w-full h-auto">
 					<h3 className="text-2xl font-playfair font-semibold mb-6">New customer?</h3>
 					<p className="text-md opacity-80 text-xl mb-4">Sign up for early Sale access plus tailored new arrivals, trends and promotions. To opt out, click unsubscribe in our emails.</p>
 					<div className="w-full md:w-1/4">
-						<PrimaryButton text="REGISTER" href="/auth/register" />
+						<PrimaryButton text="REGISTER" href="/auth/register" disabled={isLoading} />
 					</div>
 				</div>
 			</div>

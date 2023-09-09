@@ -9,12 +9,13 @@ const useSelectedValuesFromHookForm = (schema: any) => {
     register,
     handleSubmit,
     reset,
+    getValues,
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema), shouldFocusError: false, reValidateMode: "onSubmit" });
 
 
   useFormErrorCreator(errors);
-  return { register, handleSubmit, reset }
+  return { register, handleSubmit, reset, getValues }
 
 }
 
