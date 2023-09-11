@@ -121,7 +121,7 @@ const products: productType[] = [
     author: 'Zoro Store',
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '9',
-    images: [Image9],
+    images: [Image9, Image10, Image11, Image12],
     type: 'accessories',
     slugName: 'brim-hats-for-men',
   }, {

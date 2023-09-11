@@ -1,24 +1,32 @@
 import Head from "next/head";
 import Link from "next/link";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore from "swiper";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 import filters from "@/data/productfilters";
 import { productType } from "@/types/product.type";
 import localProducts from "@/data/products";
+import { goPrev, goNext } from "@/utils/swiper";
 
 import Header from "@/components/molecules/Header";
 import ProductCard from "@/components/cards/ProductCard";
 import Footer from "@/components/molecules/Footer";
 import ProductQuickView from "@/components/pages/Homepage/ProductQuickView";
 
-import products from "@/data/products";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+
+SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 export default function Home() {
-	const [selectedFilter, setSelectedFilter] = useState("all");
 	const [product, setProduct] = useState<productType | null>(null);
 	const [loading, setLoading] = useState(true);
 	const { query } = useRouter();
+	const swiperRef = useRef<any>(null);
+	const [active, setActive] = useState(0);
 
 	const [recentlyViewed, setRecentlyViewed] = useState<productType[]>([]);
 	const [previewProduct, setPreviewProduct] = useState<null | productType>(null);
@@ -51,6 +59,14 @@ export default function Home() {
 
 		localStorage.setItem("recents", JSON.stringify(localRecents));
 	}, [product]);
+
+	const handleSwiper = useCallback((swiper: any) => {
+		swiper.on("slideChange", () => {
+			const activeIndex = swiper.activeIndex;
+			setActive(activeIndex);
+		});
+	}, []);
+
 	return (
 		<>
 			<Head>
@@ -61,14 +77,14 @@ export default function Home() {
 			</Head>
 			<Header />
 			<main className="w-full min-h-screen bg-white relative">
-				{!loading && (
+				{!loading && product && (
 					<>
 						<section className="w-full h-auto py-5 bg-white px-10" id="hero">
 							<nav className="flex items-center justify-start gap-2">
 								{[
 									{ name: "Home", link: "/" },
 									{ name: "Products", link: "/products" },
-									{ name: product?.type, link: `/products?type=${product?.type}` },
+									{ name: filters?.find((filt) => filt.option === product?.type)?.name, link: `/products?type=${product?.type}` },
 								].map((crumb, index, arr) => (
 									<Fragment key={index}>
 										<Link href={crumb?.link} className="hover:text-brown capitalize">
@@ -80,12 +96,54 @@ export default function Home() {
 								<p className="capitalize">{product?.name.toLowerCase()}</p>
 							</nav>
 
-							<section id="products" className="px-10 py-12 h-auto mt-8 flex flex-col items-center justify-center w-full">
+							<section className="w-full h-auto mt-4 flex items-start justify-between">
+								<article className="w-3/5 h-auto">
+									<div className="w-full relative h-screen group hover:cursor-pointer">
+										<button
+											className={`w-7 h-10 absolute bg-white hover:bg-brown hover:text-white scale-0 ${
+												active == 0 ? "" : "group-hover:scale-100"
+											} transition-all duration-300 text-black top-0 left-0 flex items-center justify-center bottom-0 my-auto z-[2]`}
+											onClick={() => goPrev(swiperRef)}
+											disabled={active === 0}>
+											<FiChevronLeft />
+										</button>
+										<Swiper spaceBetween={30} slidesPerView={1} autoplay={true} ref={swiperRef} className="overflow-y-visible w-full h-full relative" onSwiper={handleSwiper}>
+											{[1, 2, 3, 4].map((_i, index: number) => (
+												<SwiperSlide key={index} className=" w-full bg-[#f5f2ec] flex items-center justify-center h-full">
+													<div className="w-full h-full relative ">
+														<Image fill src={product?.images[0]} alt="Product Image" sizes="(max-width: 767px) 100vw, 50vw" />
+													</div>
+												</SwiperSlide>
+											))}
+										</Swiper>
+										<button
+											className={`${
+												active == 3 ? "" : "group-hover:scale-100"
+											} w-7 h-10 absolute bg-white hover:bg-brown hover:text-white scale-0 transition-all duration-300 text-black top-0 right-0 flex items-center justify-center bottom-0 my-auto z-[2]`}
+											onClick={() => goNext(swiperRef)}
+											disabled={active === 3}>
+											<FiChevronRight />
+										</button>
+									</div>
+
+									<div className="w-4/5 mx-auto h-[30vh] flex items-center gap-4 justify-between bg-white">
+										{[1, 2, 3, 4].map((_i, index) => (
+											<button key={index} className={`w-full h-[20vh] relative ${active === index ? "opacity-100" : "opacity-40"} transition-all duration-200`}>
+												<Image fill src={product?.images[0]} alt="Product Image" />
+											</button>
+										))}
+									</div>
+								</article>
+								<article className="w-2/5 h-[130vh] bg-[yellow]"></article>
+							</section>
+
+							<section id="recommendations" className="px-10 pt-12 h-auto flex flex-col items-center justify-center w-full">
 								<h3 className="text-center mb-8 text-3xl font-medium">YOU MAY ALSO LIKE</h3>
-								<article className="w-full flex flex-col items-center justify-center  border-b-[1px] pb-36">
+								<article className="w-full flex flex-col items-center justify-center pb-12">
 									<div className="grid grid-cols-4 gap-6 w-full h-auto">
 										{localProducts
-											?.filter((i, index) => index < 4)
+											?.filter((p: productType, index: number) => product?.type === p?.type)
+											?.filter((p, index) => index < 4)
 											.map((product, index) => {
 												return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} sx="!h-[300px]" />;
 											})}
@@ -93,9 +151,9 @@ export default function Home() {
 								</article>
 							</section>
 
-							<section id="products" className="px-10 py-12 h-auto mt-8 flex flex-col items-center justify-center w-full">
+							<section id="recents" className="px-10 pb-12 pt-6 h-auto flex flex-col items-center justify-center w-full">
 								<h3 className="text-center mb-8 text-3xl font-medium">RECENTLY VIEWED PRODUCTS</h3>
-								<article className="w-full flex flex-col items-center justify-center  border-b-[1px] pb-36">
+								<article className="w-full flex flex-col items-center justify-center pb-12">
 									<div className="grid grid-cols-4 gap-6 w-full h-auto">
 										{recentlyViewed.map((product, index) => {
 											return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} sx="!h-[300px]" />;
@@ -103,7 +161,7 @@ export default function Home() {
 									</div>
 								</article>
 							</section>
-							{/* {previewProduct && <ProductQuickView setPreviewProduct={setPreviewProduct} previewProduct={previewProduct} />} */}
+							{previewProduct && <ProductQuickView setPreviewProduct={setPreviewProduct} previewProduct={previewProduct} />}
 						</section>
 					</>
 				)}

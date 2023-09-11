@@ -5,6 +5,7 @@ import SwiperCore from "swiper";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 import testimonials, { testimonialType } from "@/data/testimonials";
+import { goPrev, goNext } from "@/utils/swiper";
 
 import TestimonialCard from "@/components/cards/TestimonialCard";
 
@@ -14,22 +15,12 @@ SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 const Testimonials = () => {
 	const swiperRef = useRef<any>(null);
-	const goPrev = () => {
-		if (swiperRef.current && swiperRef.current.swiper) {
-			swiperRef.current.swiper.slidePrev();
-		}
-	};
 
-	const goNext = () => {
-		if (swiperRef.current && swiperRef.current.swiper) {
-			swiperRef.current.swiper.slideNext();
-		}
-	};
 	return (
 		<section id="testimonials" className="w-full py-6 pt-12  xl:py-32 h-auto px-16">
 			<div className="w-full h-full  flex flex-col items-center justify-center relative">
 				<div className="w-full  mx-auto h-full flex justify-between items-center gap-4">
-					<button className={`hidden md:flex items-center justify-center hover:text-brown text-sec `} onClick={goPrev}>
+					<button className={`hidden md:flex items-center justify-center hover:text-brown text-sec `} onClick={() => goPrev(swiperRef)}>
 						<HiMiniArrowLongLeft className="text-2xl" />
 					</button>
 					<article className="h-full w-full md:w-4/5">
@@ -41,7 +32,7 @@ const Testimonials = () => {
 							))}
 						</Swiper>
 					</article>
-					<button className={`hidden md:flex items-center hover:text-brown justify-center text-sec`} onClick={goNext}>
+					<button className={`hidden md:flex items-center hover:text-brown justify-center text-sec`} onClick={() => goNext(swiperRef)}>
 						<HiMiniArrowLongRight className="text-2xl" />
 					</button>
 				</div>
