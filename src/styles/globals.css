@@ -8,3 +8,7 @@
 * {
 	@apply font-jost;
 }
+
+html {
+	scroll-behavior: smooth;
+}

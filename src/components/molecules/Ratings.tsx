@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
-const Ratings = ({ rating }: { rating: number }) => {
+const Ratings = ({ rating, totalRatings }: { rating: number; totalRatings: number }) => {
 	const [stars, setStars] = useState<string[]>([]);
 	useEffect(() => {
 		setStars([]);
@@ -17,9 +17,9 @@ const Ratings = ({ rating }: { rating: number }) => {
 	return (
 		<div className="w-auto flex items-center ">
 			{stars.map((star, index) => {
-				return star === "filled" ? <AiFillStar key={index} className="text-secondary" /> : <AiOutlineStar key={index} />;
+				return star === "filled" ? <AiFillStar key={index} className="text-black" /> : <AiOutlineStar key={index} className="text-black" />;
 			})}
-			<p className="text-3">({rating})</p>
+			<p className="text-3">({totalRatings})</p>
 		</div>
 	);
 };
