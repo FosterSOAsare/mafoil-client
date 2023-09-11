@@ -15,11 +15,11 @@ const Ratings = ({ rating, totalRatings }: { rating: number; totalRatings: numbe
 	}, [rating]);
 
 	return (
-		<div className="w-auto flex items-center ">
+		<div className="w-auto flex items-center text-[12px]">
 			{stars.map((star, index) => {
 				return star === "filled" ? <AiFillStar key={index} className="text-black" /> : <AiOutlineStar key={index} className="text-black" />;
 			})}
-			<p className="text-3">({totalRatings})</p>
+			<p className="text-[12px] ml-[3px] opacity-70">({totalRatings})</p>
 		</div>
 	);
 };

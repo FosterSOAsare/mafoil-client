@@ -12,3 +12,9 @@
 html {
 	scroll-behavior: smooth;
 }
+
+.product-hero {
+	background: url("/product-herobg.webp");
+	background-size: cover;
+	background-repeat: no-repeat;
+}

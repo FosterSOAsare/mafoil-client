@@ -7,14 +7,14 @@ import Ratings from "../molecules/Ratings";
 
 import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 
-const ProductCard = ({ product, setPreviewProduct }: { product: productType; setPreviewProduct: React.Dispatch<React.SetStateAction<productType | null>> }) => {
+const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: productType; setPreviewProduct: React.Dispatch<React.SetStateAction<productType | null>>; sx?: string }) => {
 	const { name, price, rating, totalRatings, images, slugName } = product;
 	const [showContent, setShowContent] = useState(false);
 	return (
 		<article className="w-full h-auto bg-white ">
-			<div className="w-full h-[400px] overflow-hidden">
+			<div className={`w-full h-[400px] ${sx} overflow-hidden`}>
 				<div
-					className="bg-[green] w-full h-96 relative overflow-hidden hover:cursor-pointer"
+					className="w-full h-full relative overflow-hidden hover:cursor-pointer"
 					onMouseEnter={() => setShowContent(true)}
 					onMouseLeave={() => {
 						setShowContent(false);
@@ -36,7 +36,7 @@ const ProductCard = ({ product, setPreviewProduct }: { product: productType; set
 							<AiOutlineShoppingCart className="text-lg" />
 						</button>
 					</aside>
-					<aside className={`absolute ${showContent ? "bottom-4" : "-bottom-[15%]"} transition-all duration-300 w-[93%] left-0 gap-4 right-0 mx-auto flex items-center h-12`}>
+					<aside className={`absolute ${showContent ? "bottom-4" : "-bottom-[20%]"} transition-all duration-300 w-[93%] left-0 gap-4 right-0 mx-auto flex items-center h-12`}>
 						<Link href={`/products/${slugName}`} className="bg-[white] flex items-center justify-center  text-black relative w-1/2 group h-full overflow-hidden">
 							<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
 							<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">View Product</p>
