@@ -21,6 +21,7 @@ const products: productType[] = [
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '1',
     images: [Image1],
+    type: 'bag',
     slugName: 'small-crossbody-bag',
   }, {
     name: 'ROUND FUR HAT',
@@ -31,6 +32,7 @@ const products: productType[] = [
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '2',
     images: [Image2],
+    type: 'accessories',
     slugName: 'round-fur-hat',
   }, {
     name: 'SHORT SLEEVE SWEATER',
@@ -41,6 +43,7 @@ const products: productType[] = [
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '3',
     images: [Image3],
+    type: 'cloth',
     slugName: 'short-sleeve-sweater',
   }, {
     name: 'FUR SLIPPERS IN HOUSE',
@@ -51,6 +54,7 @@ const products: productType[] = [
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '4',
     images: [Image4],
+    type: 'shoe',
     slugName: 'fur-slippers-in-house',
   }, {
     name: 'UV PROTECTION GLASSES',
@@ -61,6 +65,7 @@ const products: productType[] = [
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '5',
     images: [Image5],
+    type: 'accessories',
     slugName: 'uv-protection-glasses',
   }, {
     name: 'SHORT FLARE SKIRT',
@@ -71,6 +76,7 @@ const products: productType[] = [
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '6',
     images: [Image6],
+    type: 'cloth',
     slugName: 'short-flare-skirt',
   }, {
     name: '3 HOLE SWEATER',
@@ -81,6 +87,7 @@ const products: productType[] = [
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '7',
     images: [Image7],
+    type: 'cloth',
     slugName: '3-hole-sweater',
   }, {
     name: 'LONG KHAKI PANTS',
@@ -91,6 +98,7 @@ const products: productType[] = [
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '8',
     images: [Image8],
+    type: 'cloth',
     slugName: 'long-khaki-pants',
   }, {
     name: 'BRIM HATS FOR MEN',
@@ -101,6 +109,7 @@ const products: productType[] = [
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '9',
     images: [Image9],
+    type: 'accessories',
     slugName: 'brim-hats-for-men',
   }, {
     name: 'SMALL CROSSBODY BAG',
@@ -111,6 +120,7 @@ const products: productType[] = [
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '1',
     images: [Image1],
+    type: 'bag',
     slugName: 'small-crossbody-bag',
   }, {
     name: 'ROUND FUR HAT',
@@ -121,6 +131,7 @@ const products: productType[] = [
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '2',
     images: [Image2],
+    type: 'accessories',
     slugName: 'round-fur-hat',
   }, {
     name: 'SHORT SLEEVE SWEATER',
@@ -131,6 +142,7 @@ const products: productType[] = [
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '3',
     images: [Image3],
+    type: 'cloth',
     slugName: 'short-sleeve-sweater',
   }, {
     name: 'FUR SLIPPERS IN HOUSE',
@@ -141,6 +153,7 @@ const products: productType[] = [
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '4',
     images: [Image4],
+    type: 'shoe',
     slugName: 'fur-slippers-in-house',
   }, {
     name: 'UV PROTECTION GLASSES',
@@ -151,6 +164,7 @@ const products: productType[] = [
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '5',
     images: [Image5],
+    type: 'accessories',
     slugName: 'uv-protection-glasses',
   }, {
     name: 'SHORT FLARE SKIRT',
@@ -161,6 +175,7 @@ const products: productType[] = [
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '6',
     images: [Image6],
+    type: 'cloth',
     slugName: 'short-flare-skirt',
   }, {
     name: '3 HOLE SWEATER',
@@ -171,6 +186,7 @@ const products: productType[] = [
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '7',
     images: [Image7],
+    type: 'cloth',
     slugName: '3-hole-sweater',
   }, {
     name: 'LONG KHAKI PANTS',
@@ -181,6 +197,7 @@ const products: productType[] = [
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '8',
     images: [Image8],
+    type: 'cloth',
     slugName: 'long-khaki-pants',
   }, {
     name: 'BRIM HATS FOR MEN',
@@ -191,9 +208,9 @@ const products: productType[] = [
     description: 'Curabitur egestas malesuada volutpat. Nunc vel vestibulum odio, ac pellentesque lacus. Pellentesque dapibus nunc nec est imperdiet, a malesuada sem rutrum',
     id: '9',
     images: [Image9],
+    type: 'accessories',
     slugName: 'brim-hats-for-men',
   },
-
 ]
 
 export default products

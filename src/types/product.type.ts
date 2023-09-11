@@ -9,5 +9,6 @@ export type productType = {
   description?: string;
   id: string;
   images: StaticImageData[];
-  slugName: string
+  slugName: string;
+  type: string
 }

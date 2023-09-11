@@ -19,10 +19,11 @@ export default function Home() {
 	const [previewProduct, setPreviewProduct] = useState<null | productType>(null);
 
 	useEffect(() => {
+		const products = selectedFilter === "all" ? localProducts : localProducts.filter((product) => product.type === selectedFilter);
 		setProducts((prev) => {
-			return { ...prev, data: localProducts.filter((pro: productType, index: number) => index < 9 * page), nextPage: localProducts?.length > 9 * page };
+			return { ...prev, data: products.filter((pro: productType, index: number) => index < 9 * page), nextPage: products?.length > 9 * page };
 		});
-	}, [selectedFilter, page]);
+	}, [page, selectedFilter]);
 	return (
 		<>
 			<Head>
@@ -41,7 +42,10 @@ export default function Home() {
 							<React.Fragment key={index}>
 								<button
 									className={`font-medium text-md block  hover:text-brown ${selectedFilter === filter.option ? "text-brown" : ""}`}
-									onClick={() => setSelectedFilter(filter.option)}>
+									onClick={() => {
+										setSelectedFilter(filter.option);
+										setPage(1);
+									}}>
 									{filter.name}
 								</button>
 								{index !== filters?.length - 1 && <p>/</p>}

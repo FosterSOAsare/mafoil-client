@@ -10,7 +10,7 @@ const filters: productFilterType[] = [
   { option: "cloth", name: "Clothings" },
   { option: "shoe", name: "Shoes" },
   { option: "bag", name: "Bags" },
-  { option: "designer", name: "Designer" },
+  { option: "accessories", name: "Accessories" },
 ]
 
 
