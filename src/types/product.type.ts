@@ -10,5 +10,5 @@ export type productType = {
   id: string;
   images: StaticImageData[];
   slugName: string;
-  type: string
+  type: 'cloth' | 'bag' | 'accessories' | 'shoe'
 }
