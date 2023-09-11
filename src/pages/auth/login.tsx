@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
 import { loginSchema } from "@/libs/hookform";
 import useSelectedValuesFromHookForm from "@/hooks/useSelectedValuesFromHookForm";
 import { useLoginRequestMutation } from "@/apis/authApi";
 import useCreateErrorFromApiRequest from "@/hooks/useCreateErrorFromApiRequest";
-import { setData } from "@/slices/user.slice";
+import { setData, setIsLoading, useUserSlice, setError } from "@/slices/user.slice";
 
 import PrimaryInput from "@/components/atom/PrimaryInput";
 import PrimaryButton from "@/components/atom/PrimaryButton";
@@ -19,6 +19,7 @@ const login = () => {
 	const [loginRequest, { data, error, isLoading }]: any = useLoginRequestMutation();
 	const dispatch = useDispatch();
 	const { push } = useRouter();
+	const { user, isLoading: loading, error: userError } = useSelector(useUserSlice);
 
 	function loginUser(data: any) {
 		loginRequest(data);
@@ -32,7 +33,10 @@ const login = () => {
 		toast.success("Login was successful. Redirecting...", { autoClose: 1500 });
 
 		// Store data in redux
+
 		dispatch(setData(data));
+		dispatch(setError(false));
+		dispatch(setIsLoading(false));
 
 		// Redirect;
 		setTimeout(() => {
@@ -42,7 +46,7 @@ const login = () => {
 
 	useEffect(() => {
 		if (!error) return;
-		let err: any = error?.data?.error as any;
+		let err = error?.data?.error;
 		if (err == "Email is not verified , redirecting you to verify your email address") {
 			toast.error(err, { autoClose: 1500 });
 			push(`/auth/verify?mode=accountverification&email=${getValues().email}`);

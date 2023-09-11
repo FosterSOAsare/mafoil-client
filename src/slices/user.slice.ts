@@ -30,7 +30,7 @@ const userSlice = createSlice({
       state.user = { ...state.user, ...action.payload }
     },
     logout: () => {
-      return initialState
+      return { ...initialState, isLoading: false }
     },
     setBalance: (state, action) => {
       state.user.balance = action.payload

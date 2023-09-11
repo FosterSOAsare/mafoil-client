@@ -1,13 +1,15 @@
-import { useEffect } from "react";
 import Head from "next/head";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
 
-import { useFetchLoggedInUserRequestQuery } from "@/apis/userApi";
-import { setData } from "@/slices/user.slice";
+import filters from "@/data/productfilters";
 
+import Header from "@/components/molecules/Header";
+import ProductCard from "@/components/cards/ProductCard";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import Testimonials from "@/components/pages/Homepage/Testimonials";
 
 export default function Home() {
+	const [selectedFilter, setSelectedFilter] = useState("all");
 	return (
 		<>
 			<Head>
@@ -17,7 +19,40 @@ export default function Home() {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<ProtectedRoute>
-				<main>Dead</main>
+				<main className="w-full min-h-screen bg-white pb-[100vh]">
+					<Header />
+					<section className="w-full h-screen bg-[green]" id="hero"></section>
+
+					<section id="products" className="px-10 w-full h-auto mt-8">
+						<div id="breadcrumbs" className="w-full mb-8 h-auto flex items-center gap-4">
+							{filters.map((filter, index) => (
+								<>
+									<button
+										key={index}
+										className={`font-medium text-md block  hover:text-brown ${selectedFilter === filter.option ? "text-brown" : ""}`}
+										onClick={() => setSelectedFilter(filter.option)}>
+										{filter.name}
+									</button>
+									{index !== filters?.length - 1 && <p>/</p>}
+								</>
+							))}
+						</div>
+
+						<article id="products" className="flex flex-col items-center justify-center w-full border-b-[1px] pb-36">
+							<div className="grid grid-cols-3 gap-12 w-full h-auto">
+								{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((product, index) => (
+									<ProductCard key={index} />
+								))}
+							</div>
+							<button className="bg-[white]  text-black relative mt-16 w-[200px] hover:border-brown border-black h-16 group border-[1px] overflow-hidden">
+								<span className="w-full h-full bg-brown absolute transition-all duration-200 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
+								<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase  font-medium text-sm">load more</p>
+							</button>
+						</article>
+					</section>
+
+					<Testimonials />
+				</main>
 			</ProtectedRoute>
 		</>
 	);

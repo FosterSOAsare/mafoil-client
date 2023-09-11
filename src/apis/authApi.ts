@@ -35,7 +35,7 @@ const authApi = createApi({
         body: { email, password }
       }),
     }),
-    logoutRequest: builder.query({
+    logoutRequest: builder.query<{}, void>({
       query: () => '/logout'
     }),
     changePassword: builder.mutation({
@@ -66,7 +66,7 @@ export const {
   useResendEmailRequestMutation,
   useVerifyUserEmailRequestMutation,
   useLoginRequestMutation,
-  useLogoutRequestQuery,
+  useLazyLogoutRequestQuery,
   useRequestPasswordResetRequestMutation,
   useConfirmPasswordResetRequestMutation,
 } = authApi
