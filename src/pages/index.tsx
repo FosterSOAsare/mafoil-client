@@ -1,4 +1,11 @@
+import { useEffect } from "react";
 import Head from "next/head";
+import { useDispatch } from "react-redux";
+
+import { useFetchLoggedInUserRequestQuery } from "@/apis/userApi";
+import { setData } from "@/slices/user.slice";
+
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 export default function Home() {
 	return (
@@ -9,7 +16,9 @@ export default function Home() {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<main>Dead</main>
+			<ProtectedRoute>
+				<main>Dead</main>
+			</ProtectedRoute>
 		</>
 	);
 }
