@@ -121,11 +121,13 @@ const ProductDetails = ({ product }: { product: productType }) => {
 					<ItemInCartCount product={product} itemCount={count} increaseCount={() => setCount((prev) => ++prev)} decreaseCount={() => setCount((prev) => --prev)} />
 
 					<button
-						className="bg-black text-white gap-3 w-full h-14 flex items-center justify-center hover:bg-brown group transition-all duration-200"
+						className={`bg-black ${
+							count === 0 ? "opacity-70" : "opacity-100 hover:bg-brown"
+						}  text-white gap-3 w-full h-14 flex items-center justify-center  group transition-all duration-200`}
 						onClick={addToCart}
 						disabled={count === 0}>
 						{cartLoading && <Loading />}
-						{<p className="uppercase inline text-[13px] tracking-[2px]  animate-fadeIn infinite  group-hover:text-[14px] transition-all duration-150">Add to cart</p>}
+						<p className={`uppercase inline ${count > 0 && "group-hover:text-[14px]"} text-[13px] tracking-[2px]  animate-fadeIn infinite   transition-all duration-150`}>Add to cart</p>
 					</button>
 				</article>
 			</div>
