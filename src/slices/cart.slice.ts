@@ -7,7 +7,7 @@ export type cartItemType = {
 const initialState: cartItemType[] = []
 
 const cartSlice = createSlice({
-  name: 'slice',
+  name: 'cart',
   initialState,
   reducers: {
     insertCartData: (state, action) => {

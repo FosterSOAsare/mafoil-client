@@ -39,13 +39,13 @@ const CartPreview = ({ setShowCart }: { setShowCart: React.Dispatch<React.SetSta
 
 			{cart?.length > 0 && (
 				<>
-					<div className="w-full px-2 border-b-[1px] border-black pb-2">
+					<div className="w-full h-[50vh] overflow-auto px-2 border-b-[1px] border-black pb-2">
 						{cartItems.map((item: productType, index) => (
 							<PreviewCartItemCard key={index} product={item} index={index} />
 						))}
 					</div>
 
-					<div className="px-6 w-full">
+					<div className="px-6 w-full h-[38vh]">
 						<div className="w-full pb-2 border-b-[1px] border-dashed">
 							<div className="w-full text-medium mt-4 flex items-center justify-between">
 								<p>SUBTOTAL:</p>

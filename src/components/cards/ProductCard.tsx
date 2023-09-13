@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+
 import { productType } from "@/types/product.type";
+import useCheckIfProductIsInWishList from "@/hooks/useCheckIfProductIsInWishList";
+import { toggleItemInWishList } from "@/slices/wishlist.slice";
 
 import Ratings from "../molecules/Ratings";
 
 import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
+import { useDispatch } from "react-redux";
 
 const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: productType; setPreviewProduct: React.Dispatch<React.SetStateAction<productType | null>>; sx?: string }) => {
-	const { name, price, rating, totalRatings, images, slugName } = product;
+	const { name, price, rating, totalRatings, images, slugName, id } = product;
 	const [showContent, setShowContent] = useState(false);
+	const partOfWishList = useCheckIfProductIsInWishList(product?.id as string);
+	const dispatch = useDispatch();
 	return (
 		<article className="w-full h-auto bg-white ">
 			<div className={`w-full h-[400px] ${sx} overflow-hidden`}>
@@ -24,9 +30,10 @@ const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: product
 					</div>
 					<aside className="absolute top-4 right-4  w-auto h-auto">
 						<button
-							className={`w-8 h-8 bg-white transition-all duration-300 hover:bg-brown hover:text-white ${
-								showContent ? "scale-100" : "scale-0"
-							} text-black mb-2 flex items-center justify-center`}>
+							onClick={() => dispatch(toggleItemInWishList({ id }))}
+							className={`w-8 h-8 transition-all duration-300 ${showContent ? "scale-100" : "scale-0"} ${
+								partOfWishList ? "bg-brown text-white" : "hover:bg-brown bg-white  text-black  hover:text-white"
+							} mb-2 flex items-center justify-center`}>
 							<AiOutlineHeart className="text-lg" />
 						</button>
 						<button

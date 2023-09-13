@@ -3,9 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { useFetchLoggedInUserRequestQuery } from "@/apis/userApi";
 import { setData, setError, setIsLoading } from "@/slices/user.slice";
-import { cartItemType, insertCartData, useCartSelector } from "@/slices/cart.slice";
-import makeStore from "@/store";
+import { insertCartData, useCartSelector } from "@/slices/cart.slice";
+import { insertWishLists, useWishListSelector } from "@/slices/wishlist.slice";
 import useDebounce from "@/hooks/useDebounce";
+import makeStore from "@/store";
 
 import { BsArrowUp } from "react-icons/bs";
 
@@ -14,6 +15,7 @@ const store = makeStore();
 const InitialDispatch = ({ children }: { children: ReactNode }) => {
 	const { isLoading, error, data }: any = useFetchLoggedInUserRequestQuery();
 	const cart = useSelector(useCartSelector);
+	const wishList = useSelector(useWishListSelector);
 	const [showScroll, setShowScroll] = useState(false);
 	const dispatch = useDispatch();
 	const debounceCart = useDebounce(cart, 3000);
@@ -48,19 +50,28 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 		// Fetch cart from localStorage
 		if (!isLoading) return;
 		if (!data) {
-			let cart: string = localStorage.getItem("cart") || "[]";
+			let cart: string = localStorage.getItem("cart") || "[]",
+				wishlist = localStorage.getItem("wishlist") || "[]";
 			cart = JSON.parse(cart);
+			wishlist = JSON.parse(wishlist);
 			dispatch(insertCartData(cart));
+			dispatch(insertWishLists(wishlist));
 		}
 	}, [data, isLoading]);
 
-	// Store cart in localStorage
+	// Store cart  in localStorage
 	useEffect(() => {
 		if (!data && !isLoading) {
-			console.log(debounceCart);
 			localStorage.setItem("cart", JSON.stringify(cart));
 		}
-	}, [data, debounceCart]);
+	}, [data, debounceCart, isLoading]);
+
+	// Store wishlist  in localStorage
+	useEffect(() => {
+		if (!data && !isLoading) {
+			localStorage.setItem("wishlist", JSON.stringify(wishList));
+		}
+	}, [data, isLoading, wishList]);
 	return (
 		<main className="w-full h-auto relative">
 			{children}

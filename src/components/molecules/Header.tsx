@@ -8,9 +8,11 @@ import CartPreview from "./CartPreview";
 
 import { AiOutlinePhone, AiOutlineUser, AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
+import { useWishListSelector } from "@/slices/wishlist.slice";
 
 const Header = () => {
 	const cart = useSelector(useCartSelector);
+	const wishList = useSelector(useWishListSelector);
 
 	const cartItemsCount = useMemo(() => {
 		if (cart?.length === 0) return 0;
@@ -46,10 +48,10 @@ const Header = () => {
 			<div className="flex items-center gap-4 text-2xl h-12 font-thin">
 				<BiSearch className="hover:cursor-pointer" />
 				<AiOutlineUser className="hover:cursor-pointer" />
-				<div className="relative">
+				<Link href="/wishlists" className="relative">
 					<AiOutlineHeart className="hover:cursor-pointer" />
-					<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>9</span>
-				</div>
+					<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>{wishList?.length}</span>
+				</Link>
 				<button className="relative" onClick={() => setShowCart(true)}>
 					<AiOutlineShoppingCart className="hover:cursor-pointer" />
 					<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>

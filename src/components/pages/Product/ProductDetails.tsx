@@ -2,20 +2,22 @@ import React, { useRef, useCallback, useState } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
 
+import { productType } from "@/types/product.type";
 import { goPrev, goNext } from "@/utils/swiper";
 import filters from "@/data/productfilters";
+import { increaseItemCount } from "@/slices/cart.slice";
+import useCheckIfProductIsInWishList from "@/hooks/useCheckIfProductIsInWishList";
+import { toggleItemInWishList } from "@/slices/wishlist.slice";
 
 import Ratings from "@/components/molecules/Ratings";
 import ItemInCartCount from "@/components/molecules/ItemInCartCount";
 import Loading from "@/components/atom/Loading";
-import { increaseItemCount } from "@/slices/cart.slice";
 
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsCheck } from "react-icons/bs";
-import { productType } from "@/types/product.type";
-import { useDispatch } from "react-redux";
 
 const ProductDetails = ({ product }: { product: productType }) => {
 	const swiperRef = useRef<any>(null);
@@ -23,6 +25,8 @@ const ProductDetails = ({ product }: { product: productType }) => {
 	const [active, setActive] = useState(0);
 	const [cartLoading, setCartLoading] = useState(false);
 	const [tab, setTab] = useState("description");
+
+	const partOfWishList = useCheckIfProductIsInWishList(product?.id as string);
 
 	const dispatch = useDispatch();
 
@@ -41,6 +45,7 @@ const ProductDetails = ({ product }: { product: productType }) => {
 			setCartLoading(false);
 		}, 2000);
 	};
+
 	return (
 		<section className="w-full h-auto">
 			<div className="w-full h-auto mt-4 flex items-start justify-between">
@@ -93,7 +98,11 @@ const ProductDetails = ({ product }: { product: productType }) => {
 						<h3 className="text-xl text-brown font-medium">GH₵{product?.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
 						<p className="text-center opacity-80">{product?.description}</p>
 
-						<button className="absolute top-0 right-5 h-10 w-10 hover:border-brown text-brown hover:text-white flex items-center justify-center border-[1px] hover:bg-brown rounded-full">
+						<button
+							className={`absolute top-0 right-5 h-10 w-10 ${
+								partOfWishList ? "text-white bg-brown border-brown" : "hover:text-white hover:bg-brown hover:border-brown text-brown"
+							}  flex items-center justify-center border-[1px] rounded-full`}
+							onClick={() => dispatch(toggleItemInWishList({ id: product?.id }))}>
 							<AiOutlineHeart className="text-xl" />
 						</button>
 					</div>
