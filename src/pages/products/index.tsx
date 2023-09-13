@@ -1,5 +1,7 @@
 import Head from "next/head";
 import React, { Fragment, useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 import filters from "@/data/productfilters";
 import { productType } from "@/types/product.type";
@@ -9,21 +11,29 @@ import Header from "@/components/molecules/Header";
 import ProductCard from "@/components/cards/ProductCard";
 import Footer from "@/components/molecules/Footer";
 import ProductQuickView from "@/components/pages/Homepage/ProductQuickView";
-import Link from "next/link";
 
 export default function Home() {
-	const [selectedFilter, setSelectedFilter] = useState("all");
+	const { query, isReady } = useRouter();
+
+	const [selectedFilter, setSelectedFilter] = useState("");
 	const [products, setProducts] = useState<{ data: productType[]; nextPage: boolean }>({ data: [], nextPage: false });
 	const [page, setPage] = useState(1);
 
 	const [previewProduct, setPreviewProduct] = useState<null | productType>(null);
 
 	useEffect(() => {
+		if (!selectedFilter) return;
 		const products = selectedFilter === "all" ? localProducts : localProducts.filter((product) => product.type === selectedFilter);
 		setProducts((prev) => {
 			return { ...prev, data: products.filter((pro: productType, index: number) => index < 9 * page), nextPage: products?.length > 9 * page };
 		});
 	}, [page, selectedFilter]);
+
+	useEffect(() => {
+		if (!isReady) return;
+		const type = query?.type as string;
+		setSelectedFilter(type ? type : "all");
+	}, [query, isReady]);
 	return (
 		<>
 			<Head>

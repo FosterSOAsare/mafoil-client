@@ -18,3 +18,41 @@ html {
 	background-size: cover;
 	background-repeat: no-repeat;
 }
+.custom-loader {
+	@apply w-6 h-6 rounded-full border-[6px] border-[#0000] border-r-[#ffffff97] relative;
+	animation: s4 1s infinite linear;
+}
+.custom-loader:before,
+.custom-loader:after {
+	@apply absolute rounded-full;
+	content: "";
+	inset: -6px;
+	border: inherit;
+	animation: inherit;
+	animation-duration: 2s;
+}
+.custom-loader:after {
+	animation-duration: 4s;
+}
+
+@keyframes s4 {
+	100% {
+		transform: rotate(1turn);
+	}
+}
+@keyframes s2 {
+	to {
+		transform: rotate(1turn);
+	}
+}
+
+.active-tab:after {
+	content: "";
+	@apply absolute w-0 h-[1px] bg-black -bottom-[1px] left-0;
+	animation: fullWidth 0.35s forwards linear;
+}
+@keyframes fullWidth {
+	to {
+		width: 100%;
+	}
+}

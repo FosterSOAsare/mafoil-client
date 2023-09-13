@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+
+import { cartItemType, useCartSelector } from "@/slices/cart.slice";
 
 import { AiOutlinePhone, AiOutlineUser, AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 
 const Header = () => {
+	const cart = useSelector(useCartSelector);
+
+	const cartItemsCount = useMemo(() => {
+		if (cart?.length === 0) return 0;
+		return cart.reduce((total: number, item: cartItemType) => total + item?.count, 0);
+	}, [cart]);
 	return (
 		<header className="w-full bg-white shadow-md sticky top-0 left-0 z-[4] h-20 flex items-center justify-between px-10">
 			<Link href="tel:+8665972742" className="flex items-center text-sm gap-2 group font-medium">
@@ -39,7 +48,7 @@ const Header = () => {
 				</div>
 				<div className="relative">
 					<AiOutlineShoppingCart className="hover:cursor-pointer" />
-					<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>0</span>
+					<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>{cartItemsCount}</span>
 				</div>
 			</div>
 		</header>

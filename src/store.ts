@@ -1,5 +1,6 @@
 import { configureStore, Middleware } from "@reduxjs/toolkit";
 import UserReducer from '@/slices/user.slice'
+import CartReducer from '@/slices/cart.slice'
 import authApi from "./apis/authApi";
 import userApi from "./apis/userApi";
 
@@ -9,6 +10,7 @@ const makeStore = () => (
   configureStore({
     reducer: {
       user: UserReducer,
+      cart: CartReducer,
       [authApi.reducerPath]: authApi.reducer,
       [userApi.reducerPath]: userApi.reducer
     },
