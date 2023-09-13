@@ -27,16 +27,20 @@ const RecentViews = ({ setPreviewProduct, product }: { setPreviewProduct: any; p
 		localStorage.setItem("recents", JSON.stringify(localRecents));
 	}, [product]);
 	return (
-		<section id="recents" className="px-20 pb-12 pt-6 h-auto flex flex-col items-center justify-center w-full">
-			<h3 className="text-center mb-8 text-3xl font-medium">RECENTLY VIEWED PRODUCTS</h3>
-			<article className="w-full flex flex-col items-center justify-center pb-12">
-				<div className="grid grid-cols-4 gap-6 w-full h-auto">
-					{recentlyViewed.map((product, index) => {
-						return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} sx="!h-[300px]" />;
-					})}
-				</div>
-			</article>
-		</section>
+		<>
+			{recentlyViewed?.length > 0 && (
+				<section id="recents" className="px-20 pb-12 pt-6 h-auto flex flex-col items-center justify-center w-full">
+					<h3 className="text-center mb-8 text-3xl font-medium">RECENTLY VIEWED PRODUCTS</h3>
+					<article className="w-full flex flex-col items-center justify-center pb-12">
+						<div className="grid grid-cols-4 gap-6 w-full h-auto">
+							{recentlyViewed.map((product, index) => {
+								return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} sx="!h-[300px]" />;
+							})}
+						</div>
+					</article>
+				</section>
+			)}
+		</>
 	);
 };
 

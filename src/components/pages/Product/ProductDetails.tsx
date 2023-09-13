@@ -26,8 +26,6 @@ const ProductDetails = ({ product }: { product: productType }) => {
 
 	const dispatch = useDispatch();
 
-	console.log(tab);
-
 	const handleSwiper = useCallback((swiper: any) => {
 		swiper.on("slideChange", () => {
 			const activeIndex = swiper.activeIndex;
@@ -127,7 +125,7 @@ const ProductDetails = ({ product }: { product: productType }) => {
 				<div className="w-full h-auto border-b-[1px]">
 					<div className="h-12 w-1/3 mx-auto px-4 flex justify-between items-center">
 						{["Description", "Review", "Refund"].map((t, index) => (
-							<button className={`h-full px-2 ${tab === t.toLocaleLowerCase() ? "active-tab text-black  font-medium relative" : ""}`} onClick={() => setTab(t.toLowerCase())}>
+							<button key={index} className={`h-full px-2 ${tab === t.toLocaleLowerCase() ? "active-tab text-black  font-medium relative" : ""}`} onClick={() => setTab(t.toLowerCase())}>
 								{t}
 							</button>
 						))}

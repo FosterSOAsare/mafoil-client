@@ -45,12 +45,20 @@ html {
 		transform: rotate(1turn);
 	}
 }
+@layer utilities {
+	.active-tab:after {
+		content: "";
+		@apply absolute w-0 h-[1px] bg-black -bottom-[1px] left-0;
+		animation: fullWidth 0.35s forwards linear;
+	}
+}
 
 .active-tab:after {
 	content: "";
-	@apply absolute w-0 h-[1px] bg-black -bottom-[1px] left-0;
+	@apply absolute w-0 h-[1px] -bottom-[1px] left-0 bg-brown;
 	animation: fullWidth 0.35s forwards linear;
 }
+
 @keyframes fullWidth {
 	to {
 		width: 100%;

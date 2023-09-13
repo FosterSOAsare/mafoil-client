@@ -1,8 +1,10 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 
 import { cartItemType, useCartSelector } from "@/slices/cart.slice";
+
+import CartPreview from "./CartPreview";
 
 import { AiOutlinePhone, AiOutlineUser, AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
@@ -14,6 +16,8 @@ const Header = () => {
 		if (cart?.length === 0) return 0;
 		return cart.reduce((total: number, item: cartItemType) => total + item?.count, 0);
 	}, [cart]);
+
+	const [showCart, setShowCart] = useState(false);
 	return (
 		<header className="w-full bg-white shadow-md sticky top-0 left-0 z-[4] h-20 flex items-center justify-between px-10">
 			<Link href="tel:+8665972742" className="flex items-center text-sm gap-2 group font-medium">
@@ -46,11 +50,15 @@ const Header = () => {
 					<AiOutlineHeart className="hover:cursor-pointer" />
 					<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>9</span>
 				</div>
-				<div className="relative">
+				<button className="relative" onClick={() => setShowCart(true)}>
 					<AiOutlineShoppingCart className="hover:cursor-pointer" />
-					<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>{cartItemsCount}</span>
-				</div>
+					<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>
+						{cartItemsCount > 9 ? "9+" : cartItemsCount}
+					</span>
+				</button>
 			</div>
+
+			{showCart && <CartPreview setShowCart={setShowCart} />}
 		</header>
 	);
 };
