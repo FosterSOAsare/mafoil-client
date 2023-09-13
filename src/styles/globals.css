@@ -51,6 +51,9 @@ html {
 		@apply absolute w-0 h-[1px] bg-black -bottom-[1px] left-0;
 		animation: fullWidth 0.35s forwards linear;
 	}
+	.bounce {
+		animation: bounce 2s infinite linear;
+	}
 }
 
 .active-tab:after {
@@ -62,5 +65,16 @@ html {
 @keyframes fullWidth {
 	to {
 		width: 100%;
+	}
+}
+@keyframes bounce {
+	0% {
+		scale: 100%;
+	}
+	50% {
+		scale: 110%;
+	}
+	100% {
+		scale: 100%;
 	}
 }

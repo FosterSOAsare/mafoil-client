@@ -7,6 +7,7 @@ module.exports = {
 				blue: "#14009F",
 				sec: "#000000",
 				brown: "#7f4227",
+				border: "#e5e7eb",
 			},
 			fontFamily: {
 				playfair: ["'Playfair Display', serif"],

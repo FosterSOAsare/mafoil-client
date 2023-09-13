@@ -12,7 +12,7 @@ import ProductCard from "@/components/cards/ProductCard";
 import Footer from "@/components/molecules/Footer";
 import ProductQuickView from "@/components/pages/Homepage/ProductQuickView";
 
-export default function Home() {
+const Products = () => {
 	const { query, isReady } = useRouter();
 
 	const [selectedFilter, setSelectedFilter] = useState("");
@@ -102,4 +102,6 @@ export default function Home() {
 			<Footer />
 		</>
 	);
-}
+};
+
+export default Products;

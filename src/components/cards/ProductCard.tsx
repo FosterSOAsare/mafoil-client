@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useDispatch } from "react-redux";
 
 import { productType } from "@/types/product.type";
 import useCheckIfProductIsInWishList from "@/hooks/useCheckIfProductIsInWishList";
@@ -9,7 +10,6 @@ import { toggleItemInWishList } from "@/slices/wishlist.slice";
 import Ratings from "../molecules/Ratings";
 
 import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
-import { useDispatch } from "react-redux";
 
 const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: productType; setPreviewProduct: React.Dispatch<React.SetStateAction<productType | null>>; sx?: string }) => {
 	const { name, price, rating, totalRatings, images, slugName, id } = product;
@@ -19,12 +19,7 @@ const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: product
 	return (
 		<article className="w-full h-auto bg-white ">
 			<div className={`w-full h-[400px] ${sx} overflow-hidden`}>
-				<div
-					className="w-full h-full relative overflow-hidden hover:cursor-pointer"
-					onMouseEnter={() => setShowContent(true)}
-					onMouseLeave={() => {
-						setShowContent(false);
-					}}>
+				<div className="w-full h-full relative overflow-hidden hover:cursor-pointer" onMouseEnter={() => setShowContent(true)} onMouseLeave={() => setShowContent(false)}>
 					<div className="w-full h-full bg-[#F5F2EC] relative">
 						<Image src={images[0]} fill alt="product Image" />
 					</div>
@@ -32,7 +27,7 @@ const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: product
 						<button
 							onClick={() => dispatch(toggleItemInWishList({ id }))}
 							className={`w-8 h-8 transition-all duration-300 ${showContent ? "scale-100" : "scale-0"} ${
-								partOfWishList ? "bg-brown text-white" : "hover:bg-brown bg-white  text-black  hover:text-white"
+								partOfWishList ? "bg-brown hover:text-black hover:bg-white text-white" : "hover:bg-brown bg-white  text-black  hover:text-white"
 							} mb-2 flex items-center justify-center`}>
 							<AiOutlineHeart className="text-lg" />
 						</button>
@@ -57,7 +52,7 @@ const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: product
 			</div>
 			<div className="h-[150px] flex items-center shadow-md justify-center flex-col">
 				<Ratings rating={rating} totalRatings={totalRatings} />
-				<Link href="/" className="text-sm my-2">
+				<Link href={`/products/${slugName}`} className="text-sm my-2">
 					{name}
 				</Link>
 				<p className="text-brown font-medium">GH₵{price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>

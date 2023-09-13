@@ -48,7 +48,7 @@ const Header = () => {
 			<div className="flex items-center gap-4 text-2xl h-12 font-thin">
 				<BiSearch className="hover:cursor-pointer" />
 				<AiOutlineUser className="hover:cursor-pointer" />
-				<Link href="/wishlists" className="relative">
+				<Link href="/wishlist" className="relative">
 					<AiOutlineHeart className="hover:cursor-pointer" />
 					<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>{wishList?.length}</span>
 				</Link>

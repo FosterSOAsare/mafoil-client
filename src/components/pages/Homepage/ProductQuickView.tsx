@@ -26,7 +26,7 @@ const ProductQuickView = ({ setPreviewProduct, previewProduct }: { setPreviewPro
 	}, []);
 	return (
 		<aside className={`${show ? "w-[70%]" : "w-[35%]"} flex transition-all duration-300 items-start shadow-md z-[3] justify-between h-[70vh] bg-white fixed top-0 bottom-0 m-auto left-0 right-0`}>
-			<article className={`${!show ? "w-full" : "w-1/2"} h-full relative`}>
+			<article className={`${!show ? "w-full max-w-[500px]" : "w-1/2 min-w-[450px]"} h-full relative`}>
 				<Image src={images[0]} alt="Product Image" fill />
 			</article>
 			{show && (
