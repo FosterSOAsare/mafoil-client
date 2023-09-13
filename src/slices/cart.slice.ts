@@ -29,10 +29,15 @@ const cartSlice = createSlice({
       let cartItem = state.find((item) => item.id === id)
       if (!cartItem) return [...state, { id, count }]
       return state.map(item => item.id === id ? { ...item, count: item.count + count } : item)
-    }
+    },
+    removeItem: (state, action) => {
+      let { id } = action.payload
+      return state.filter(item => item.id !== id)
+    },
+
   }
 })
 
 export const useCartSelector = (state: any) => state.cart
-export const { insertCartData, increaseItemCount, reduceItemCount } = cartSlice.actions
+export const { insertCartData, increaseItemCount, reduceItemCount, removeItem } = cartSlice.actions
 export default cartSlice.reducer

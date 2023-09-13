@@ -53,7 +53,7 @@ const WishList = () => {
 					<article className="w-full flex flex-col items-center justify-center  border-b-[1px] pb-36">
 						<div className="grid grid-cols-4 gap-4 w-full h-auto">
 							{products?.map((product, index) => {
-								return <WishListProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} sx="!h-[320px]" />;
+								return <WishListProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} />;
 							})}
 						</div>
 					</article>

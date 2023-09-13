@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Link from "next/link";
 
 import products from "@/data/products";
+import useGetCartSubTotal from "@/hooks/useGetCartSubTotal";
 
 import PreviewCartItemCard from "../cards/PreviewCartItemCard";
 
@@ -12,14 +13,7 @@ import { productType } from "@/types/product.type";
 
 const CartPreview = ({ setShowCart }: { setShowCart: React.Dispatch<React.SetStateAction<boolean>> }) => {
 	const cart = useSelector(useCartSelector);
-	const subTotal = useMemo(() => {
-		let itemTotalPrices = cart.map((item: cartItemType) => {
-			let product = products.find((p: productType) => item.id === p.id);
-			if (!product) return 0;
-			return product.price * item.count;
-		});
-		return itemTotalPrices.reduce((total: number, itemTotal: number) => total + itemTotal, 0);
-	}, [cart]);
+	const subtotal = useGetCartSubTotal({ products, cart });
 
 	const [agreeToTerms, setAgreeToTerms] = useState(false);
 
@@ -49,14 +43,14 @@ const CartPreview = ({ setShowCart }: { setShowCart: React.Dispatch<React.SetSta
 						<div className="w-full pb-2 border-b-[1px] border-dashed">
 							<div className="w-full text-medium mt-4 flex items-center justify-between">
 								<p>SUBTOTAL:</p>
-								<p className="font-bold">GH₵{subTotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+								<p className="font-bold">GH₵{subtotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 							</div>
 							<p className="opacity-80 text-sm mt-2">Taxes and shipping calculated at checkout</p>
 						</div>
 
 						<div className="w-full mt-4">
 							<div className="flex gap-2 items-center">
-								<input type="radio" id="terms" className="accent-brown rounded-full" checked={agreeToTerms} onClick={(e) => setAgreeToTerms((prev) => !prev)} />
+								<input type="radio" id="terms" className="accent-brown rounded-full" checked={agreeToTerms} onClick={(e) => setAgreeToTerms((prev) => !prev)} onChange={() => {}} />
 								<label htmlFor="terms" className="text-sm hover:cursor-pointer">
 									I agree with
 									<Link href="/" className="hover:text-brown ml-[4px] hover:active-tab relative">
@@ -65,14 +59,12 @@ const CartPreview = ({ setShowCart }: { setShowCart: React.Dispatch<React.SetSta
 								</label>
 							</div>
 
-							<Link href="/cart" className={`mt-4 flex items-center justify-center bg-black ${!agreeToTerms && "opacity-70"} text-white relative w-full group h-12 overflow-hidden`}>
+							<Link href="/checkout" className={`mt-4 flex items-center justify-center bg-black ${!agreeToTerms && "opacity-70"} text-white relative w-full group h-12 overflow-hidden`}>
 								<span className={`w-full h-full bg-brown absolute transition-all duration-300 top-0 ${agreeToTerms && "group-hover:left-0"} z-[1] -left-[100%]`}></span>
 								<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Checkout</p>
 							</Link>
 
-							<Link
-								href="/checkout"
-								className={`mt-4 flex items-center justify-center border-black text-black hover:border-brown border-[1px] relative w-full group h-12 overflow-hidden`}>
+							<Link href="/cart" className={`mt-4 flex items-center justify-center border-black text-black hover:border-brown border-[1px] relative w-full group h-12 overflow-hidden`}>
 								<span className={`w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-[1] -left-[100%]`}></span>
 								<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">View Cart</p>
 							</Link>

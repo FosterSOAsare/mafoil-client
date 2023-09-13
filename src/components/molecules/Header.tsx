@@ -50,7 +50,9 @@ const Header = () => {
 				<AiOutlineUser className="hover:cursor-pointer" />
 				<Link href="/wishlist" className="relative">
 					<AiOutlineHeart className="hover:cursor-pointer" />
-					<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>{wishList?.length}</span>
+					<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>
+						{wishList?.length > 9 ? "9+" : wishList?.length}
+					</span>
 				</Link>
 				<button className="relative" onClick={() => setShowCart(true)}>
 					<AiOutlineShoppingCart className="hover:cursor-pointer" />
