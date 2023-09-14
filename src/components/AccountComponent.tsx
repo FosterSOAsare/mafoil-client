@@ -2,9 +2,11 @@ import React from "react";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { useUserSlice } from "@/slices/user.slice";
+import useLogoutUser from "@/hooks/useLogoutUser";
 
 const AccountComponent = () => {
 	const { user } = useSelector(useUserSlice);
+	const logout = useLogoutUser();
 
 	return (
 		<aside className="absolute top-[105%] right-[00%] bg-white shadow-md w-[170px] h-auto py-2">
@@ -26,7 +28,9 @@ const AccountComponent = () => {
 					<Link href="/account/settings" className="block px-4 p-[4px] text-sm text-black hover:text-brown">
 						Settings
 					</Link>
-					<button className="block px-4 p-[4px] text-sm text-black hover:text-[red]">Signout</button>
+					<button className="block px-4 p-[4px] text-sm text-black hover:text-[red]" onClick={() => logout()}>
+						Signout
+					</button>
 				</>
 			)}
 			{!user?.id && (

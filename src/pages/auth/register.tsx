@@ -28,7 +28,9 @@ const register = () => {
 		}
 
 		// Send data to server
-		registerUserRequest({ password, email, fullname });
+		let referrer = localStorage.getItem("referrer") as string;
+
+		registerUserRequest({ password, email, fullname, referrer: referrer ? referrer : null });
 	}
 
 	// Create toastify to notify errors
@@ -36,6 +38,7 @@ const register = () => {
 
 	useEffect(() => {
 		if (!data) return;
+		localStorage.removeItem("referrer");
 		push(`/auth/verify?mode=accountverification&email=${data.email}`);
 	}, [data]);
 

@@ -9,6 +9,7 @@ import useDebounce from "@/hooks/useDebounce";
 import makeStore from "@/store";
 
 import { BsArrowUp } from "react-icons/bs";
+import { useRouter } from "next/router";
 
 const store = makeStore();
 
@@ -19,16 +20,17 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 	const [showScroll, setShowScroll] = useState(false);
 	const dispatch = useDispatch();
 	const debounceCart = useDebounce(cart, 3000);
+	const { query, replace, pathname } = useRouter();
 	useEffect(() => {
 		if (isLoading) {
 			setIsLoading(isLoading);
 			return;
 		}
-		setTimeout(() => {
-			dispatch(setData(data));
-			dispatch(setIsLoading(false));
-			dispatch(setError(null));
-		}, 1000);
+		// setTimeout(() => {
+		dispatch(setData(data));
+		dispatch(setIsLoading(false));
+		dispatch(setError(null));
+		// }, 1000);
 	}, [data, isLoading]);
 
 	useEffect(() => {
@@ -74,6 +76,14 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 			localStorage.setItem("wishlist", JSON.stringify(wishList));
 		}
 	}, [data, isLoading, wishList]);
+
+	// Chech if user has a referrer query
+	useEffect(() => {
+		if (query?.ref) {
+			localStorage.setItem("referrer", query?.ref as string);
+			replace(pathname);
+		}
+	}, [query]);
 	return (
 		<main className="w-full h-auto relative">
 			{children}
