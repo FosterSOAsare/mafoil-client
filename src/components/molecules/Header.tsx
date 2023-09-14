@@ -1,23 +1,38 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 
 import { cartItemType, useCartSelector } from "@/slices/cart.slice";
+import { useWishListSelector } from "@/slices/wishlist.slice";
 
 import CartPreview from "./CartPreview";
+import AccountComponent from "../AccountComponent";
 
 import { AiOutlinePhone, AiOutlineUser, AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
-import { useWishListSelector } from "@/slices/wishlist.slice";
 
 const Header = () => {
 	const cart = useSelector(useCartSelector);
 	const wishList = useSelector(useWishListSelector);
+	const [showAccountMenuComponent, setShowAccountMenuComponent] = useState(false);
+	const accountMenuComponentParentRef = useRef<any>(null);
 
 	const cartItemsCount = useMemo(() => {
 		if (cart?.length === 0) return 0;
 		return cart.reduce((total: number, item: cartItemType) => total + item?.count, 0);
 	}, [cart]);
+
+	useEffect(() => {
+		function checkClick(e: any) {
+			const parent = accountMenuComponentParentRef?.current;
+			setShowAccountMenuComponent(parent.contains(e.target));
+		}
+
+		window.addEventListener("click", checkClick);
+		return () => {
+			window.removeEventListener("click", checkClick);
+		};
+	}, []);
 
 	const [showCart, setShowCart] = useState(false);
 	return (
@@ -47,7 +62,12 @@ const Header = () => {
 			</nav>
 			<div className="flex items-center gap-4 text-2xl h-12 font-thin">
 				<BiSearch className="hover:cursor-pointer" />
-				<AiOutlineUser className="hover:cursor-pointer" />
+				<div className="relative" ref={accountMenuComponentParentRef}>
+					<button className="w-full block" onClick={() => setShowAccountMenuComponent(true)}>
+						<AiOutlineUser className="hover:cursor-pointer" />
+					</button>
+					{showAccountMenuComponent && <AccountComponent />}
+				</div>
 				<Link href="/wishlist" className="relative">
 					<AiOutlineHeart className="hover:cursor-pointer" />
 					<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>
