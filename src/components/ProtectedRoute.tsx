@@ -3,32 +3,36 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useUserSlice } from "@/slices/user.slice";
 
-import Loading from "@/components/Loading";
+import Loading from "./atom/Loading";
 
 interface ProtectedRouteProps {
 	children: ReactNode;
-	registerRequired?: Boolean;
+	loginRequired?: Boolean;
 }
 
-const ProtectedRoute = ({ children, registerRequired = false }: ProtectedRouteProps) => {
+const ProtectedRoute = ({ children, loginRequired = false }: ProtectedRouteProps) => {
 	const router = useRouter();
 	const { isLoading, error, user } = useSelector(useUserSlice);
 
 	useEffect(() => {
-		if (!isLoading && !registerRequired && !error && user?.id) {
+		if (!isLoading && !loginRequired && !error && user?.id) {
 			router.replace("/app");
 		}
-		if (!isLoading && registerRequired && (!user?.id || error)) {
+		if (!isLoading && loginRequired && (!user?.id || error)) {
 			router.replace("/auth/login");
 		}
 	}, [router, isLoading, error, user?.id]);
 
 	return (
 		<>
-			{isLoading && <Loading />}
-			{!isLoading && registerRequired && !error && user?.id && <>{children}</>}
+			{isLoading && (
+				<div className="text-white w-full h-screen flex items-center justify-center flex-col">
+					<Loading />
+				</div>
+			)}
+			{!isLoading && loginRequired && !error && user?.id && <>{children}</>}
 
-			{!isLoading && !registerRequired && !user?.id && <>{children}</>}
+			{!isLoading && !loginRequired && !user?.id && <>{children}</>}
 		</>
 	);
 };

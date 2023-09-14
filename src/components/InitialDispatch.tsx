@@ -24,9 +24,11 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 			setIsLoading(isLoading);
 			return;
 		}
-		dispatch(setData(data));
-		dispatch(setIsLoading(false));
-		dispatch(setError(null));
+		setTimeout(() => {
+			dispatch(setData(data));
+			dispatch(setIsLoading(false));
+			dispatch(setError(null));
+		}, 1000);
 	}, [data, isLoading]);
 
 	useEffect(() => {

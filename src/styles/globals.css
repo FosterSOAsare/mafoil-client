@@ -18,12 +18,18 @@ html {
 	background-size: cover;
 	background-repeat: no-repeat;
 }
-.custom-loader {
+.custom-loader1 {
 	@apply w-6 h-6 rounded-full border-[6px] border-[#0000] border-r-[#ffffff97] relative;
 	animation: s4 1s infinite linear;
 }
+.custom-loader {
+	@apply w-12 h-12 rounded-full border-[8px] border-[#0000] border-r-[#00000097] relative;
+	animation: s4 1s infinite linear;
+}
 .custom-loader:before,
-.custom-loader:after {
+.custom-loader:after,
+.custom-loader1:before,
+.custom-loader1:after {
 	@apply absolute rounded-full;
 	content: "";
 	inset: -6px;
@@ -31,7 +37,12 @@ html {
 	animation: inherit;
 	animation-duration: 2s;
 }
+.custom-loader:before,
 .custom-loader:after {
+	inset: -8px;
+}
+.custom-loader:after,
+.custom-loader1:after {
 	animation-duration: 4s;
 }
 

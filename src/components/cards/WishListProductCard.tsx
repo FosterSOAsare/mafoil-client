@@ -9,7 +9,7 @@ import { toggleItemInWishList } from "@/slices/wishlist.slice";
 import { increaseItemCount } from "@/slices/cart.slice";
 
 import Ratings from "../molecules/Ratings";
-import Loading from "../atom/Loading";
+import { Loading1 } from "../atom/Loading";
 
 import { FiExternalLink } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -55,7 +55,7 @@ const WishListProductCard = ({ product, setPreviewProduct, sx = "" }: { product:
 							onClick={addToCart}
 							disabled={addingToCart}>
 							{!addingToCart && <BsCartPlus className="opacity-50 group-hover:opacity-100 group-hover:text-white text-xl" />}
-							{addingToCart && <Loading />}
+							{addingToCart && <Loading1 />}
 						</button>
 						<Link
 							href={`/products/${slugName}`}

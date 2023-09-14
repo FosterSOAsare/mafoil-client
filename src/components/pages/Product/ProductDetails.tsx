@@ -13,7 +13,7 @@ import { toggleItemInWishList } from "@/slices/wishlist.slice";
 
 import Ratings from "@/components/molecules/Ratings";
 import ItemInCartCount from "@/components/molecules/ItemInCartCount";
-import Loading from "@/components/atom/Loading";
+import { Loading1 } from "@/components/atom/Loading";
 
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { AiOutlineHeart } from "react-icons/ai";
@@ -126,7 +126,7 @@ const ProductDetails = ({ product }: { product: productType }) => {
 						}  text-white gap-3 w-full h-14 flex items-center justify-center  group transition-all duration-200`}
 						onClick={addToCart}
 						disabled={count === 0}>
-						{cartLoading && <Loading />}
+						{cartLoading && <Loading1 />}
 						<p className={`uppercase inline ${count > 0 && "group-hover:text-[14px]"} text-[13px] tracking-[2px]  animate-fadeIn infinite   transition-all duration-150`}>Add to cart</p>
 					</button>
 				</article>
