@@ -4,8 +4,15 @@ import CartReducer from '@/slices/cart.slice'
 import WishListReducer from '@/slices/wishlist.slice'
 import authApi from "./apis/authApi";
 import userApi from "./apis/userApi";
+import productsApi from "./apis/productsApi";
+import filesApi from './apis/filesApi'
 
-const middlewares: Array<Middleware> = [authApi.middleware, userApi.middleware]
+const middlewares: Array<Middleware> = [
+  authApi.middleware,
+  userApi.middleware,
+  productsApi.middleware,
+  filesApi.middleware
+]
 
 const makeStore = () => (
   configureStore({
@@ -14,7 +21,9 @@ const makeStore = () => (
       cart: CartReducer,
       wishlist: WishListReducer,
       [authApi.reducerPath]: authApi.reducer,
-      [userApi.reducerPath]: userApi.reducer
+      [userApi.reducerPath]: userApi.reducer,
+      [productsApi.reducerPath]: productsApi.reducer,
+      [filesApi.reducerPath]: filesApi.reducer
     },
 
     middleware: (getDefaultMiddleware: any) => (

@@ -89,3 +89,7 @@ html {
 		scale: 100%;
 	}
 }
+
+.newProduct label {
+	@apply !font-medium;
+}

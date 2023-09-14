@@ -16,7 +16,7 @@ const PrimaryButton = ({ text, handleClick, href, sx = "", type = "button", disa
 			{!href && (
 				<button
 					type={type}
-					className={`${sx} ${disabled ? "opacity-40" : "opacity-90 hover:opacity-100"}  w-full h-12 bg-black mb-4  text-white`}
+					className={`${sx} ${disabled ? "opacity-40" : "opacity-80 hover:opacity-100 hover:bg-brown"}  w-full h-12 bg-black mb-4  text-white`}
 					onClick={() => {
 						if (handleClick) handleClick();
 					}}
@@ -25,7 +25,7 @@ const PrimaryButton = ({ text, handleClick, href, sx = "", type = "button", disa
 				</button>
 			)}
 			{href && (
-				<Link href={href} className={`${sx} w-full h-12 flex items-center justify-center bg-black mb-4 opacity-90 hover:opacity-100 text-white`}>
+				<Link href={href} className={`${sx} hover:bg-brown w-full h-12 flex items-center justify-center bg-black mb-4 opacity-90 hover:opacity-100 text-white`}>
 					{text}
 				</Link>
 			)}
