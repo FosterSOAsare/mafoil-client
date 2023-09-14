@@ -20,7 +20,7 @@ import ProductDetails from "@/components/pages/Product/ProductDetails";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
-export default function Home() {
+const Product = () => {
 	const [product, setProduct] = useState<productType | null>(null);
 	const [loading, setLoading] = useState(true);
 	const { query } = useRouter();
@@ -92,4 +92,6 @@ export default function Home() {
 			<Footer />
 		</>
 	);
-}
+};
+
+export default Product;
