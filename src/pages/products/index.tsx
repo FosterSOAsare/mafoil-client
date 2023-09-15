@@ -11,23 +11,27 @@ import Header from "@/components/molecules/Header";
 import ProductCard from "@/components/cards/ProductCard";
 import Footer from "@/components/molecules/Footer";
 import ProductQuickView from "@/components/pages/Homepage/ProductQuickView";
+import { useLazyGetProductsRequestQuery } from "@/apis/productsApi";
 
 const Products = () => {
 	const { query, isReady } = useRouter();
 
 	const [selectedFilter, setSelectedFilter] = useState("");
 	const [products, setProducts] = useState<{ data: productType[]; nextPage: boolean }>({ data: [], nextPage: false });
+	const [getProductsRequest, { data, isLoading, error }] = useLazyGetProductsRequestQuery();
 	const [page, setPage] = useState(1);
 
 	const [previewProduct, setPreviewProduct] = useState<null | productType>(null);
 
 	useEffect(() => {
 		if (!selectedFilter) return;
-		const products = selectedFilter === "all" ? localProducts : localProducts.filter((product) => product.type === selectedFilter);
-		setProducts((prev) => {
-			return { ...prev, data: products.filter((pro: productType, index: number) => index < 9 * page), nextPage: products?.length > 9 * page };
-		});
+		getProductsRequest({ page, category: selectedFilter });
 	}, [page, selectedFilter]);
+
+	useEffect(() => {
+		if (!data) return;
+		setProducts((prev) => (page !== 1 ? { data: [...prev?.data, ...data?.data], nextPage: data.nextPage } : data));
+	}, [data]);
 
 	useEffect(() => {
 		if (!isReady) return;
@@ -71,11 +75,11 @@ const Products = () => {
 									key={index}
 									className={`font-medium text-md w-full mb-2 flex justify-between items-center hover:text-brown ${selectedFilter === filter.option ? "text-brown" : ""}`}
 									onClick={() => {
-										setSelectedFilter(filter.option);
+										setSelectedFilter(filter.name);
 										setPage(1);
 									}}>
 									<p>{filter.name}</p>
-									<p className="text-sm">({filter.option === "all" ? localProducts?.length : localProducts.filter((product) => product.type === filter.option)?.length})</p>
+									<p className="text-sm">({filter.option === "all" ? localProducts?.length : localProducts.filter((product) => product.category === filter.option)?.length})</p>
 								</button>
 							))}
 						</div>

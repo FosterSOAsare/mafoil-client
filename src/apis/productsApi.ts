@@ -8,10 +8,10 @@ const productsApi = createApi({
   }),
   endpoints: (builder) => ({
     getProductsRequest: builder.query({
-      query: ({ page }) => ({
+      query: ({ page, category }) => ({
         url: '',
         method: 'GET',
-        params: { page }
+        params: { page, category }
       })
     }),
     getAProductRequest: builder.query({
@@ -44,7 +44,7 @@ const productsApi = createApi({
 })
 
 export const {
-  useGetProductsRequestQuery,
+  useLazyGetProductsRequestQuery,
   useLazyGetAProductRequestQuery,
   useUpdateAProductRequestMutation,
   useDeleteAProductRequestMutation,

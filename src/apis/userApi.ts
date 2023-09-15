@@ -8,7 +8,7 @@ const userApi = createApi({
   }), endpoints: (builder) => ({
     fetchLoggedInUserRequest: builder.query<any, void>({
       query: () => ({
-        url: "/",
+        url: "",
       }),
     })
   })
