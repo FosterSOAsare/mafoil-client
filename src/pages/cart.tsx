@@ -23,7 +23,7 @@ type cartPageItemType = {
 	long_desc?: string;
 	id: string;
 	images: { url: string; public_id: string }[];
-	slugName: string;
+	slugname: string;
 	category: "cloth" | "bag" | "accessories" | "shoe";
 	count: number;
 };

@@ -75,7 +75,7 @@ const Products = () => {
 									key={index}
 									className={`font-medium text-md w-full mb-2 flex justify-between items-center hover:text-brown ${selectedFilter === filter.option ? "text-brown" : ""}`}
 									onClick={() => {
-										setSelectedFilter(filter.name);
+										setSelectedFilter(filter.option);
 										setPage(1);
 									}}>
 									<p>{filter.name}</p>

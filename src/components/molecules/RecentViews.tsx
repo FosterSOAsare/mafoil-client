@@ -15,14 +15,14 @@ const RecentViews = ({ setPreviewProduct, product }: { setPreviewProduct: any; p
 		let recents = localStorage.getItem("recents");
 		let localRecents = recents ? [...JSON.parse(recents)].filter((product: string) => product != query?.slugName) : [];
 
-		setRecentlyViewed(localProducts.filter((product, index) => localRecents.includes(product?.slugName)).filter((p, index) => index < 4));
+		setRecentlyViewed(localProducts.filter((product, index) => localRecents.includes(product?.slugname)).filter((p, index) => index < 4));
 		// Make sure it is always 5
 		if (localRecents.length >= 5) {
 			localRecents.shift();
 		}
 
 		// Add current product
-		localRecents.push(product?.slugName);
+		localRecents.push(product?.slugname);
 
 		localStorage.setItem("recents", JSON.stringify(localRecents));
 	}, [product]);

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import filters from "@/data/productfilters";
 import { productType } from "@/types/product.type";
-import localProducts from "@/data/products";
+import { useLazyGetProductsRequestQuery } from "@/apis/productsApi";
 
 import Header from "@/components/molecules/Header";
 import ProductCard from "@/components/cards/ProductCard";
@@ -15,15 +15,19 @@ export default function Home() {
 	const [selectedFilter, setSelectedFilter] = useState("all");
 	const [products, setProducts] = useState<{ data: productType[]; nextPage: boolean }>({ data: [], nextPage: false });
 	const [page, setPage] = useState(1);
+	const [getProductsRequest, { data, isLoading, error }] = useLazyGetProductsRequestQuery();
 
 	const [previewProduct, setPreviewProduct] = useState<null | productType>(null);
 
 	useEffect(() => {
-		const products = selectedFilter === "all" ? localProducts : localProducts.filter((product) => product.type === selectedFilter);
-		setProducts((prev) => {
-			return { ...prev, data: products.filter((pro: productType, index: number) => index < 9 * page), nextPage: products?.length > 9 * page };
-		});
+		if (!selectedFilter) return;
+		getProductsRequest({ page, category: selectedFilter });
 	}, [page, selectedFilter]);
+
+	useEffect(() => {
+		if (!data) return;
+		setProducts((prev) => (page !== 1 ? { data: [...prev?.data, ...data?.data], nextPage: data.nextPage } : data));
+	}, [data]);
 	return (
 		<>
 			<Head>

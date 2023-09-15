@@ -8,7 +8,7 @@ import { productType } from "@/types/product.type";
 import { AiOutlineClose } from "react-icons/ai";
 
 const ProductQuickView = ({ setPreviewProduct, previewProduct }: { setPreviewProduct: React.Dispatch<React.SetStateAction<productType | null>>; previewProduct: productType }) => {
-	const { name, store, images, price, rating, totalRatings, short_desc, slugName } = previewProduct;
+	const { name, store, images, price, rating, totalRatings, short_desc, slugname } = previewProduct;
 
 	const [show, setShow] = useState(false);
 
@@ -54,7 +54,7 @@ const ProductQuickView = ({ setPreviewProduct, previewProduct }: { setPreviewPro
 						</p>
 					</div> */}
 
-					<Link href={`/products/${slugName}`} className="bg-black flex items-center justify-center  text-white  mt-6  relative w-1/2  group h-12 overflow-hidden">
+					<Link href={`/products/${slugname}`} className="bg-black flex items-center justify-center  text-white  mt-6  relative w-1/2  group h-12 overflow-hidden">
 						<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
 						<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">View Product</p>
 					</Link>

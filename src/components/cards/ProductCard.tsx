@@ -12,7 +12,7 @@ import Ratings from "../molecules/Ratings";
 import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 
 const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: productType; setPreviewProduct: React.Dispatch<React.SetStateAction<productType | null>>; sx?: string }) => {
-	const { name, price, rating, totalRatings, images, slugName, id } = product;
+	const { name, price, rating, totalRatings, images, slugname, id } = product;
 	const [showContent, setShowContent] = useState(false);
 	const partOfWishList = useCheckIfProductIsInWishList(product?.id as string);
 	const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: product
 						</button>
 					</aside>
 					<aside className={`absolute ${showContent ? "bottom-4" : "-bottom-[20%]"} transition-all duration-300 w-[93%] left-0 gap-4 right-0 mx-auto flex items-center h-12`}>
-						<Link href={`/products/${slugName}`} className="bg-[white] flex items-center justify-center  text-black relative w-1/2 group h-full overflow-hidden">
+						<Link href={`/products/${slugname}`} className="bg-[white] flex items-center justify-center  text-black relative w-1/2 group h-full overflow-hidden">
 							<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
 							<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">View Product</p>
 						</Link>
@@ -52,7 +52,7 @@ const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: product
 			</div>
 			<div className="h-[150px] flex items-center shadow-md justify-center flex-col">
 				<Ratings rating={rating} totalRatings={totalRatings} />
-				<Link href={`/products/${slugName}`} className="text-sm my-2">
+				<Link href={`/products/${slugname}`} className="text-sm my-2">
 					{name}
 				</Link>
 				<p className="text-brown font-medium">GH₵{price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>

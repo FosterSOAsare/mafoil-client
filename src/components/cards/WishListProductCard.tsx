@@ -17,7 +17,7 @@ import { AiOutlineEye } from "react-icons/ai";
 import { BsCartPlus } from "react-icons/bs";
 
 const WishListProductCard = ({ product, setPreviewProduct, sx = "" }: { product: productType; setPreviewProduct: React.Dispatch<React.SetStateAction<productType | null>>; sx?: string }) => {
-	const { name, price, rating, totalRatings, images, slugName, id } = product;
+	const { name, price, rating, totalRatings, images, slugname, id } = product;
 	const [showContent, setShowContent] = useState(false);
 	const dispatch = useDispatch();
 
@@ -58,7 +58,7 @@ const WishListProductCard = ({ product, setPreviewProduct, sx = "" }: { product:
 							{addingToCart && <Loading1 />}
 						</button>
 						<Link
-							href={`/products/${slugName}`}
+							href={`/products/${slugname}`}
 							className="border-border border-[1px] hover:border-brown flex items-center justify-center hover:bg-brown  text-black relative w-10 h-10 group">
 							<FiExternalLink className="opacity-50 group-hover:opacity-100 group-hover:text-white text-xl" />
 						</Link>
@@ -72,7 +72,7 @@ const WishListProductCard = ({ product, setPreviewProduct, sx = "" }: { product:
 			</div>
 			<div className="h-[150px] flex items-start justify-center flex-col">
 				<Ratings rating={rating} totalRatings={totalRatings} />
-				<Link href={`/products/${slugName}`} className="text-sm my-2">
+				<Link href={`/products/${slugname}`} className="text-sm my-2">
 					{name}
 				</Link>
 				<p className="text-brown font-medium">GH₵{price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
