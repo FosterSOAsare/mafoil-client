@@ -40,7 +40,7 @@ const login = () => {
 
 		// Redirect;
 		setTimeout(() => {
-			push("/");
+			window.location.href = "/";
 		}, 1500);
 	}, [data]);
 

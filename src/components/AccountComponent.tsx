@@ -10,7 +10,7 @@ const AccountComponent = () => {
 
 	return (
 		<aside className="absolute top-[105%] right-[00%] bg-white shadow-md w-[170px] h-auto py-2">
-			{user?.id && (
+			{user?._id && (
 				<>
 					<p className="text-[12px] border-b-[1px] pb-2 px-4">
 						Hello{" "}
@@ -33,7 +33,7 @@ const AccountComponent = () => {
 					</button>
 				</>
 			)}
-			{!user?.id && (
+			{!user?._id && (
 				<>
 					<p className="text-sm border-b-[1px] pb-2 px-4">Welcome to Mafo.il</p>
 

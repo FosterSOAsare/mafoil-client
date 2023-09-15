@@ -6,12 +6,14 @@ import authApi from "./apis/authApi";
 import userApi from "./apis/userApi";
 import productsApi from "./apis/productsApi";
 import filesApi from './apis/filesApi'
+import cartApi from "./apis/cartApi";
 
 const middlewares: Array<Middleware> = [
   authApi.middleware,
   userApi.middleware,
   productsApi.middleware,
-  filesApi.middleware
+  filesApi.middleware,
+  cartApi.middleware
 ]
 
 const makeStore = () => (
@@ -23,7 +25,8 @@ const makeStore = () => (
       [authApi.reducerPath]: authApi.reducer,
       [userApi.reducerPath]: userApi.reducer,
       [productsApi.reducerPath]: productsApi.reducer,
-      [filesApi.reducerPath]: filesApi.reducer
+      [filesApi.reducerPath]: filesApi.reducer,
+      [cartApi.reducerPath]: cartApi.reducer
     },
 
     middleware: (getDefaultMiddleware: any) => (

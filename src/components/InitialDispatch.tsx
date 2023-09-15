@@ -4,9 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useFetchLoggedInUserRequestQuery } from "@/apis/userApi";
 import { setData, setError, setIsLoading } from "@/slices/user.slice";
 import { insertCartData, useCartSelector } from "@/slices/cart.slice";
+import { useLazyFetchCartRequestQuery, useUploadCartRequestMutation } from "@/apis/cartApi";
 import { insertWishLists, useWishListSelector } from "@/slices/wishlist.slice";
 import useDebounce from "@/hooks/useDebounce";
 import makeStore from "@/store";
+// import { useUploadAFileRequestMutation } from "@/apis/filesApi";
 
 import { BsArrowUp } from "react-icons/bs";
 import { useRouter } from "next/router";
@@ -15,12 +17,15 @@ const store = makeStore();
 
 const InitialDispatch = ({ children }: { children: ReactNode }) => {
 	const { isLoading, error, data }: any = useFetchLoggedInUserRequestQuery();
+	const [fetchCart, { error: cartError, data: cartData }]: any = useLazyFetchCartRequestQuery();
+	const [uploadCart, { error: uploadError, data: uploadData }]: any = useUploadCartRequestMutation();
 	const cart = useSelector(useCartSelector);
 	const wishList = useSelector(useWishListSelector);
 	const [showScroll, setShowScroll] = useState(false);
 	const dispatch = useDispatch();
 	const debounceCart = useDebounce(cart, 3000);
 	const { query, replace, pathname } = useRouter();
+
 	useEffect(() => {
 		if (isLoading) {
 			setIsLoading(isLoading);
@@ -50,25 +55,23 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 		dispatch(setError(err));
 	}, [error]);
 
+	// Fetch cart from db. This is only done if user is loggedin
 	useEffect(() => {
-		// Fetch cart from localStorage
-		if (!isLoading) return;
-		if (!data) {
-			let cart: string = localStorage.getItem("cart") || "[]",
-				wishlist = localStorage.getItem("wishlist") || "[]";
-			cart = JSON.parse(cart);
-			wishlist = JSON.parse(wishlist);
-			dispatch(insertCartData(cart));
-			dispatch(insertWishLists(wishlist));
-		}
-	}, [data, isLoading]);
+		if (!data?._id) return;
+		fetchCart();
+	}, [data]);
 
-	// Store cart  in localStorage
+	// Store cartdata in redux if user is logged in
 	useEffect(() => {
-		if (!data && !isLoading) {
-			localStorage.setItem("cart", JSON.stringify(cart));
-		}
-	}, [data, debounceCart, isLoading]);
+		if (!cartData) return;
+		dispatch(insertCartData(cartData));
+	}, [cartData]);
+
+	// Store cart  in db
+	useEffect(() => {
+		if (!data?._id || !debounceCart || debounceCart?.length === 0) return;
+		uploadCart(cart);
+	}, [data, debounceCart]);
 
 	// Store wishlist  in localStorage
 	useEffect(() => {

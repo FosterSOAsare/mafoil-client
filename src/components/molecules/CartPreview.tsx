@@ -20,7 +20,7 @@ const CartPreview = ({ setShowCart }: { setShowCart: React.Dispatch<React.SetSta
 	const cartItems = useMemo(() => {
 		// let data = products.filter((product: productType) => cart.find((item: cartItemType) => item.id === product.id));
 		let cartIds = cart.map((item: cartItemType) => item.id);
-		return products.filter((product: productType) => cartIds.includes(product.id));
+		return products.filter((product: productType) => cartIds.includes(product._id));
 	}, [cart]);
 	return (
 		<aside className="w-1/4 bg-white shadow-md  fixed right-0 flex items-center justify-start pb-6 flex-col top-[12.7vh] z-[2] h-[88vh] overflow-y-auto ">

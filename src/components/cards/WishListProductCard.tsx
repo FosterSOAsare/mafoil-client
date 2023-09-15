@@ -17,7 +17,7 @@ import { AiOutlineEye } from "react-icons/ai";
 import { BsCartPlus } from "react-icons/bs";
 
 const WishListProductCard = ({ product, setPreviewProduct, sx = "" }: { product: productType; setPreviewProduct: React.Dispatch<React.SetStateAction<productType | null>>; sx?: string }) => {
-	const { name, price, rating, totalRatings, images, slugname, id } = product;
+	const { name, price, rating, totalRatings, images, slugname, _id } = product;
 	const [showContent, setShowContent] = useState(false);
 	const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ const WishListProductCard = ({ product, setPreviewProduct, sx = "" }: { product:
 		setAddingToCart(true);
 
 		setTimeout(() => {
-			dispatch(increaseItemCount({ id }));
+			dispatch(increaseItemCount({ _id }));
 			setAddingToCart(false);
 			toast.success("Item successfully added to cart", { autoClose: 1500 });
 		}, 2000);
@@ -42,7 +42,7 @@ const WishListProductCard = ({ product, setPreviewProduct, sx = "" }: { product:
 					</div>
 					<aside className="absolute top-4 right-4  w-auto h-auto">
 						<button
-							onClick={() => dispatch(toggleItemInWishList({ id }))}
+							onClick={() => dispatch(toggleItemInWishList({ _id }))}
 							className={`w-8 h-8 hover:bounce rounded-full transition-all duration-300 hover:bg-brown bg-white  text-black  hover:text-white mb-2 flex items-center justify-center`}>
 							<RiDeleteBin6Line className="text-md" />
 						</button>

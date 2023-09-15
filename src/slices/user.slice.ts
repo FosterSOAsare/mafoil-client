@@ -7,7 +7,7 @@ type userSliceType = {
     fullname: string,
     balance: number,
     subscribed: boolean,
-    id: string,
+    _id: string,
     activated: boolean,
   }, error: null | string
 }
@@ -18,7 +18,7 @@ const initialState: userSliceType = {
     fullname: '',
     balance: 0.00,
     subscribed: false,
-    id: '',
+    _id: '',
     activated: false
   },
   isLoading: true,

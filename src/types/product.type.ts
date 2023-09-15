@@ -7,7 +7,7 @@ export type productType = {
   totalRatings: number;
   store: string;
   short_desc?: string;
-  id: string;
+  _id: string;
   images: { url: string, public_id: string }[];
   slugname: string;
   category: 'cloth' | 'bag' | 'accessories' | 'shoe';

@@ -15,13 +15,13 @@ const ProtectedRoute = ({ children, loginRequired = false }: ProtectedRouteProps
 	const { isLoading, error, user } = useSelector(useUserSlice);
 
 	useEffect(() => {
-		if (!isLoading && !loginRequired && !error && user?.id) {
+		if (!isLoading && !loginRequired && !error && user?._id) {
 			router.replace("/app");
 		}
-		if (!isLoading && loginRequired && (!user?.id || error)) {
+		if (!isLoading && loginRequired && (!user?._id || error)) {
 			router.replace("/auth/login");
 		}
-	}, [router, isLoading, error, user?.id]);
+	}, [router, isLoading, error, user?._id]);
 
 	return (
 		<>
@@ -30,9 +30,9 @@ const ProtectedRoute = ({ children, loginRequired = false }: ProtectedRouteProps
 					<Loading />
 				</div>
 			)}
-			{!isLoading && loginRequired && !error && user?.id && <>{children}</>}
+			{!isLoading && loginRequired && !error && user?._id && <>{children}</>}
 
-			{!isLoading && !loginRequired && !user?.id && <>{children}</>}
+			{!isLoading && !loginRequired && !user?._id && <>{children}</>}
 		</>
 	);
 };
