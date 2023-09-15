@@ -18,12 +18,13 @@ type cartPageItemType = {
 	price: number;
 	rating: number;
 	totalRatings: number;
-	author: string;
-	description?: string;
+	store: string;
+	short_desc?: string;
+	long_desc?: string;
 	id: string;
-	images: StaticImageData[];
+	images: { url: string; public_id: string }[];
 	slugName: string;
-	type: "cloth" | "bag" | "accessories" | "shoe";
+	category: "cloth" | "bag" | "accessories" | "shoe";
 	count: number;
 };
 
@@ -70,7 +71,7 @@ const Cart = () => {
 								<div key={index} className="w-full h-auto py-8 flex items-center justify-between border-b-[1px]">
 									<div className="w-1/3 h-full flex items-center gap-4">
 										<div className="w-28 h-20 relative">
-											<Image src={product?.images[0]} alt="product Image" fill />
+											<Image src={product?.images[0]?.url} alt="product Image" fill />
 										</div>
 										<div>
 											<h3 className="text-sm text-bold text-black mb-2">{product?.name}</h3>

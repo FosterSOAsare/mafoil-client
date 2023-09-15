@@ -17,7 +17,7 @@ const PreviewCartItemCard = ({ product, index }: { product: productType; index: 
 	return (
 		<div className={`w-full p-3 h-auto ${index !== cart?.length - 1 && "border-b-[1px]"} flex gap-2 mb-4 items-center`}>
 			<div className="w-28 h-20 relative">
-				<Image src={product?.images[0]} alt="product Image" fill />
+				<Image src={product?.images[0]?.url} alt="product Image" fill />
 			</div>
 			<div className="w-full">
 				<h3 className="text-sm text-bold text-black mb-2">{product?.name}</h3>

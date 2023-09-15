@@ -15,7 +15,7 @@ const productsApi = createApi({
       })
     }),
     getAProductRequest: builder.query({
-      query: ({ slugname }) => ({
+      query: (slugname) => ({
         url: `/${slugname}`,
         method: 'GET',
       })
@@ -45,7 +45,7 @@ const productsApi = createApi({
 
 export const {
   useGetProductsRequestQuery,
-  useGetAProductRequestQuery,
+  useLazyGetAProductRequestQuery,
   useUpdateAProductRequestMutation,
   useDeleteAProductRequestMutation,
   usePostAProductRequestMutation

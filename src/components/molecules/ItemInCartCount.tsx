@@ -9,7 +9,7 @@ const ItemInCartCount = ({ product, increaseCount, decreaseCount, itemCount }: {
 		<div className="flex w-full py-6 items-center gap-2">
 			<div className="w-full p-3 h-auto border-black border-[1px] flex gap-2 items-center">
 				<div className="w-16 h-16 relative">
-					<Image src={product?.images[0]} alt="product Image" fill />
+					<Image src={product?.images[0]?.url} alt="product Image" fill />
 				</div>
 				<div>
 					<h3>{product?.name}</h3>

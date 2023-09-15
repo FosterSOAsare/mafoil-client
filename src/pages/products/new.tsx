@@ -30,7 +30,7 @@ const NewProduct = () => {
 
 	function storeNewProduct(data: any) {
 		let { name, price, category, store, long_desc, short_desc } = data;
-		if (images?.length < 4) {
+		if (images?.length === 0) {
 			toast.error("Please upload product images");
 			return;
 		}
@@ -45,6 +45,7 @@ const NewProduct = () => {
 	useCreateErrorFromApiRequest(fileDeleteError);
 
 	function storeImage(e: any) {
+		if (e.target.files.length === 0) return;
 		uploadAFile({ file: e.target.files[0] });
 	}
 

@@ -8,7 +8,7 @@ import { productType } from "@/types/product.type";
 import { AiOutlineClose } from "react-icons/ai";
 
 const ProductQuickView = ({ setPreviewProduct, previewProduct }: { setPreviewProduct: React.Dispatch<React.SetStateAction<productType | null>>; previewProduct: productType }) => {
-	const { name, author, images, price, rating, totalRatings, description, slugName } = previewProduct;
+	const { name, store, images, price, rating, totalRatings, short_desc, slugName } = previewProduct;
 
 	const [show, setShow] = useState(false);
 
@@ -27,7 +27,7 @@ const ProductQuickView = ({ setPreviewProduct, previewProduct }: { setPreviewPro
 	return (
 		<aside className={`${show ? "w-[70%]" : "w-[35%]"} flex transition-all duration-300 items-start shadow-md z-[3] justify-between h-[70vh] bg-white fixed top-0 bottom-0 m-auto left-0 right-0`}>
 			<article className={`${!show ? "w-full max-w-[500px]" : "w-1/2 min-w-[450px]"} h-full relative`}>
-				<Image src={images[0]} alt="Product Image" fill />
+				<Image src={images[0]?.url} alt="Product Image" fill />
 			</article>
 			{show && (
 				<article className="w-1/2 h-full bg-white p-4">
@@ -39,12 +39,12 @@ const ProductQuickView = ({ setPreviewProduct, previewProduct }: { setPreviewPro
 						<div className="w-full h-auto pb-6 border-b-[1px]  mt-4">
 							<h3 className="uppercase mb-2 text-xl font-medium">{name}</h3>
 							<p className="mb-2">
-								By <span className="underline hover:text-brown hover:cursor-pointer text-sm"> {author}</span>
+								By <span className="underline hover:text-brown hover:cursor-pointer text-sm"> {store}</span>
 							</p>
 
 							<h4 className="text-brown text-xl font-medium">GH₵{price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h4>
 						</div>
-						<p className="mt-6">{description}</p>
+						<p className="mt-6">{short_desc}</p>
 					</div>
 
 					{/* <div className="bg-[#F7EBEC] w-full h-12 mt-10 flex items-center gap-4">

@@ -21,7 +21,7 @@ const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: product
 			<div className={`w-full h-[400px] ${sx} overflow-hidden`}>
 				<div className="w-full h-full relative overflow-hidden hover:cursor-pointer" onMouseEnter={() => setShowContent(true)} onMouseLeave={() => setShowContent(false)}>
 					<div className="w-full h-full bg-[#F5F2EC] relative">
-						<Image src={images[0]} fill alt="product Image" />
+						<Image src={images[0]?.url} fill alt="product Image" />
 					</div>
 					<aside className="absolute top-4 right-4  w-auto h-auto">
 						<button

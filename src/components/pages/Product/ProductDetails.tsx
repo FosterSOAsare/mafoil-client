@@ -63,7 +63,7 @@ const ProductDetails = ({ product }: { product: productType }) => {
 							{[1, 2, 3, 4].map((_i, index: number) => (
 								<SwiperSlide key={index} className=" w-full bg-[#f5f2ec] flex items-center justify-center h-full">
 									<div className="w-[500px] h-[500px] relative ">
-										<Image fill src={product?.images[0]} alt="Product Image" sizes="(max-width: 767px) 100vw, 50vw" />
+										<Image fill src={product?.images[0]?.url} alt="Product Image" sizes="(max-width: 767px) 100vw, 50vw" />
 									</div>
 								</SwiperSlide>
 							))}
@@ -81,25 +81,25 @@ const ProductDetails = ({ product }: { product: productType }) => {
 					<div className="w-4/5 mx-auto h-[30vh] flex items-center gap-4 justify-between bg-white">
 						{[1, 2, 3, 4].map((_i, index) => (
 							<div key={index} className={`w-full bg-[red]  h-[20vh] relative ${active === index ? "opacity-100" : "opacity-40"} transition-all duration-200`}>
-								<Image fill src={product?.images[0]} alt="Product Image" />
+								<Image fill src={product?.images[0]?.url} alt="Product Image" />
 							</div>
 						))}
 					</div>
 				</article>
 				<article className="w-2/5 h-[130vh] pl-6 flex items-center justify-start flex-col">
 					<div className="pb-8 border-b-[1px] flex items-center gap-2 relative justify-start flex-col w-full">
-						<Link href={`/products?type=${product?.type}`} className="uppercase hover:text-brown opacity-60">
-							{filters?.find((filt) => filt.option === product?.type)?.name}
+						<Link href={`/products?type=${product?.category}`} className="uppercase hover:text-brown opacity-60">
+							{filters?.find((filt) => filt.option === product?.category)?.name}
 						</Link>
 
 						<h1 className="text-2xl font-medium">{product?.name}</h1>
 						<Ratings rating={product?.rating} totalRatings={product?.totalRatings} />
 
 						<h3 className="text-xl text-brown font-medium">GH₵{product?.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
-						<p className="text-center opacity-80">{product?.description}</p>
+						<p className="text-center opacity-80">{product?.short_desc}</p>
 
 						<button
-							className={`absolute top-0 right-5 h-10 w-10 ${
+							className={`absolute -top-4 right-5 h-10 w-10 ${
 								partOfWishList ? "text-white bg-brown border-brown" : "hover:text-white hover:bg-brown hover:border-brown text-brown"
 							}  flex items-center justify-center border-[1px] rounded-full`}
 							onClick={() => dispatch(toggleItemInWishList({ id: product?.id }))}>

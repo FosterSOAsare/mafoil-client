@@ -7,7 +7,7 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 import filters from "@/data/productfilters";
 import { productType } from "@/types/product.type";
-import localProducts from "@/data/products";
+import { useLazyGetAProductRequestQuery } from "@/apis/productsApi";
 
 import Header from "@/components/molecules/Header";
 import ProductCard from "@/components/cards/ProductCard";
@@ -25,18 +25,25 @@ const Product = () => {
 	const [loading, setLoading] = useState(true);
 	const { query } = useRouter();
 	const [previewProduct, setPreviewProduct] = useState<null | productType>(null);
+	const [getAProduct, { data, error, isLoading }] = useLazyGetAProductRequestQuery();
+	const [recommendations, setRecommendations] = useState<productType[]>([]);
 
 	useEffect(() => {
 		if (!query?.slugName) return;
 		setLoading(true);
-		let product = localProducts.find((product) => product.slugName === query?.slugName);
-		if (!product) {
-			// Render 404
-			return;
-		}
-		setProduct(product || null);
-		setLoading(false);
+		getAProduct(query?.slugName);
 	}, [query]);
+
+	useEffect(() => {
+		if (!data) return;
+		setProduct(data?.product || null);
+		setRecommendations(data?.recommendations);
+		setLoading(false);
+	}, [data]);
+
+	useEffect(() => {
+		// 404 page
+	}, [error]);
 
 	return (
 		<>
@@ -55,7 +62,7 @@ const Product = () => {
 								{[
 									{ name: "Home", link: "/" },
 									{ name: "Products", link: "/products" },
-									{ name: filters?.find((filt) => filt.option === product?.type)?.name, link: `/products?type=${product?.type}` },
+									{ name: filters?.find((filt) => filt.option === product?.category)?.name, link: `/products?type=${product?.category}` },
 								].map((crumb, index, arr) => (
 									<Fragment key={index}>
 										<Link href={crumb?.link} className="hover:text-brown capitalize">
@@ -73,12 +80,9 @@ const Product = () => {
 								<h3 className="text-center mb-8 text-3xl font-medium">YOU MAY ALSO LIKE</h3>
 								<article className="w-full flex flex-col items-center justify-center pb-12">
 									<div className="grid grid-cols-4 gap-6 w-full h-auto">
-										{localProducts
-											?.filter((p: productType, index: number) => product?.type === p?.type)
-											?.filter((p, index) => index < 4)
-											.map((product, index) => {
-												return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} sx="!h-[300px]" />;
-											})}
+										{recommendations.map((product, index) => {
+											return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} sx="!h-[300px]" />;
+										})}
 									</div>
 								</article>
 							</section>

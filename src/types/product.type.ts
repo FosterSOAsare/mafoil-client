@@ -5,11 +5,11 @@ export type productType = {
   price: number;
   rating: number;
   totalRatings: number;
-  author: string;
-  description?: string;
+  store: string;
+  short_desc?: string;
   id: string;
-  images: StaticImageData[];
+  images: { url: string, public_id: string }[];
   slugName: string;
-  type: 'cloth' | 'bag' | 'accessories' | 'shoe';
+  category: 'cloth' | 'bag' | 'accessories' | 'shoe';
   purchased?: boolean
 }
