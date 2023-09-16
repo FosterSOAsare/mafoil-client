@@ -13,16 +13,15 @@ import Header from "@/components/molecules/Header";
 import ProductCard from "@/components/cards/ProductCard";
 import Footer from "@/components/molecules/Footer";
 import ProductQuickView from "@/components/pages/Homepage/ProductQuickView";
-
 import RecentViews from "@/components/molecules/RecentViews";
-
 import ProductDetails from "@/components/pages/Product/ProductDetails";
+import NotFound from "@/components/NotFound";
+import Loading from "@/components/atom/Loading";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 const Product = () => {
 	const [product, setProduct] = useState<productType | null>(null);
-	const [loading, setLoading] = useState(true);
 	const { query } = useRouter();
 	const [previewProduct, setPreviewProduct] = useState<null | productType>(null);
 	const [getAProduct, { data, error, isLoading }] = useLazyGetAProductRequestQuery();
@@ -30,7 +29,6 @@ const Product = () => {
 
 	useEffect(() => {
 		if (!query?.slugName) return;
-		setLoading(true);
 		getAProduct(query?.slugName);
 	}, [query]);
 
@@ -38,12 +36,7 @@ const Product = () => {
 		if (!data) return;
 		setProduct(data?.product || null);
 		setRecommendations(data?.recommendations);
-		setLoading(false);
 	}, [data]);
-
-	useEffect(() => {
-		// 404 page
-	}, [error]);
 
 	return (
 		<>
@@ -54,8 +47,8 @@ const Product = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<Header />
-			<main className="w-full min-h-screen bg-white relative">
-				{!loading && product && (
+			<main className="w-full min-h-screen flex items-center justify-center bg-white relative">
+				{!isLoading && product && (
 					<>
 						<section className="w-full h-auto py-5 bg-white " id="hero">
 							<nav className="flex items-center justify-start gap-2 px-10">
@@ -92,6 +85,10 @@ const Product = () => {
 						</section>
 					</>
 				)}
+
+				{!isLoading && error && <NotFound />}
+
+				{isLoading && <Loading />}
 			</main>
 			<Footer />
 		</>
