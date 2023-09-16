@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { useFetchLoggedInUserRequestQuery } from "@/apis/userApi";
 import { setData, setError, setIsLoading } from "@/slices/user.slice";
-import { insertCartData, useCartSelector } from "@/slices/cart.slice";
+import { cartItemType, insertCartData, useCartSelector } from "@/slices/cart.slice";
 import { useLazyFetchCartRequestQuery, useUploadCartRequestMutation } from "@/apis/cartApi";
 import { insertWishLists, useWishListSelector } from "@/slices/wishlist.slice";
 import useDebounce from "@/hooks/useDebounce";
@@ -13,6 +13,7 @@ import makeStore from "@/store";
 import { BsArrowUp } from "react-icons/bs";
 import { useRouter } from "next/router";
 import { useLazyFetchWishListRequestQuery, useUploadWishListRequestMutation } from "@/apis/wishListApi";
+import { productType } from "@/types/product.type";
 
 const store = makeStore();
 
@@ -75,15 +76,15 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 
 	// Store cart  in db
 	useEffect(() => {
-		if (!data?._id || !debounceCart || cartLoading) return;
-		uploadCart(cart.map((item: any) => ({ id: item._id, count: item.count })));
-	}, [data, debounceCart, cartLoading]);
+		if (!data?._id || !debounceCart || !cartData) return;
+		uploadCart(debounceCart.map((item: cartItemType) => ({ id: item._id, count: item.count })));
+	}, [data, debounceCart]);
 
 	// Store wishlist  in db
 	useEffect(() => {
-		if (!data?._id || !debounceWishList || wishListLoading) return;
-		uploadWishList(debounceWishList);
-	}, [data, debounceWishList, wishListLoading]);
+		if (!data?._id || !debounceWishList || !wishListData) return;
+		uploadWishList(debounceWishList.map((item: productType) => item._id));
+	}, [data, debounceWishList]);
 
 	// Chech if user has a referrer query
 	useEffect(() => {
