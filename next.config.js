@@ -8,6 +8,9 @@ const nextConfig = {
 			},
 		];
 	},
+	images: {
+		domains: ["res.cloudinary.com", "procvcreator.s3.eu-north-1.amazonaws.com"],
+	},
 };
 
 module.exports = nextConfig;

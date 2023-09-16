@@ -3,7 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
-import { useAuthSlice } from "@/slices/user.slice";
+import { useUserSlice } from "@/slices/user.slice";
 import { registerSchema } from "@/libs/hookform";
 import { useRegisterUserRequestMutation } from "@/apis/authApi";
 import useSelectedValuesFromHookForm from "@/hooks/useSelectedValuesFromHookForm";
@@ -16,7 +16,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 
 const register = () => {
 	const { register, handleSubmit } = useSelectedValuesFromHookForm(registerSchema);
-	const user = useSelector(useAuthSlice);
+	const user = useSelector(useUserSlice);
 	const [registerUserRequest, { error, data, isLoading }] = useRegisterUserRequestMutation();
 	const { push } = useRouter();
 
@@ -28,7 +28,9 @@ const register = () => {
 		}
 
 		// Send data to server
-		registerUserRequest({ password, email, fullname });
+		let referrer = localStorage.getItem("referrer") as string;
+
+		registerUserRequest({ password, email, fullname, referrer: referrer ? referrer : null });
 	}
 
 	// Create toastify to notify errors
@@ -36,6 +38,7 @@ const register = () => {
 
 	useEffect(() => {
 		if (!data) return;
+		localStorage.removeItem("referrer");
 		push(`/auth/verify?mode=accountverification&email=${data.email}`);
 	}, [data]);
 

@@ -6,14 +6,19 @@ module.exports = {
 			colors: {
 				blue: "#14009F",
 				sec: "#000000",
+				brown: "#7f4227",
+				border: "#e5e7eb",
 			},
 			fontFamily: {
 				playfair: ["'Playfair Display', serif"],
+				jost: ["'Jost', serif"],
 			},
 			maxWidth: {
 				"6xl": "1024px",
+				"7xl": "1224px",
 			},
 		},
 	},
+
 	plugins: [],
 };

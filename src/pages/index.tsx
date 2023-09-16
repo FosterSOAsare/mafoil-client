@@ -1,13 +1,33 @@
-import { useEffect } from "react";
 import Head from "next/head";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
 
-import { useFetchLoggedInUserRequestQuery } from "@/apis/userApi";
-import { setData } from "@/slices/user.slice";
+import filters from "@/data/productfilters";
+import { productType } from "@/types/product.type";
+import { useLazyGetProductsRequestQuery } from "@/apis/productsApi";
 
-import ProtectedRoute from "@/components/ProtectedRoute";
+import Header from "@/components/molecules/Header";
+import ProductCard from "@/components/cards/ProductCard";
+import Testimonials from "@/components/pages/Homepage/Testimonials";
+import Footer from "@/components/molecules/Footer";
+import ProductQuickView from "@/components/pages/Homepage/ProductQuickView";
 
 export default function Home() {
+	const [selectedFilter, setSelectedFilter] = useState("all");
+	const [products, setProducts] = useState<{ data: productType[]; nextPage: boolean }>({ data: [], nextPage: false });
+	const [page, setPage] = useState(1);
+	const [getProductsRequest, { data, isLoading, error }] = useLazyGetProductsRequestQuery();
+
+	const [previewProduct, setPreviewProduct] = useState<null | productType>(null);
+
+	useEffect(() => {
+		if (!selectedFilter) return;
+		getProductsRequest({ page, category: selectedFilter });
+	}, [page, selectedFilter]);
+
+	useEffect(() => {
+		if (!data) return;
+		setProducts((prev) => (page !== 1 ? { data: [...prev?.data, ...data?.data], nextPage: data.nextPage } : data));
+	}, [data]);
 	return (
 		<>
 			<Head>
@@ -16,9 +36,49 @@ export default function Home() {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<ProtectedRoute>
-				<main>Dead</main>
-			</ProtectedRoute>
+			<Header />
+			<main className="w-full min-h-screen bg-white relative">
+				<section className="w-full h-screen bg-[green]" id="hero"></section>
+
+				<section id="products" className="px-10 w-full h-auto mt-8">
+					<div id="breadcrumbs" className="w-full mb-8 h-auto flex items-center gap-4">
+						{filters.map((filter, index) => (
+							<React.Fragment key={index}>
+								<button
+									className={`font-medium text-md block  hover:text-brown ${selectedFilter === filter.option ? "text-brown" : ""}`}
+									onClick={() => {
+										setSelectedFilter(filter.option);
+										setPage(1);
+									}}>
+									{filter.name}
+								</button>
+								{index !== filters?.length - 1 && <p>/</p>}
+							</React.Fragment>
+						))}
+					</div>
+
+					<article id="products" className="flex flex-col items-center justify-center w-full border-b-[1px] pb-36">
+						<div className="grid grid-cols-3 gap-12 w-full h-auto">
+							{products?.data.map((product, index) => {
+								return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} />;
+							})}
+						</div>
+						{products?.nextPage && (
+							<button
+								className="bg-[white]  text-black relative mt-16 w-[200px] hover:border-brown border-black h-16 group border-[1px] overflow-hidden"
+								onClick={() => setPage((prev) => ++prev)}>
+								<span className="w-full h-full bg-brown absolute transition-all duration-200 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
+								<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase  font-medium text-sm">load more</p>
+							</button>
+						)}
+					</article>
+				</section>
+
+				{previewProduct && <ProductQuickView setPreviewProduct={setPreviewProduct} previewProduct={previewProduct} />}
+
+				<Testimonials />
+			</main>
+			<Footer />
 		</>
 	);
 }

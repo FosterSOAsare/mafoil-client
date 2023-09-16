@@ -1,5 +1,95 @@
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+	@apply font-jost;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+.product-hero {
+	background: url("/product-herobg.webp");
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.custom-loader1 {
+	@apply w-6 h-6 rounded-full border-[6px] border-[#0000] border-r-[#ffffff97] relative;
+	animation: s4 1s infinite linear;
+}
+.custom-loader {
+	@apply w-12 h-12 rounded-full border-[8px] border-[#0000] border-r-[#00000097] relative;
+	animation: s4 1s infinite linear;
+}
+.custom-loader:before,
+.custom-loader:after,
+.custom-loader1:before,
+.custom-loader1:after {
+	@apply absolute rounded-full;
+	content: "";
+	inset: -6px;
+	border: inherit;
+	animation: inherit;
+	animation-duration: 2s;
+}
+.custom-loader:before,
+.custom-loader:after {
+	inset: -8px;
+}
+.custom-loader:after,
+.custom-loader1:after {
+	animation-duration: 4s;
+}
+
+@keyframes s4 {
+	100% {
+		transform: rotate(1turn);
+	}
+}
+@keyframes s2 {
+	to {
+		transform: rotate(1turn);
+	}
+}
+@layer utilities {
+	.active-tab:after {
+		content: "";
+		@apply absolute w-0 h-[1px] bg-black -bottom-[1px] left-0;
+		animation: fullWidth 0.35s forwards linear;
+	}
+	.bounce {
+		animation: bounce 2s infinite linear;
+	}
+}
+
+.active-tab:after {
+	content: "";
+	@apply absolute w-0 h-[1px] -bottom-[1px] left-0 bg-brown;
+	animation: fullWidth 0.35s forwards linear;
+}
+
+@keyframes fullWidth {
+	to {
+		width: 100%;
+	}
+}
+@keyframes bounce {
+	0% {
+		scale: 100%;
+	}
+	50% {
+		scale: 110%;
+	}
+	100% {
+		scale: 100%;
+	}
+}
+
+.newProduct label {
+	@apply !font-medium;
+}

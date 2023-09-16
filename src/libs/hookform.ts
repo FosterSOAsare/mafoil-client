@@ -70,3 +70,12 @@ export const changePasswordSchema = z.object({
   newPassword: z.string().min(1, { message: "Please create a new password" }).min(8, { message: 'Password must be at least 8 characters in length' }),
   confirmPassword: z.string().min(1, { message: "Please confirm your new password" }).min(8, { message: 'Password must be at least 8 characters in length' }),
 })
+
+export const productSchema = z.object({
+  name: z.string().min(1, { message: "Please enter name of product" }).min(3, { message: 'First name should not be less than 3 characters' }),
+  price: z.string().min(1, { message: "Please enter price of product" }),
+  category: z.string().min(1, { message: "Please select the category of product" }),
+  store: z.string().min(1, { message: "Please select the store where product can be found" }),
+  short_desc: z.string().min(1, { message: "Please enter short description of product" }).min(25, { message: 'Short description should not be less than 25 characters' }),
+  long_desc: z.string()
+});
