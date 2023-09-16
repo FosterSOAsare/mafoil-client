@@ -12,10 +12,8 @@ import Header from "@/components/molecules/Header";
 import Footer from "@/components/molecules/Footer";
 import ProductQuickView from "@/components/pages/Homepage/ProductQuickView";
 import WishListProductCard from "@/components/cards/WishListProductCard";
-import { useUserSlice } from "@/slices/user.slice";
 
 const WishList = () => {
-	const { user } = useSelector(useUserSlice);
 	const wishlist = useSelector(useWishListSelector);
 	const [previewProduct, setPreviewProduct] = useState<null | productType>(null);
 
@@ -47,11 +45,15 @@ const WishList = () => {
 
 				<section id="products" className="px-10 py-4 h-auto mt-8 w-full flex items-start gap-6 justify-between">
 					<article className="w-full flex flex-col items-center justify-center  border-b-[1px] pb-36">
-						<div className="grid grid-cols-4 gap-4 w-full h-auto">
-							{wishlist?.map((wishlistItem: productType, index: number) => {
-								return <WishListProductCard key={index} wishlistItem={wishlistItem} setPreviewProduct={setPreviewProduct} />;
-							})}
-						</div>
+						{wishlist?.length > 0 && (
+							<div className="grid grid-cols-4 gap-4 w-full h-auto">
+								{wishlist?.map((wishlistItem: productType, index: number) => {
+									return <WishListProductCard key={index} wishlistItem={wishlistItem} setPreviewProduct={setPreviewProduct} />;
+								})}
+							</div>
+						)}
+
+						{wishlist?.length === 0 && <p className="text-center">Your wishlist is currently empty.</p>}
 					</article>
 				</section>
 
