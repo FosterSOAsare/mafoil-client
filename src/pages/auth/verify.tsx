@@ -56,6 +56,14 @@ const verifiy = () => {
 		}, 1500);
 	}, [verifyEmailData]);
 
+	function verifyCode() {
+		if (code.length < 6) {
+			toast.error("The provided code is too short");
+			return;
+		}
+		verifyUserEmailRequest({ code, mode, email });
+	}
+
 	//  Create toastify to notify errors
 	useCreateErrorFromApiRequest(error);
 	useCreateErrorFromApiRequest(resendEmailError);
@@ -97,8 +105,8 @@ const verifiy = () => {
 							text={mode === "resetpassword" ? "Verify Reset Code" : "Verify email "}
 							type="button"
 							sx="w-full md:w-1/2"
-							handleClick={() => verifyUserEmailRequest({ code, mode, email })}
-							disabled={isLoading || resendEmailRequestLoading || code.length < 6}
+							handleClick={verifyCode}
+							disabled={isLoading || resendEmailRequestLoading}
 						/>
 						<p className="mt-4 text-sm">
 							Didn't receive the email?{" "}

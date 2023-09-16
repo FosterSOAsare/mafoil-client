@@ -9,6 +9,7 @@ type userSliceType = {
     subscribed: boolean,
     _id: string,
     activated: boolean,
+    is_admin: boolean,
   }, error: null | string
 }
 
@@ -19,7 +20,8 @@ const initialState: userSliceType = {
     balance: 0.00,
     subscribed: false,
     _id: '',
-    activated: false
+    activated: false,
+    is_admin: false
   },
   isLoading: true,
   error: null
