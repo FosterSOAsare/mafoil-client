@@ -1,22 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit";
-export type wishLIstItemType = {
-  id: string | number
-}
 
-const initialState: wishLIstItemType[] = []
+import { productType } from "@/types/product.type";
+import { createSlice } from "@reduxjs/toolkit";
+
+
+const initialState: productType[] = []
 
 const wishListSlice = createSlice({
   name: 'wishlist',
   initialState,
   reducers: {
-    insertWishLists: (state, action) => {
+    insertWishLists: (_state, action) => {
       return action.payload
     },
     toggleItemInWishList: (state, action) => {
-      const { id } = action.payload;
-      let exists = state.find(e => e.id === id)
-      if (exists) return state.filter(e => e?.id !== id)
-      return [...state, { id }]
+      const { wishlistItem } = action.payload;
+      if (!wishlistItem?._id) return
+      let exists = state.find(e => e?._id === wishlistItem?._id)
+      if (exists) return state.filter(e => e?._id !== wishlistItem?._id)
+      return [...state, wishlistItem]
     },
   }
 })

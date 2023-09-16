@@ -18,15 +18,9 @@ const cartApi = createApi({
         body: { cart }
       })
     }),
-    populateCartData: builder.query({
-      query: (cart) => ({
-        method: 'GET',
-        url: '/populate',
-      })
-    })
   })
 })
 
-export const { useLazyFetchCartRequestQuery, useUploadCartRequestMutation, useLazyPopulateCartDataQuery } = cartApi
+export const { useLazyFetchCartRequestQuery, useUploadCartRequestMutation } = cartApi
 
 export default cartApi

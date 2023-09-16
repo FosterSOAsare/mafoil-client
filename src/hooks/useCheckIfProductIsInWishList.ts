@@ -1,13 +1,14 @@
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 
-import { useWishListSelector, wishLIstItemType } from "@/slices/wishlist.slice";
+import { useWishListSelector } from "@/slices/wishlist.slice";
+import { productType } from "@/types/product.type";
 
-const useCheckIfProductIsInWishList = (id: string) => {
+const useCheckIfProductIsInWishList = (_id: string) => {
 	const wishlist = useSelector(useWishListSelector);
 	const exists = useMemo(() => {
-		return wishlist.find((item: wishLIstItemType) => item?.id === id);
-	}, [id, wishlist]);
+		return wishlist.find((item: productType) => item?._id === _id);
+	}, [_id, wishlist]);
 
 	return Boolean(exists);
 };

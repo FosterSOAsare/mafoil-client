@@ -40,7 +40,6 @@ const ProductDetails = ({ product }: { product: productType }) => {
 	const addToCart = () => {
 		setCartLoading(true);
 		setCount(0);
-		console.log(product);
 		setTimeout(() => {
 			dispatch(increaseItemCount({ count, product: product }));
 			setCartLoading(false);
@@ -101,9 +100,9 @@ const ProductDetails = ({ product }: { product: productType }) => {
 
 						<button
 							className={`absolute -top-4 right-5 h-10 w-10 ${
-								partOfWishList ? "text-white bg-brown border-brown" : "hover:text-white hover:bg-brown hover:border-brown text-brown"
+								partOfWishList ? "text-white bg-brown hover:text-black border-brown" : "hover:text-white hover:bg-brown hover:border-brown text-brown"
 							}  flex items-center justify-center border-[1px] rounded-full`}
-							onClick={() => dispatch(toggleItemInWishList({ id: product?._id }))}>
+							onClick={() => dispatch(toggleItemInWishList({ wishlistItem: product }))}>
 							<AiOutlineHeart className="text-xl" />
 						</button>
 					</div>

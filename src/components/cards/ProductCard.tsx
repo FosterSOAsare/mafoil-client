@@ -12,9 +12,9 @@ import Ratings from "../molecules/Ratings";
 import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 
 const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: productType; setPreviewProduct: React.Dispatch<React.SetStateAction<productType | null>>; sx?: string }) => {
-	const { name, price, rating, totalRatings, images, slugname, id } = product;
+	const { name, price, rating, totalRatings, images, slugname, _id } = product;
 	const [showContent, setShowContent] = useState(false);
-	const partOfWishList = useCheckIfProductIsInWishList(product?.id as string);
+	const partOfWishList = useCheckIfProductIsInWishList(product?._id as string);
 	const dispatch = useDispatch();
 	return (
 		<article className="w-full h-auto bg-white ">
@@ -25,9 +25,9 @@ const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: product
 					</div>
 					<aside className="absolute top-4 right-4  w-auto h-auto">
 						<button
-							onClick={() => dispatch(toggleItemInWishList({ id }))}
+							onClick={() => dispatch(toggleItemInWishList({ wishlistItem: product }))}
 							className={`w-8 h-8 transition-all duration-300 ${showContent ? "scale-100" : "scale-0"} ${
-								partOfWishList ? "bg-brown hover:text-black hover:bg-white text-white" : "hover:bg-brown bg-white  text-black  hover:text-white"
+								partOfWishList ? "bg-brown hover:text-black  text-white" : "hover:bg-brown bg-white  text-black  hover:text-white"
 							} mb-2 flex items-center justify-center`}>
 							<AiOutlineHeart className="text-lg" />
 						</button>

@@ -7,13 +7,15 @@ import userApi from "./apis/userApi";
 import productsApi from "./apis/productsApi";
 import filesApi from './apis/filesApi'
 import cartApi from "./apis/cartApi";
+import wishlistApi from "./apis/wishListApi";
 
 const middlewares: Array<Middleware> = [
   authApi.middleware,
   userApi.middleware,
   productsApi.middleware,
   filesApi.middleware,
-  cartApi.middleware
+  cartApi.middleware,
+  wishlistApi.middleware
 ]
 
 const makeStore = () => (
@@ -26,7 +28,8 @@ const makeStore = () => (
       [userApi.reducerPath]: userApi.reducer,
       [productsApi.reducerPath]: productsApi.reducer,
       [filesApi.reducerPath]: filesApi.reducer,
-      [cartApi.reducerPath]: cartApi.reducer
+      [cartApi.reducerPath]: cartApi.reducer,
+      [wishlistApi.reducerPath]: wishlistApi.reducer
     },
 
     middleware: (getDefaultMiddleware: any) => (

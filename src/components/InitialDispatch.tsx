@@ -12,21 +12,25 @@ import makeStore from "@/store";
 
 import { BsArrowUp } from "react-icons/bs";
 import { useRouter } from "next/router";
+import { useLazyFetchWishListRequestQuery, useUploadWishListRequestMutation } from "@/apis/wishListApi";
 
 const store = makeStore();
 
 const InitialDispatch = ({ children }: { children: ReactNode }) => {
 	const { isLoading, error, data }: any = useFetchLoggedInUserRequestQuery();
 	const [fetchCart, { error: cartError, data: cartData }]: any = useLazyFetchCartRequestQuery();
-	const [uploadCart, { error: uploadError, data: uploadData }]: any = useUploadCartRequestMutation();
+	const [fetchWishList, { data: wishListData }] = useLazyFetchWishListRequestQuery();
+	const [uploadCart, {}]: any = useUploadCartRequestMutation();
+	const [uploadWishList, {}]: any = useUploadWishListRequestMutation();
 	const cart = useSelector(useCartSelector);
 	const wishList = useSelector(useWishListSelector);
 	const [showScroll, setShowScroll] = useState(false);
 	const dispatch = useDispatch();
 	const debounceCart = useDebounce(cart, 3000);
+	const debounceWishList = useDebounce(wishList, 3000);
 	const { query, replace, pathname } = useRouter();
 
-	console.log(cart);
+	console.log(wishList);
 
 	useEffect(() => {
 		if (isLoading) {
@@ -57,17 +61,19 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 		dispatch(setError(err));
 	}, [error]);
 
-	// Fetch cart from db. This is only done if user is loggedin
+	// Fetch cart  and wishlist from db. This is only done if user is loggedin
 	useEffect(() => {
 		if (!data?._id) return;
 		fetchCart();
+		fetchWishList();
 	}, [data]);
 
 	// Store cartdata in redux if user is logged in
 	useEffect(() => {
-		if (!cartData) return;
-		dispatch(insertCartData(cartData));
-	}, [cartData]);
+		if (!cartData && !wishListData) return;
+		dispatch(insertCartData(cartData ? cartData : []));
+		dispatch(insertWishLists(wishListData ? wishListData : []));
+	}, [cartData, wishListData]);
 
 	// Store cart  in db
 	useEffect(() => {
@@ -75,12 +81,11 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 		uploadCart(cart.map((item: any) => ({ id: item._id, count: item.count })));
 	}, [data, debounceCart]);
 
-	// Store wishlist  in localStorage
+	// Store wishlist  in db
 	useEffect(() => {
-		if (!data && !isLoading) {
-			localStorage.setItem("wishlist", JSON.stringify(wishList));
-		}
-	}, [data, isLoading, wishList]);
+		if (!data?._id || !debounceWishList) return;
+		uploadWishList(debounceWishList);
+	}, [data, debounceWishList]);
 
 	// Chech if user has a referrer query
 	useEffect(() => {

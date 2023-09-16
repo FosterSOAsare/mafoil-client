@@ -16,8 +16,8 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { AiOutlineEye } from "react-icons/ai";
 import { BsCartPlus } from "react-icons/bs";
 
-const WishListProductCard = ({ product, setPreviewProduct, sx = "" }: { product: productType; setPreviewProduct: React.Dispatch<React.SetStateAction<productType | null>>; sx?: string }) => {
-	const { name, price, rating, totalRatings, images, slugname, _id } = product;
+const WishListProductCard = ({ wishlistItem, setPreviewProduct, sx = "" }: { wishlistItem: productType; setPreviewProduct: React.Dispatch<React.SetStateAction<productType | null>>; sx?: string }) => {
+	const { name, price, rating, totalRatings, images, slugname, _id } = wishlistItem;
 	const [showContent, setShowContent] = useState(false);
 	const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ const WishListProductCard = ({ product, setPreviewProduct, sx = "" }: { product:
 		setAddingToCart(true);
 
 		setTimeout(() => {
-			dispatch(increaseItemCount({ _id }));
+			dispatch(increaseItemCount({ wishlistItem }));
 			setAddingToCart(false);
 			toast.success("Item successfully added to cart", { autoClose: 1500 });
 		}, 2000);
@@ -42,7 +42,7 @@ const WishListProductCard = ({ product, setPreviewProduct, sx = "" }: { product:
 					</div>
 					<aside className="absolute top-4 right-4  w-auto h-auto">
 						<button
-							onClick={() => dispatch(toggleItemInWishList({ _id }))}
+							onClick={() => dispatch(toggleItemInWishList({ wishlistItem }))}
 							className={`w-8 h-8 hover:bounce rounded-full transition-all duration-300 hover:bg-brown bg-white  text-black  hover:text-white mb-2 flex items-center justify-center`}>
 							<RiDeleteBin6Line className="text-md" />
 						</button>
@@ -64,7 +64,7 @@ const WishListProductCard = ({ product, setPreviewProduct, sx = "" }: { product:
 						</Link>
 						<button
 							className="border-border border-[1px] hover:border-brown flex items-center justify-center hover:bg-brown  text-black relative w-10 h-10 group"
-							onClick={() => setPreviewProduct(product)}>
+							onClick={() => setPreviewProduct(wishlistItem)}>
 							<AiOutlineEye className="opacity-50 group-hover:opacity-100 group-hover:text-white text-xl" />
 						</button>
 					</aside>

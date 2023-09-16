@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 
-import { useWishListSelector, wishLIstItemType } from "@/slices/wishlist.slice";
+import { useWishListSelector } from "@/slices/wishlist.slice";
 import { productType } from "@/types/product.type";
 import localProducts from "@/data/products";
 
@@ -12,16 +12,12 @@ import Header from "@/components/molecules/Header";
 import Footer from "@/components/molecules/Footer";
 import ProductQuickView from "@/components/pages/Homepage/ProductQuickView";
 import WishListProductCard from "@/components/cards/WishListProductCard";
+import { useUserSlice } from "@/slices/user.slice";
 
 const WishList = () => {
+	const { user } = useSelector(useUserSlice);
 	const wishlist = useSelector(useWishListSelector);
-	const [products, setProducts] = useState<productType[]>([]);
 	const [previewProduct, setPreviewProduct] = useState<null | productType>(null);
-
-	useEffect(() => {
-		const data = wishlist.map((p: wishLIstItemType) => localProducts.find((lp) => lp.id === p.id));
-		setProducts(data);
-	}, [wishlist]);
 
 	return (
 		<>
@@ -52,8 +48,8 @@ const WishList = () => {
 				<section id="products" className="px-10 py-4 h-auto mt-8 w-full flex items-start gap-6 justify-between">
 					<article className="w-full flex flex-col items-center justify-center  border-b-[1px] pb-36">
 						<div className="grid grid-cols-4 gap-4 w-full h-auto">
-							{products?.map((product, index) => {
-								return <WishListProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} />;
+							{wishlist?.map((wishlistItem: productType, index: number) => {
+								return <WishListProductCard key={index} wishlistItem={wishlistItem} setPreviewProduct={setPreviewProduct} />;
 							})}
 						</div>
 					</article>
