@@ -17,7 +17,7 @@ import { AiOutlineEye } from "react-icons/ai";
 import { BsCartPlus } from "react-icons/bs";
 
 const WishListProductCard = ({ wishlistItem, setPreviewProduct, sx = "" }: { wishlistItem: productType; setPreviewProduct: React.Dispatch<React.SetStateAction<productType | null>>; sx?: string }) => {
-	const { name, price, rating, totalRatings, images, slugname, _id } = wishlistItem;
+	const { name, price, rating, totalRatings, images, slugname } = wishlistItem;
 	const [showContent, setShowContent] = useState(false);
 	const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ const WishListProductCard = ({ wishlistItem, setPreviewProduct, sx = "" }: { wis
 		setAddingToCart(true);
 
 		setTimeout(() => {
-			dispatch(increaseItemCount({ wishlistItem }));
+			dispatch(increaseItemCount({ product: wishlistItem }));
 			setAddingToCart(false);
 			toast.success("Item successfully added to cart", { autoClose: 1500 });
 		}, 2000);

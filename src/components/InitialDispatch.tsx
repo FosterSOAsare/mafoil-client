@@ -18,8 +18,8 @@ const store = makeStore();
 
 const InitialDispatch = ({ children }: { children: ReactNode }) => {
 	const { isLoading, error, data }: any = useFetchLoggedInUserRequestQuery();
-	const [fetchCart, { error: cartError, data: cartData }]: any = useLazyFetchCartRequestQuery();
-	const [fetchWishList, { data: wishListData }] = useLazyFetchWishListRequestQuery();
+	const [fetchCart, { error: cartError, data: cartData, isLoading: cartLoading }]: any = useLazyFetchCartRequestQuery();
+	const [fetchWishList, { data: wishListData, isLoading: wishListLoading }] = useLazyFetchWishListRequestQuery();
 	const [uploadCart, {}]: any = useUploadCartRequestMutation();
 	const [uploadWishList, {}]: any = useUploadWishListRequestMutation();
 	const cart = useSelector(useCartSelector);
@@ -29,8 +29,6 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 	const debounceCart = useDebounce(cart, 3000);
 	const debounceWishList = useDebounce(wishList, 3000);
 	const { query, replace, pathname } = useRouter();
-
-	console.log(wishList);
 
 	useEffect(() => {
 		if (isLoading) {
@@ -77,15 +75,15 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 
 	// Store cart  in db
 	useEffect(() => {
-		if (!data?._id || !debounceCart) return;
+		if (!data?._id || !debounceCart || cartLoading) return;
 		uploadCart(cart.map((item: any) => ({ id: item._id, count: item.count })));
-	}, [data, debounceCart]);
+	}, [data, debounceCart, cartLoading]);
 
 	// Store wishlist  in db
 	useEffect(() => {
-		if (!data?._id || !debounceWishList) return;
+		if (!data?._id || !debounceWishList || wishListLoading) return;
 		uploadWishList(debounceWishList);
-	}, [data, debounceWishList]);
+	}, [data, debounceWishList, wishListLoading]);
 
 	// Chech if user has a referrer query
 	useEffect(() => {
