@@ -52,68 +52,79 @@ const Cart = () => {
 				</section>
 
 				<section id="products" className="px-10 py-4 h-auto mt-8 w-full gap-6 justify-between">
-					<article className="w-full flex flex-col items-center max-w-5xl mx-auto justify-center">
-						<div className="w-full font-medium h-auto pb-3 flex items-center justify-between border-b-[1px]">
-							<p className="w-1/3">PRODUCT</p>
-							<p className="w-1/5 text-center">QUANTITY</p>
+					{cart?.length > 0 && (
+						<article className="w-full flex flex-col items-center max-w-5xl mx-auto justify-center">
+							<div className="w-full font-medium h-auto pb-3 flex items-center justify-between border-b-[1px]">
+								<p className="w-1/3">PRODUCT</p>
+								<p className="w-1/5 text-center">QUANTITY</p>
 
-							<p className="w-1/5  text-right">TOTAL</p>
-						</div>
-						{cart?.map((product: cartItemType, index: number) => {
-							const { count, ...rest } = product;
-							return (
-								<div key={index} className="w-full h-auto py-8 flex items-center justify-between border-b-[1px]">
-									<div className="w-1/3 h-full flex items-center gap-4">
-										<div className="w-28 h-20 relative">
-											<Image src={product?.images[0]?.url} alt="product Image" fill />
-										</div>
-										<div>
-											<h3 className="text-sm text-bold text-black mb-2">{product?.name}</h3>
-											<p className="text-[12px]">GH₵{(product?.price).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-										</div>
-									</div>
-									<div className="w-1/5 flex flex-col items-center justify-center">
-										<div className="w-24 mx-auto h-8 border-[1px] px-2">
-											<CartItemNumberModerator itemCount={count} product={rest} />
-										</div>
-										<button className="text-[12px] underline hover:no-underline hover:text-[red] uppercase mt-2" onClick={() => dispatch(removeItem({ _id: product?._id }))}>
-											Remove
-										</button>
-									</div>
-
-									<p className="w-1/5 text-right text-sm font-medium">
-										GH₵{(product?.price * product?.count).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-									</p>
-								</div>
-							);
-						})}
-						<article className="w-[45%] mr-auto mt-8">
-							<h3 className="font-medium">Subtotal: GH₵{subtotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} </h3>
-							<p className="text-sm italic">Taxes and shipping calculated at checkout</p>
-							<p className="text-sm mt-4">
-								All charges are billed in USD. While the content of your cart is currently displayed in GHS, the checkout will use USD at the most current exchange rate.
-							</p>
-
-							<div className="w-full mt-4">
-								<div className="flex gap-2 items-center">
-									<input type="radio" id="terms" className="accent-brown rounded-full" checked={agreeToTerms} onClick={(e) => setAgreeToTerms((prev) => !prev)} onChange={() => {}} />
-									<label htmlFor="terms" className="text-sm hover:cursor-pointer">
-										I agree with
-										<Link href="/" className="hover:text-brown ml-[4px] hover:active-tab relative">
-											the terms and conditions
-										</Link>
-									</label>
-								</div>
-
-								<Link
-									href="/checkout"
-									className={`mt-4 w-[150px] flex items-center justify-center bg-black ${!agreeToTerms && "opacity-70"} text-white relative w-full group h-12 overflow-hidden`}>
-									<span className={`w-full h-full bg-brown absolute transition-all duration-300 top-0 ${agreeToTerms && "group-hover:left-0"} z-[1] -left-[100%]`}></span>
-									<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Checkout</p>
-								</Link>
+								<p className="w-1/5  text-right">TOTAL</p>
 							</div>
+							{cart?.map((product: cartItemType, index: number) => {
+								const { count, ...rest } = product;
+								return (
+									<div key={index} className="w-full h-auto py-8 flex items-center justify-between border-b-[1px]">
+										<div className="w-1/3 h-full flex items-center gap-4">
+											<div className="w-28 h-20 relative">
+												<Image src={product?.images[0]?.url} alt="product Image" fill />
+											</div>
+											<div>
+												<h3 className="text-sm text-bold text-black mb-2">{product?.name}</h3>
+												<p className="text-[12px]">GH₵{(product?.price).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+											</div>
+										</div>
+										<div className="w-1/5 flex flex-col items-center justify-center">
+											<div className="w-24 mx-auto h-8 border-[1px] px-2">
+												<CartItemNumberModerator itemCount={count} product={rest} />
+											</div>
+											<button className="text-[12px] underline hover:no-underline hover:text-[red] uppercase mt-2" onClick={() => dispatch(removeItem({ _id: product?._id }))}>
+												Remove
+											</button>
+										</div>
+
+										<p className="w-1/5 text-right text-sm font-medium">
+											GH₵{(product?.price * product?.count).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+										</p>
+									</div>
+								);
+							})}
+							<article className="w-[45%] mr-auto mt-8">
+								<h3 className="font-medium">Subtotal: GH₵{subtotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} </h3>
+								<p className="text-sm italic">Taxes and shipping calculated at checkout</p>
+								<p className="text-sm mt-4">
+									All charges are billed in USD. While the content of your cart is currently displayed in GHS, the checkout will use USD at the most current exchange rate.
+								</p>
+
+								<div className="w-full mt-4">
+									<div className="flex gap-2 items-center">
+										<input
+											type="radio"
+											id="terms"
+											className="accent-brown rounded-full"
+											checked={agreeToTerms}
+											onClick={(e) => setAgreeToTerms((prev) => !prev)}
+											onChange={() => {}}
+										/>
+										<label htmlFor="terms" className="text-sm hover:cursor-pointer">
+											I agree with
+											<Link href="/" className="hover:text-brown ml-[4px] hover:active-tab relative">
+												the terms and conditions
+											</Link>
+										</label>
+									</div>
+
+									<Link
+										href="/checkout"
+										className={`mt-4 w-[150px] flex items-center justify-center bg-black ${!agreeToTerms && "opacity-70"} text-white relative w-full group h-12 overflow-hidden`}>
+										<span className={`w-full h-full bg-brown absolute transition-all duration-300 top-0 ${agreeToTerms && "group-hover:left-0"} z-[1] -left-[100%]`}></span>
+										<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Checkout</p>
+									</Link>
+								</div>
+							</article>
 						</article>
-					</article>
+					)}
+
+					{cart?.length === 0 && <p className="text-center">Your cart is currently empty.</p>}
 				</section>
 			</main>
 			<Footer />
