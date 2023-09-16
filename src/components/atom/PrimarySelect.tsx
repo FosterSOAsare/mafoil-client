@@ -7,7 +7,7 @@ type primarySelectType = {
 	placeholder?: string;
 	register: UseFormRegister<FieldValues>;
 	sx?: string;
-	options: string[];
+	options: string[] | { option: string; name: string }[];
 };
 
 const PrimarySelect = ({ name, label, register, sx = "", options }: primarySelectType) => {
@@ -20,11 +20,15 @@ const PrimarySelect = ({ name, label, register, sx = "", options }: primarySelec
 			)}
 			<div className="w-full h-auto overflow-hidden flex items-center py-[2px] mb-4 px-2 pl-3 justify-between border-[1px] border-[#000000c2]">
 				<select id={name} className={`w-full py-[2px] h-12 resize-none focus:outline-none  text-black ${sx}`} {...register(name)}>
-					{options?.map((option, index) => (
-						<option key={index} className="!px-6">
-							{option}
-						</option>
-					))}
+					{options?.map((option, index) => {
+						let text = typeof option !== "string" ? option?.name : option;
+						let value = typeof option !== "string" ? option?.option : option;
+						return (
+							<option key={index} className="!px-6" value={value}>
+								{text}
+							</option>
+						);
+					})}
 				</select>
 			</div>
 		</div>

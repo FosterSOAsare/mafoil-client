@@ -73,7 +73,7 @@ const NewProduct = () => {
 				<PrimaryInput name="price" placeholder="100.00" register={register} label="Product Price" />
 
 				<div className="w-full flex justify-between gap-4 items-center">
-					<PrimarySelect name="category" label="Category" register={register} options={filters?.map((filter) => filter.name)} />
+					<PrimarySelect name="category" label="Category" register={register} options={filters} />
 					<PrimarySelect name="store" label="Store" register={register} options={stores} />
 				</div>
 				<PrimaryTextArea name="short_desc" placeholder="" label="Short Description (255 characters max) " register={register} />

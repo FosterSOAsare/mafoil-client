@@ -5,7 +5,7 @@ import Header from "../molecules/Header";
 import Footer from "../molecules/Footer";
 import ProtectedRoute from "../ProtectedRoute";
 
-const MainPageLayout = ({ children, loginRequired = false }: { children: ReactNode; loginRequired?: boolean }) => {
+const MainPageLayout = ({ children, loginRequired = true }: { children: ReactNode; loginRequired?: boolean }) => {
 	return (
 		<ProtectedRoute loginRequired={loginRequired}>
 			<Header />
