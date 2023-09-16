@@ -45,6 +45,12 @@ const productsApi = createApi({
         url: `/${productId}`,
         method: 'DELETE',
       })
+    }),
+    getCategoriesDataRequest: builder.query<any, void>({
+      query: () => ({
+        url: `/categories`,
+        method: 'GET',
+      })
     })
   })
 })
@@ -55,7 +61,8 @@ export const {
   useUpdateAProductRequestMutation,
   useDeleteAProductRequestMutation,
   usePostAProductRequestMutation,
-  useLazyGetEditPageProductRequestQuery
+  useLazyGetEditPageProductRequestQuery,
+  useGetCategoriesDataRequestQuery
 } = productsApi
 
 export default productsApi

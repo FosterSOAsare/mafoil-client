@@ -7,6 +7,7 @@ import filters from "@/data/productfilters";
 import { productType } from "@/types/product.type";
 import localProducts from "@/data/products";
 import { useLazyGetProductsRequestQuery } from "@/apis/productsApi";
+import { useGetCategoriesDataRequestQuery } from "@/apis/productsApi";
 
 import Header from "@/components/molecules/Header";
 import ProductCard from "@/components/cards/ProductCard";
@@ -19,6 +20,7 @@ const Products = () => {
 
 	const [selectedFilter, setSelectedFilter] = useState("");
 	const [products, setProducts] = useState<{ data: productType[]; nextPage: boolean }>({ data: [], nextPage: false });
+	const { data: categoriesData } = useGetCategoriesDataRequestQuery();
 	const [getProductsRequest, { data, isLoading, error }] = useLazyGetProductsRequestQuery();
 	const [page, setPage] = useState(1);
 
@@ -71,18 +73,25 @@ const Products = () => {
 							<p className="text-xl">Collections</p>
 						</div>
 						<div id="breadcrumbs" className="w-full mt-4 h-auto">
-							{filters.map((filter, index) => (
-								<button
-									key={index}
-									className={`font-medium text-md w-full mb-2 flex justify-between items-center hover:text-brown ${selectedFilter === filter.option ? "text-brown" : ""}`}
-									onClick={() => {
-										setSelectedFilter(filter.option);
-										setPage(1);
-									}}>
-									<p>{filter.name}</p>
-									<p className="text-sm">({filter.option === "all" ? localProducts?.length : localProducts.filter((product) => product.category === filter.option)?.length})</p>
-								</button>
-							))}
+							{filters.map((filter, index) => {
+								let count = 0;
+								if (categoriesData) {
+									count = categoriesData[filter?.option];
+								}
+
+								return (
+									<button
+										key={index}
+										className={`font-medium text-md w-full mb-2 flex justify-between items-center hover:text-brown ${selectedFilter === filter.option ? "text-brown" : ""}`}
+										onClick={() => {
+											setSelectedFilter(filter.option);
+											setPage(1);
+										}}>
+										<p>{filter.name}</p>
+										<p className="text-sm">({count})</p>
+									</button>
+								);
+							})}
 						</div>
 					</article>
 					{!isLoading && (
