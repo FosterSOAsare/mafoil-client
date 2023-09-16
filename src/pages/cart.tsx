@@ -21,7 +21,7 @@ type cartPageItemType = {
 	store: string;
 	short_desc?: string;
 	long_desc?: string;
-	id: string;
+	_id: string;
 	images: { url: string; public_id: string }[];
 	slugname: string;
 	category: "cloth" | "bag" | "accessories" | "shoe";
@@ -30,17 +30,10 @@ type cartPageItemType = {
 
 const Cart = () => {
 	const cart = useSelector(useCartSelector);
-	const [products, setProducts] = useState<cartPageItemType[]>([]);
+	// const [products, setProducts] = useState<cartPageItemType[]>([]);
 	const dispatch = useDispatch();
-	const subtotal = useGetCartSubTotal({ products, cart });
+	const subtotal = useGetCartSubTotal({ cart });
 	const [agreeToTerms, setAgreeToTerms] = useState(false);
-
-	useEffect(() => {
-		const data = cart.map((item: cartItemType) => {
-			return { ...localProducts.find((product) => product?.id === item?.id), count: item?.count };
-		});
-		setProducts(data);
-	}, [cart]);
 
 	return (
 		<>
@@ -66,7 +59,8 @@ const Cart = () => {
 
 							<p className="w-1/5  text-right">TOTAL</p>
 						</div>
-						{products?.map((product: cartPageItemType, index: number) => {
+						{cart?.map((product: cartItemType, index: number) => {
+							const { count, ...rest } = product;
 							return (
 								<div key={index} className="w-full h-auto py-8 flex items-center justify-between border-b-[1px]">
 									<div className="w-1/3 h-full flex items-center gap-4">
@@ -80,9 +74,9 @@ const Cart = () => {
 									</div>
 									<div className="w-1/5 flex flex-col items-center justify-center">
 										<div className="w-24 mx-auto h-8 border-[1px] px-2">
-											<CartItemNumberModerator itemCount={product?.count} id={product?.id} />
+											<CartItemNumberModerator itemCount={count} product={rest} />
 										</div>
-										<button className="text-[12px] underline hover:no-underline hover:text-[red] uppercase mt-2" onClick={() => dispatch(removeItem({ id: product?.id }))}>
+										<button className="text-[12px] underline hover:no-underline hover:text-[red] uppercase mt-2" onClick={() => dispatch(removeItem({ _id: product?._id }))}>
 											Remove
 										</button>
 									</div>

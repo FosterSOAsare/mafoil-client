@@ -40,9 +40,9 @@ const ProductDetails = ({ product }: { product: productType }) => {
 	const addToCart = () => {
 		setCartLoading(true);
 		setCount(0);
-		console.log(product?._id);
+		console.log(product);
 		setTimeout(() => {
-			dispatch(increaseItemCount({ count, id: product?._id }));
+			dispatch(increaseItemCount({ count, product: product }));
 			setCartLoading(false);
 		}, 2000);
 	};

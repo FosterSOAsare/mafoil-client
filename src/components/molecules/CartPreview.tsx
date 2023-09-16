@@ -13,14 +13,16 @@ import { productType } from "@/types/product.type";
 
 const CartPreview = ({ setShowCart }: { setShowCart: React.Dispatch<React.SetStateAction<boolean>> }) => {
 	const cart = useSelector(useCartSelector);
-	const subtotal = useGetCartSubTotal({ products, cart });
+	const subtotal = useGetCartSubTotal({ cart });
 
 	const [agreeToTerms, setAgreeToTerms] = useState(false);
 
 	const cartItems = useMemo(() => {
-		// let data = products.filter((product: productType) => cart.find((item: cartItemType) => item.id === product.id));
-		let cartIds = cart.map((item: cartItemType) => item.id);
-		return products.filter((product: productType) => cartIds.includes(product._id));
+		return cart.map((item: cartItemType) => {
+			// remove the item count from the cart items
+			let { count, ...rest } = item;
+			return rest;
+		});
 	}, [cart]);
 	return (
 		<aside className="w-1/4 bg-white shadow-md  fixed right-0 flex items-center justify-start pb-6 flex-col top-[12.7vh] z-[2] h-[88vh] overflow-y-auto ">
@@ -34,7 +36,7 @@ const CartPreview = ({ setShowCart }: { setShowCart: React.Dispatch<React.SetSta
 			{cart?.length > 0 && (
 				<>
 					<div className="w-full h-[50vh] overflow-auto px-2 border-b-[1px] border-black pb-2">
-						{cartItems.map((item: productType, index) => (
+						{cartItems.map((item: productType, index: number) => (
 							<PreviewCartItemCard key={index} product={item} index={index} />
 						))}
 					</div>

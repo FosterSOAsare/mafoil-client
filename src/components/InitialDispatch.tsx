@@ -26,6 +26,8 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 	const debounceCart = useDebounce(cart, 3000);
 	const { query, replace, pathname } = useRouter();
 
+	console.log(cart);
+
 	useEffect(() => {
 		if (isLoading) {
 			setIsLoading(isLoading);
@@ -58,19 +60,19 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 	// Fetch cart from db. This is only done if user is loggedin
 	useEffect(() => {
 		if (!data?._id) return;
-		fetchCart();
+		// fetchCart();
 	}, [data]);
 
 	// Store cartdata in redux if user is logged in
 	useEffect(() => {
 		if (!cartData) return;
-		dispatch(insertCartData(cartData));
+		// dispatch(insertCartData(cartData));
 	}, [cartData]);
 
 	// Store cart  in db
 	useEffect(() => {
 		if (!data?._id || !debounceCart || debounceCart?.length === 0) return;
-		uploadCart(cart);
+		// uploadCart(cart.map((item: any) => ({ itemId: item._id, count: item.count })));
 	}, [data, debounceCart]);
 
 	// Store wishlist  in localStorage
