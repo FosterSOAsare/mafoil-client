@@ -9,7 +9,7 @@ import AccountLayout from "@/components/layouts/account.layout";
 const index = () => {
 	const { user } = useSelector(useUserSlice);
 	return (
-		<AccountLayout active="dashboard">
+		<AccountLayout active="dashboard" title="MY ACCOUNT">
 			<div className="w-full h-auto pb-12">
 				<p>Hello {user?.fullname} </p>
 				<p>Email: {user?.email}</p>
