@@ -37,7 +37,7 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 			return;
 		}
 		// setTimeout(() => {
-		dispatch(setData(data));
+		dispatch(setData({ ...data, accountVerified: data?.activated }));
 		dispatch(setIsLoading(false));
 		dispatch(setError(null));
 		// }, 1000);

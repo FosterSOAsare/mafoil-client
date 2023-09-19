@@ -10,9 +10,14 @@ const userApi = createApi({
       query: () => ({
         url: "",
       }),
+    }),
+    activateUserAccountRequest: builder.query<any, void>({
+      query: () => ({
+        url: "/activate",
+      }),
     })
   })
 })
 
-export const { useFetchLoggedInUserRequestQuery } = userApi
+export const { useFetchLoggedInUserRequestQuery, useLazyActivateUserAccountRequestQuery } = userApi
 export default userApi
