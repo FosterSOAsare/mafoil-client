@@ -3,17 +3,19 @@ import React, { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import Link from "next/link";
 
-import products from "@/data/products";
 import useGetCartSubTotal from "@/hooks/useGetCartSubTotal";
+import useCheckoutCart from "@/hooks/useCheckoutCart";
 
 import PreviewCartItemCard from "../cards/PreviewCartItemCard";
 
 import { AiOutlineClose } from "react-icons/ai";
 import { productType } from "@/types/product.type";
+import { ToastContainer } from "react-toastify";
 
 const CartPreview = ({ setShowCart }: { setShowCart: React.Dispatch<React.SetStateAction<boolean>> }) => {
 	const cart = useSelector(useCartSelector);
 	const subtotal = useGetCartSubTotal({ cart });
+	const { checkOut, isLoading } = useCheckoutCart();
 
 	const [agreeToTerms, setAgreeToTerms] = useState(false);
 
@@ -61,10 +63,12 @@ const CartPreview = ({ setShowCart }: { setShowCart: React.Dispatch<React.SetSta
 								</label>
 							</div>
 
-							<Link href="/checkout" className={`mt-4 flex items-center justify-center bg-black ${!agreeToTerms && "opacity-70"} text-white relative w-full group h-12 overflow-hidden`}>
+							<button
+								onClick={() => checkOut()}
+								className={`mt-4 flex items-center justify-center bg-black ${!agreeToTerms && "opacity-70"} text-white relative w-full group h-12 overflow-hidden`}>
 								<span className={`w-full h-full bg-brown absolute transition-all duration-300 top-0 ${agreeToTerms && "group-hover:left-0"} z-[1] -left-[100%]`}></span>
 								<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Checkout</p>
-							</Link>
+							</button>
 
 							<Link href="/cart" className={`mt-4 flex items-center justify-center border-black text-black hover:border-brown border-[1px] relative w-full group h-12 overflow-hidden`}>
 								<span className={`w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-[1] -left-[100%]`}></span>
@@ -74,6 +78,7 @@ const CartPreview = ({ setShowCart }: { setShowCart: React.Dispatch<React.SetSta
 					</div>
 				</>
 			)}
+			<ToastContainer />
 		</aside>
 	);
 };
