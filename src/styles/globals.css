@@ -93,3 +93,18 @@ html {
 .newProduct label {
 	@apply !font-medium;
 }
+.progress {
+	@apply relative;
+}
+.progress::before {
+	content: "";
+	@apply w-[85px] h-[3px] absolute right-[100%] top-0 bottom-0 my-auto;
+}
+.filled,
+.filled::before {
+	@apply bg-green-500 text-white;
+}
+.empty,
+.empty::before {
+	@apply bg-slate-200;
+}

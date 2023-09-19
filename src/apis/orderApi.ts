@@ -11,7 +11,7 @@ const orderApi = createApi({
         url: `?filter=${sort}`,
       }),
     }),
-    fetchAnOrderRequest: builder.query<any, void>({
+    fetchAnOrderRequest: builder.query<any, string>({
       query: (orderId) => ({
         url: `/${orderId}`,
       }),
