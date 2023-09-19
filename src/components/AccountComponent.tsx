@@ -12,12 +12,14 @@ const AccountComponent = () => {
 		<aside className="absolute top-[105%] right-[00%] bg-white shadow-md w-[170px] h-auto py-2">
 			{user?._id && (
 				<>
-					<p className="text-[12px] border-b-[1px] pb-2 px-4">
-						Hello{" "}
-						<Link href="/account" className="text-sm text-brown underline">
-							Foster Asare
-						</Link>
-					</p>
+					<div className="border-b-[1px] pb-2 px-4">
+						<p className="text-[12px]">
+							Hello{" "}
+							<Link href="/account" className="text-sm text-brown underline">
+								{user?.fullname}
+							</Link>
+						</p>
+					</div>
 
 					<Link href="/account/transactions" className="block px-4 pt-2 p-[4px] text-sm text-black hover:text-brown">
 						Transactions

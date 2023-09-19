@@ -79,3 +79,8 @@ export const productSchema = z.object({
   short_desc: z.string().min(1, { message: "Please enter short description of product" }).min(25, { message: 'Short description should not be less than 25 characters' }),
   long_desc: z.string()
 });
+
+export const withdrawSchema = z.object({
+  address: z.string().min(1, { message: "Please enter address to withdraw funds to" }),
+  amount: z.string().min(1, { message: "Please enter an amount to withdraw" }),
+});

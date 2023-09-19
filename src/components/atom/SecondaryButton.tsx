@@ -17,6 +17,7 @@ const SecondaryButton = ({ text, handleClick, href, disabled = false }: secondar
 					onClick={() => {
 						if (handleClick) handleClick();
 					}}
+					type="button"
 					disabled={disabled}>
 					{text}
 				</button>
