@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react'
 import { toast } from 'react-toastify'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 import { useLazyCheckoutCartRequestQuery } from '@/apis/cartApi'
 import { clearCart } from '@/slices/cart.slice'
+import { setData, useUserSlice } from '@/slices/user.slice'
 
 const useCheckoutCart = () => {
   const dispatch = useDispatch()
+  const { user } = useSelector(useUserSlice)
+
 
   const [checkoutCart, { data, error, isLoading }]: any = useLazyCheckoutCartRequestQuery()
   async function checkOut() {
@@ -17,8 +20,10 @@ const useCheckoutCart = () => {
   useEffect(() => {
     if (!data) return
     toast.success('Order has been successfully added', { autoClose: 1500 })
+    console.log(data)
     setTimeout(() => {
       dispatch(clearCart())
+      dispatch(setData({ balance: user?.balance - data?.total }))
     }, 2000)
   }, [data])
 

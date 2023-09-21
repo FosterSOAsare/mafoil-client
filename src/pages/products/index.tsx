@@ -2,10 +2,10 @@ import Head from "next/head";
 import React, { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { ToastContainer } from "react-toastify";
 
 import filters from "@/data/productfilters";
 import { productType } from "@/types/product.type";
-import localProducts from "@/data/products";
 import { useLazyGetProductsRequestQuery } from "@/apis/productsApi";
 import { useGetCategoriesDataRequestQuery } from "@/apis/productsApi";
 
@@ -121,6 +121,7 @@ const Products = () => {
 				{previewProduct && <ProductQuickView setPreviewProduct={setPreviewProduct} previewProduct={previewProduct} />}
 			</main>
 			<Footer />
+			<ToastContainer />
 		</>
 	);
 };

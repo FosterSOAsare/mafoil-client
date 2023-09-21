@@ -44,7 +44,7 @@ const Header = () => {
 	}
 
 	return (
-		<header className="w-full bg-white shadow-md sticky top-0 left-0 z-[4] h-20 flex items-center justify-between px-10">
+		<header className="w-full bg-white shadow-md sticky top-0 left-0 z-[6] h-20 flex items-center justify-between px-10">
 			<Link href="tel:+8665972742" className="flex items-center text-sm gap-2 group font-medium">
 				<div className="w-10 h-10 rounded-full border-[1px] group-hover:bg-brown group-hover:text-white flex items-center justify-center">
 					<AiOutlinePhone className="text-xl rotate-90" />

@@ -1,19 +1,15 @@
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Link from "next/link";
+import React, { useEffect } from "react";
 import Image from "next/image";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import { useRouter } from "next/router";
 
-import { cartItemType, useCartSelector, removeItem } from "@/slices/cart.slice";
-import useCheckoutCart from "@/hooks/useCheckoutCart";
-import useGetCartSubTotal from "@/hooks/useGetCartSubTotal";
+import { useLazyFetchAnOrderRequestQuery, useLazyCancelOrderRequestQuery } from "@/apis/orderApi";
 
-import CartItemNumberModerator from "@/components/molecules/CartItemNumberModerator";
 import Header from "@/components/molecules/Header";
 import Footer from "@/components/molecules/Footer";
-import { useLazyFetchAnOrderRequestQuery } from "@/apis/orderApi";
-import { useRouter } from "next/router";
+import Loading from "@/components/atom/Loading";
+import useCreateErrorFromApiRequest from "@/hooks/useCreateErrorFromApiRequest";
 
 type cartPageItemType = {
 	name: string;
@@ -31,10 +27,10 @@ type cartPageItemType = {
 };
 
 const OrderPage = () => {
-	const cart = useSelector(useCartSelector);
 	const { query, isReady } = useRouter();
 
 	const [fetchOrder, { data, error, isLoading }]: any = useLazyFetchAnOrderRequestQuery();
+	const [cancelOrder, { data: order, error: cancelError, isLoading: cancelOrderLoading }]: any = useLazyCancelOrderRequestQuery();
 
 	useEffect(() => {
 		if (!isReady) return;
@@ -45,6 +41,16 @@ const OrderPage = () => {
 		fetchOrder(query?.id);
 	}, [isReady, query?.id]);
 
+	useEffect(() => {
+		if (!order) return;
+		toast.success("Order has successfully been cancelled", { autoClose: 1500 });
+		setTimeout(() => {
+			window.location.reload();
+		}, 2000);
+	}, [order]);
+	// Handle error from cancelling and fetching order
+	useCreateErrorFromApiRequest(error);
+	useCreateErrorFromApiRequest(cancelError);
 	return (
 		<>
 			<Head>
@@ -58,7 +64,7 @@ const OrderPage = () => {
 				<section className="w-full h-[30vh] flex items-center justify-center flex-col " id="hero">
 					<h1 className="text-4xl mb-6 font-bold">MY ORDER</h1>
 
-					{data?.status !== "caneclled" && (
+					{data?.status !== "cancelled" && !isLoading && (
 						<div className="flex items-center justify-between h-auto w-1/3 overflow-hidden rounded-[5px]">
 							{[1, 2, 3, 4, 5].map((item, index) => (
 								<span
@@ -70,70 +76,87 @@ const OrderPage = () => {
 							))}
 						</div>
 					)}
+					{data?.status === "cancelled" && !isLoading && <p className="text-red-500 -mt-4 font-bold text-xl text-center">Order Cancelled</p>}
 				</section>
 
 				<section id="products" className="max-w-5xl mx-auto h-auto mt-4 w-full gap-6 justify-between">
-					<h3 className="text-3xl font-bold mb-7">PURCHASED ITEMS</h3>
 					{!isLoading && data?.cart?.length > 0 && (
-						<article className="w-full flex flex-col items-center max-w-5xl mx-auto justify-center">
-							<div className="w-full font-medium h-auto pb-3 flex items-center justify-between border-b-[1px]">
-								<p className="w-[40%]">PRODUCT</p>
-								<p className="w-[15%] text-center">QUANTITY</p>
-								<p className="w-[15%] text-center">TOTAL PRICE</p>
-								<p className="w-[15%] text-center">TOTAL PROFIT</p>
-								<p className="w-[15%] text-center">PROFIT PERCENT</p>
-							</div>
-							{data?.cart?.map((product: any, index: number) => {
-								const { count, price, totalItemsProfit, profitPercent } = product;
-								return (
-									<div key={index} className="w-full h-auto py-8 flex items-center justify-between border-b-[1px]">
-										<div className="w-[40%] h-full flex items-center gap-4">
-											<div className="w-28 h-20 relative">
-												<Image src={product?.image?.url} alt="product Image" fill />
+						<>
+							<h3 className="text-3xl font-bold mb-7">PURCHASED ITEMS</h3>
+							<article className="w-full flex flex-col items-center max-w-5xl mx-auto justify-center">
+								<div className="w-full font-medium h-auto pb-3 flex items-center justify-between border-b-[1px]">
+									<p className="w-[40%]">PRODUCT</p>
+									<p className="w-[15%] text-center">QUANTITY</p>
+									<p className="w-[15%] text-center">TOTAL PRICE</p>
+									<p className="w-[15%] text-center">{data?.status == "complete" ? "TOTAL" : "EXPECTED"} PROFIT</p>
+									<p className="w-[15%] text-center">PROFIT PERCENT</p>
+								</div>
+								{data?.cart?.map((product: any, index: number) => {
+									const { count, price, totalItemsProfit, profitPercent } = product;
+									return (
+										<div key={index} className="w-full h-auto py-8 flex items-center justify-between border-b-[1px]">
+											<div className="w-[40%] h-full flex items-center gap-4">
+												<div className="w-28 h-20 relative">
+													<Image src={product?.image?.url} alt="product Image" fill />
+												</div>
+												<div>
+													<h3 className="text-sm text-bold text-black mb-2">{product?.name}</h3>
+													<p className="text-[12px]">GH₵{(product?.price).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+												</div>
 											</div>
-											<div>
-												<h3 className="text-sm text-bold text-black mb-2">{product?.name}</h3>
-												<p className="text-[12px]">GH₵{(product?.price).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-											</div>
-										</div>
-										<p className="w-[15%] flex flex-col items-center justify-center">{count}</p>
+											<p className="w-[15%] flex flex-col items-center justify-center">{count}</p>
 
-										<p className="w-[15%] text-center text-sm font-medium">GH₵{(price * count).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-										<p className="w-[15%] text-green-500 font-bold text-center">
-											GH₵{totalItemsProfit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-										</p>
-										<p className="w-[15%] text-green-500 font-bold text-center">{profitPercent}%</p>
-									</div>
-								);
-							})}
-							<article className="w-[45%] mr-auto mt-8">
-								<h3 className="font-bold">Subtotal: GH₵{data?.totalPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} </h3>
-								<p className="font-medium text-green-600">Total Profit: GH₵{data?.totalProfit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} </p>
-								<p className="font-medium opacity-60 text-sm">
-									Average Profit Percentage: {data?.avgProfitPercent.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%
-								</p>
-
-								{data?.step === 2 && (
-									<div className="w-full mt-4">
-										<button
-											disabled={isLoading}
-											onClick={() => {
-												// Implement cancel order
-											}}
-											className={`mt-4 !w-[150px] flex items-center justify-center bg-black text-white relative group h-12 overflow-hidden`}>
-											<span
-												className={`w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:-left-0 z-[1] ${
-													isLoading ? "left-0" : "-left-[100%]"
-												}`}></span>
-											<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">
-												{isLoading ? "Cancelling Order..." : "Cancel Order"}
+											<p className="w-[15%] text-center text-sm font-medium">
+												GH₵{(price * count).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
 											</p>
-										</button>
-									</div>
-								)}
-								<ToastContainer />
+											<p className={`w-[15%] ${data?.status === "complete" ? "text-green-500" : "text-slate-500"} font-bold text-center`}>
+												GH₵{totalItemsProfit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+											</p>
+											<p className={`w-[15%] ${data?.status === "complete" ? "text-green-500" : "text-slate-500"} font-bold text-center`}>{profitPercent}%</p>
+										</div>
+									);
+								})}
+								<article className="w-[45%] mr-auto mt-8">
+									<h3 className="font-bold">Subtotal: GH₵{data?.totalPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} </h3>
+									{data?.status !== "cancelled" && (
+										<p className={`font-medium text-green-600`}>
+											{data.status === "complete" ? "Total" : "Expected"} Profit: GH₵
+											{data?.totalProfit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" "}
+										</p>
+									)}
+									<p className="font-medium opacity-60 text-sm">
+										Average Profit Percentage: {data?.avgProfitPercent.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%
+									</p>
+
+									{data?.step === 1 && data?.status === "pending" && (
+										<div className="w-full mt-4">
+											<button
+												disabled={cancelOrderLoading}
+												onClick={() => {
+													// Implement cancel order
+													cancelOrder(query?.id);
+												}}
+												className={`mt-4 !w-[180px] flex items-center justify-center bg-black text-white relative group h-12 overflow-hidden`}>
+												<span
+													className={`w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:-left-0 z-[1] ${
+														cancelOrderLoading ? "left-0" : "-left-[100%]"
+													}`}></span>
+												<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">
+													{cancelOrderLoading ? "Cancelling Order..." : "Cancel Order"}
+												</p>
+											</button>
+										</div>
+									)}
+									<ToastContainer />
+								</article>
 							</article>
-						</article>
+						</>
+					)}
+
+					{isLoading && (
+						<div className="w-full h-[60vh] flex items-center justify-center">
+							<Loading />
+						</div>
 					)}
 
 					{!isLoading && data?.cart?.length === 0 && <p className="text-center">Your cart is currently empty.</p>}

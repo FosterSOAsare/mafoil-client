@@ -23,14 +23,14 @@ const orderApi = createApi({
         body: { cart }
       })
     }),
-    cancelOrderRequest: builder.mutation({
-      query: () => ({
-        url: "/checkout",
+    cancelOrderRequest: builder.query<any, string>({
+      query: (orderId) => ({
+        url: `/cancel/${orderId}`,
       }),
     })
   })
 })
 
-export const { useLazyFetchOrdersRequestQuery, useLazyFetchAnOrderRequestQuery, usePostOrderRequestMutation, useCancelOrderRequestMutation } = orderApi
+export const { useLazyFetchOrdersRequestQuery, useLazyFetchAnOrderRequestQuery, usePostOrderRequestMutation, useLazyCancelOrderRequestQuery } = orderApi
 
 export default orderApi

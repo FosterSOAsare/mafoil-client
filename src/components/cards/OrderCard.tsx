@@ -11,8 +11,8 @@ const OrderCard = ({ createdAt, totalPrice, totalProfit, status, avgProfitPercen
 		<div className="w-full h-auto flex justify-start  items-center gap-4 border-b-[1px]">
 			<div className={"w-1/5 text-center py-4 border-l-[1px] flex items-center justify-center"}>
 				{status === "pending" && <AiOutlineLoading3Quarters className="text-[grey]" />}
-				{status === "cancelled" && <BsCheckLg className="text-green-500" />}
-				{status === "complete" && <AiOutlineClose className="text-red-600" />}
+				{status === "complete" && <BsCheckLg className="text-green-500" />}
+				{status === "cancelled" && <AiOutlineClose className="text-red-600" />}
 			</div>
 			<p className="w-1/5 text-center py-4 border-l-[1px]">{createDateFromString(createdAt)}</p>
 			<p className="w-1/5 text-center py-4 border-l-[1px]">GH₵{totalPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
