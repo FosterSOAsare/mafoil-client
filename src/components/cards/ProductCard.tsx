@@ -9,6 +9,7 @@ import { productType } from "@/types/product.type";
 import useCheckIfProductIsInWishList from "@/hooks/useCheckIfProductIsInWishList";
 import { toggleItemInWishList } from "@/slices/wishlist.slice";
 import { increaseItemCount } from "@/slices/cart.slice";
+import produceError from "@/utils/produceErrorIfUserIsNotLoggedIn";
 
 import Ratings from "../molecules/Ratings";
 import { Loading1 } from "../atom/Loading";
@@ -26,10 +27,6 @@ const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: product
 	const [addingToCart, setAddingToCart] = useState(false);
 
 	function addToCart() {
-		if (!user._id) {
-			toast.error("Functionality is reserved for logged in users . Please login into your account");
-			return;
-		}
 		setAddingToCart(true);
 
 		setTimeout(() => {
@@ -48,20 +45,14 @@ const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: product
 					</div>
 					<aside className="absolute top-4 right-4  w-auto h-auto">
 						<button
-							onClick={() => {
-								if (!user?._id) {
-									toast.error("Functionality is reserved for logged in users . Please login into your account");
-									return;
-								}
-								dispatch(toggleItemInWishList({ wishlistItem: product }));
-							}}
+							onClick={() => produceError(user?._id, dispatch(toggleItemInWishList({ wishlistItem: product })))}
 							className={`w-8 h-8 transition-all duration-300 ${showContent ? "scale-100" : "scale-0"} ${
 								partOfWishList ? "bg-brown hover:text-black  text-white" : "hover:bg-brown bg-white  text-black  hover:text-white"
 							} mb-2 flex items-center justify-center`}>
 							<AiOutlineHeart className="text-lg" />
 						</button>
 						<button
-							onClick={() => addToCart()}
+							onClick={() => produceError(user?._id, addToCart)}
 							className={`${showContent ? "scale-100" : "scale-0"} w-8 h-8 ${
 								addingToCart ? "bg-black" : "bg-white"
 							} transition-all duration-300 delay-100 hover:bg-brown hover:text-white text-black flex items-center justify-center`}>

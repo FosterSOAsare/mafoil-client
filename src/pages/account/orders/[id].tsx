@@ -82,7 +82,7 @@ const OrderPage = () => {
 				<section id="products" className="max-w-5xl mx-auto h-auto mt-4 w-full gap-6 justify-between">
 					{!isLoading && data?.cart?.length > 0 && (
 						<>
-							<h3 className="text-3xl font-bold mb-7">PURCHASED ITEMS</h3>
+							<h3 className="text-3xl font-bold mb-7">ORDERED ITEMS</h3>
 							<article className="w-full flex flex-col items-center max-w-5xl mx-auto justify-center">
 								<div className="w-full font-medium h-auto pb-3 flex items-center justify-between border-b-[1px]">
 									<p className="w-[40%]">PRODUCT</p>

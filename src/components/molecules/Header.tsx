@@ -1,19 +1,21 @@
+import { useRouter } from "next/router";
 import React, { useMemo, useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 
 import { cartItemType, useCartSelector } from "@/slices/cart.slice";
 import { useWishListSelector } from "@/slices/wishlist.slice";
+import { useUserSlice } from "@/slices/user.slice";
 
 import CartPreview from "./CartPreview";
 import AccountComponent from "../AccountComponent";
 
 import { AiOutlinePhone, AiOutlineUser, AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
-import { useRouter } from "next/router";
 
 const Header = () => {
 	const cart = useSelector(useCartSelector);
+	const { user } = useSelector(useUserSlice);
 	const wishList = useSelector(useWishListSelector);
 	const [showAccountMenuComponent, setShowAccountMenuComponent] = useState(false);
 	const accountMenuComponentParentRef = useRef<any>(null);
@@ -76,18 +78,22 @@ const Header = () => {
 					</button>
 					{showAccountMenuComponent && <AccountComponent />}
 				</div>
-				<Link href="/wishlist" className="relative">
-					<AiOutlineHeart className="hover:cursor-pointer" />
-					<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>
-						{wishList?.length > 9 ? "9+" : wishList?.length}
-					</span>
-				</Link>
-				<button className="relative" onClick={() => openCart()}>
-					<AiOutlineShoppingCart className="hover:cursor-pointer" />
-					<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>
-						{cartItemsCount > 9 ? "9+" : cartItemsCount}
-					</span>
-				</button>
+				{user?._id && (
+					<>
+						<Link href="/wishlist" className="relative">
+							<AiOutlineHeart className="hover:cursor-pointer" />
+							<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>
+								{wishList?.length > 9 ? "9+" : wishList?.length}
+							</span>
+						</Link>
+						<button className="relative" onClick={() => openCart()}>
+							<AiOutlineShoppingCart className="hover:cursor-pointer" />
+							<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>
+								{cartItemsCount > 9 ? "9+" : cartItemsCount}
+							</span>
+						</button>
+					</>
+				)}
 			</div>
 
 			{showCart && <CartPreview setShowCart={setShowCart} />}

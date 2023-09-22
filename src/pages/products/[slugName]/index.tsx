@@ -80,7 +80,7 @@ const Product = () => {
 									</div>
 								</article>
 							</section>
-
+							<ToastContainer />
 							<RecentViews setPreviewProduct={setPreviewProduct} product={product} />
 							{previewProduct && <ProductQuickView setPreviewProduct={setPreviewProduct} previewProduct={previewProduct} />}
 						</section>
