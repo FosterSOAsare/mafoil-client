@@ -81,6 +81,6 @@ export const productSchema = z.object({
 });
 
 export const withdrawSchema = z.object({
-  address: z.string().min(1, { message: "Please enter address to withdraw funds to" }),
+  address: z.string().min(1, { message: "Please enter address to withdraw funds to" }).min(30, { message: "Please enter a valid withdrawal address" }),
   amount: z.string().min(1, { message: "Please enter an amount to withdraw" }),
 });
