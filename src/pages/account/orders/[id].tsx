@@ -88,8 +88,12 @@ const OrderPage = () => {
 									<p className="w-[40%]">PRODUCT</p>
 									<p className="w-[15%] text-center">QUANTITY</p>
 									<p className="w-[15%] text-center">TOTAL PRICE</p>
-									<p className="w-[15%] text-center">{data?.status == "complete" ? "TOTAL" : "EXPECTED"} PROFIT</p>
-									<p className="w-[15%] text-center">PROFIT PERCENT</p>
+									{data?.status !== "cancelled" && (
+										<>
+											<p className="w-[15%] text-center">{data?.status == "complete" ? "TOTAL" : "EXPECTED"} PROFIT</p>
+											<p className="w-[15%] text-center">PROFIT PERCENT</p>
+										</>
+									)}
 								</div>
 								{data?.cart?.map((product: any, index: number) => {
 									const { count, price, totalItemsProfit, profitPercent } = product;
@@ -105,28 +109,33 @@ const OrderPage = () => {
 												</div>
 											</div>
 											<p className="w-[15%] flex flex-col items-center justify-center">{count}</p>
-
 											<p className="w-[15%] text-center text-sm font-medium">
 												GH₵{(price * count).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
 											</p>
-											<p className={`w-[15%] ${data?.status === "complete" ? "text-green-500" : "text-slate-500"} font-bold text-center`}>
-												GH₵{totalItemsProfit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-											</p>
-											<p className={`w-[15%] ${data?.status === "complete" ? "text-green-500" : "text-slate-500"} font-bold text-center`}>{profitPercent}%</p>
+											{data.status !== "cancelled" && (
+												<>
+													<p className={`w-[15%] ${data?.status === "complete" ? "text-green-500" : "text-slate-500"} font-bold text-center`}>
+														GH₵{totalItemsProfit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+													</p>
+													<p className={`w-[15%] ${data?.status === "complete" ? "text-green-500" : "text-slate-500"} font-bold text-center`}>{profitPercent}%</p>
+												</>
+											)}
 										</div>
 									);
 								})}
 								<article className="w-[45%] mr-auto mt-8">
 									<h3 className="font-bold">Subtotal: GH₵{data?.totalPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} </h3>
 									{data?.status !== "cancelled" && (
-										<p className={`font-medium text-green-600`}>
-											{data.status === "complete" ? "Total" : "Expected"} Profit: GH₵
-											{data?.totalProfit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" "}
-										</p>
+										<>
+											<p className={`font-medium text-green-600`}>
+												{data.status === "complete" ? "Total" : "Expected"} Profit: GH₵
+												{data?.totalProfit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" "}
+											</p>
+											<p className="font-medium opacity-60 text-sm">
+												Average Profit Percentage: {data?.avgProfitPercent.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%
+											</p>
+										</>
 									)}
-									<p className="font-medium opacity-60 text-sm">
-										Average Profit Percentage: {data?.avgProfitPercent.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%
-									</p>
 
 									{data?.step === 1 && data?.status === "pending" && (
 										<div className="w-full mt-4">

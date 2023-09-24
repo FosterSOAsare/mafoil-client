@@ -46,7 +46,9 @@ const index = () => {
 
 						<button className="bg-black  text-white relative w-48 mt-6 h-12 group overflow-hidden" onClick={() => activateUserAccount()} disabled={isLoading}>
 							<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
-							<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Activate Account</p>
+							<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">
+								Activat{!isLoading ? "e" : "ing"} Account {isLoading && "..."}
+							</p>
 						</button>
 					</div>
 				)}
