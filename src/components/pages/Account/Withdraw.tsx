@@ -9,7 +9,7 @@ import PrimaryButton from "@/components/atom/PrimaryButton";
 import SecondaryButton from "@/components/atom/SecondaryButton";
 import PrimaryInput from "@/components/atom/PrimaryInput";
 
-const Withdraw = ({ closeModal }: any) => {
+const Withdraw = ({ closeModal }: { closeModal: React.Dispatch<React.SetStateAction<boolean>> }) => {
 	const { register, handleSubmit } = useSelectedValuesFromHookForm(withdrawSchema);
 
 	const withdrawFunds = async () => {};
@@ -27,7 +27,7 @@ const Withdraw = ({ closeModal }: any) => {
 					<PrimaryInput name="ammount" placeholder="100.00" register={register} label="Enter Amount To Withdraw" />
 
 					<PrimaryButton text="REGISTER" type="submit" />
-					<SecondaryButton text="CANCEL" handleClick={() => closeModal()} />
+					<SecondaryButton text="CANCEL" handleClick={() => closeModal(false)} />
 				</form>
 			</div>
 			<ToastContainer />

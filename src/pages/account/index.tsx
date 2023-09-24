@@ -19,7 +19,7 @@ const index = () => {
 		toast.success("Account has been successfully activated", { autoClose: 1500 });
 
 		setTimeout(() => {
-			dispatch(setData({ accountVerified: true, balance: user?.balalance - 40 }));
+			dispatch(setData({ accountVerified: true, balance: user?.balance - 40 }));
 		}, 2000);
 	}, [data]);
 

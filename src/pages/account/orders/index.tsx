@@ -14,7 +14,6 @@ const orders = () => {
 
 	const [fetchOrder, { data, isLoading, error }] = useLazyFetchOrdersRequestQuery();
 
-	console.log(isLoading);
 	useEffect(() => {
 		if (!user._id) return;
 		fetchOrder(sort);
