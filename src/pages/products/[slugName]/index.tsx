@@ -8,7 +8,7 @@ import { ToastContainer } from "react-toastify";
 
 import filters from "@/data/productfilters";
 import { productType } from "@/types/product.type";
-import { useLazyGetAProductRequestQuery } from "@/apis/productsApi";
+import { useLazyGetAProductRequestQuery, useLazyGetProductRecommendationsRequestQuery } from "@/apis/productsApi";
 
 import Header from "@/components/molecules/Header";
 import ProductCard from "@/components/cards/ProductCard";
@@ -26,6 +26,7 @@ const Product = () => {
 	const { query } = useRouter();
 	const [previewProduct, setPreviewProduct] = useState<null | productType>(null);
 	const [getAProduct, { data, error, isLoading }] = useLazyGetAProductRequestQuery();
+	const [getRecommendations, { data: recommendationsData }] = useLazyGetProductRecommendationsRequestQuery();
 	const [recommendations, setRecommendations] = useState<productType[]>([]);
 
 	useEffect(() => {
@@ -35,9 +36,15 @@ const Product = () => {
 
 	useEffect(() => {
 		if (!data) return;
-		setProduct(data?.product || null);
-		setRecommendations(data?.recommendations);
+		setProduct(data || null);
+
+		getRecommendations(query?.slugName as string);
 	}, [data]);
+
+	useEffect(() => {
+		if (!recommendationsData) return;
+		setRecommendations(recommendationsData);
+	}, [recommendationsData]);
 
 	return (
 		<>

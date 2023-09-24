@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
 
 import { productType } from "@/types/product.type";
-import localProducts from "@/data/products";
 
 import ProductCard from "../cards/ProductCard";
 import { useRouter } from "next/router";
+import { useGetRecentProductsRequestMutation } from "@/apis/productsApi";
 
 const RecentViews = ({ setPreviewProduct, product }: { setPreviewProduct: any; product: productType }) => {
 	const [recentlyViewed, setRecentlyViewed] = useState<productType[]>([]);
 	const { query } = useRouter();
+
+	const [getRecentProducts, { data, error, isLoading }]: any = useGetRecentProductsRequestMutation();
 
 	useEffect(() => {
 		if (!product) return;
 		let recents = localStorage.getItem("recents");
 		let localRecents = recents ? [...JSON.parse(recents)].filter((product: string) => product != query?.slugName) : [];
 
-		setRecentlyViewed(localProducts.filter((product, index) => localRecents.includes(product?.slugname)).filter((p, index) => index < 4));
+		getRecentProducts(localRecents);
+		if (!data) return;
 		// Make sure it is always 5
 		if (localRecents.length >= 5) {
 			localRecents.shift();
@@ -23,9 +26,12 @@ const RecentViews = ({ setPreviewProduct, product }: { setPreviewProduct: any; p
 
 		// Add current product
 		localRecents.push(product?.slugname);
-
 		localStorage.setItem("recents", JSON.stringify(localRecents));
 	}, [product]);
+
+	useEffect(() => {
+		setRecentlyViewed(data?.filter((item: productType) => item.slugname !== product.slugname));
+	}, [data]);
 	return (
 		<>
 			{recentlyViewed?.length > 0 && (
