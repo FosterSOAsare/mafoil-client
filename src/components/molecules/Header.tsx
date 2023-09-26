@@ -6,18 +6,22 @@ import { useSelector } from "react-redux";
 import { cartItemType, useCartSelector } from "@/slices/cart.slice";
 import { useWishListSelector } from "@/slices/wishlist.slice";
 import { useUserSlice } from "@/slices/user.slice";
+import { notificationType, useNotificationsSelector } from "@/slices/notifications.slice";
 
 import CartPreview from "./CartPreview";
 import AccountComponent from "../AccountComponent";
+import Notifications from "./Notifications";
 
-import { AiOutlinePhone, AiOutlineUser, AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlinePhone, AiOutlineUser, AiOutlineHeart, AiOutlineShoppingCart, AiOutlineBell } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 
 const Header = () => {
 	const cart = useSelector(useCartSelector);
 	const { user } = useSelector(useUserSlice);
+	const notifications = useSelector(useNotificationsSelector);
 	const wishList = useSelector(useWishListSelector);
 	const [showAccountMenuComponent, setShowAccountMenuComponent] = useState(false);
+	const [showNotifications, setShowNotifications] = useState(false);
 	const accountMenuComponentParentRef = useRef<any>(null);
 	const { pathname } = useRouter();
 
@@ -44,6 +48,11 @@ const Header = () => {
 		if (pathname.toLowerCase() === "/cart") return;
 		setShowCart(true);
 	}
+
+	const unreadNotificationsCount = useMemo(() => {
+		let unread = notifications.filter((n: notificationType) => n.status === "unread");
+		return unread?.length;
+	}, [notifications]);
 
 	return (
 		<header className="w-full bg-white shadow-md sticky top-0 left-0 z-[6] h-20 flex items-center justify-between px-10">
@@ -86,6 +95,12 @@ const Header = () => {
 								{wishList?.length > 9 ? "9+" : wishList?.length}
 							</span>
 						</Link>
+						<button className="relative" onClick={() => setShowNotifications(true)}>
+							<AiOutlineBell className="hover:cursor-pointer" />
+							<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>
+								{unreadNotificationsCount > 9 ? "9+" : unreadNotificationsCount}
+							</span>
+						</button>
 						<button className="relative" onClick={() => openCart()}>
 							<AiOutlineShoppingCart className="hover:cursor-pointer" />
 							<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>
@@ -97,6 +112,8 @@ const Header = () => {
 			</div>
 
 			{showCart && <CartPreview setShowCart={setShowCart} />}
+
+			{showNotifications && <Notifications setShowNotifications={setShowNotifications} />}
 		</header>
 	);
 };

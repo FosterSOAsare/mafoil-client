@@ -6,9 +6,10 @@ import { setData, setError, setIsLoading } from "@/slices/user.slice";
 import { cartItemType, insertCartData, useCartSelector } from "@/slices/cart.slice";
 import { useLazyFetchCartRequestQuery, useUploadCartRequestMutation } from "@/apis/cartApi";
 import { insertWishLists, useWishListSelector } from "@/slices/wishlist.slice";
+import { useLazyFetchUserNotificationsRequestQuery } from "@/apis/notificationsApi";
+import { setNotificationsData } from "@/slices/notifications.slice";
 import useDebounce from "@/hooks/useDebounce";
 import makeStore from "@/store";
-// import { useUploadAFileRequestMutation } from "@/apis/filesApi";
 
 import { BsArrowUp } from "react-icons/bs";
 import { useRouter } from "next/router";
@@ -21,6 +22,7 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 	const { isLoading, error, data }: any = useFetchLoggedInUserRequestQuery();
 	const [fetchCart, { error: cartError, data: cartData, isLoading: cartLoading }]: any = useLazyFetchCartRequestQuery();
 	const [fetchWishList, { data: wishListData, isLoading: wishListLoading }] = useLazyFetchWishListRequestQuery();
+	const [fetchNotifications, { data: notificationData }] = useLazyFetchUserNotificationsRequestQuery();
 	const [uploadCart, {}]: any = useUploadCartRequestMutation();
 	const [uploadWishList, {}]: any = useUploadWishListRequestMutation();
 	const cart = useSelector(useCartSelector);
@@ -65,14 +67,16 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 		if (!data?._id) return;
 		fetchCart();
 		fetchWishList();
+		fetchNotifications();
 	}, [data]);
 
 	// Store cartdata in redux if user is logged in
 	useEffect(() => {
-		if (!cartData && !wishListData) return;
+		if (!cartData && !wishListData && !notificationData) return;
 		dispatch(insertCartData(cartData ? cartData : []));
 		dispatch(insertWishLists(wishListData ? wishListData : []));
-	}, [cartData, wishListData]);
+		dispatch(setNotificationsData(notificationData ? notificationData : []));
+	}, [cartData, wishListData, notificationData]);
 
 	// Store cart  in db
 	useEffect(() => {

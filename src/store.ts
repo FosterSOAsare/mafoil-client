@@ -2,6 +2,7 @@ import { configureStore, Middleware } from "@reduxjs/toolkit";
 import UserReducer from '@/slices/user.slice'
 import CartReducer from '@/slices/cart.slice'
 import WishListReducer from '@/slices/wishlist.slice'
+import NotificationsReducer from '@/slices/notifications.slice'
 import authApi from "./apis/authApi";
 import userApi from "./apis/userApi";
 import productsApi from "./apis/productsApi";
@@ -10,6 +11,7 @@ import cartApi from "./apis/cartApi";
 import wishlistApi from "./apis/wishListApi";
 import orderApi from "./apis/orderApi";
 import transactionApi from "./apis/transactionsApi";
+import notificatonsApi from "./apis/notificationsApi";
 
 const middlewares: Array<Middleware> = [
   authApi.middleware,
@@ -20,6 +22,7 @@ const middlewares: Array<Middleware> = [
   wishlistApi.middleware,
   orderApi.middleware,
   transactionApi.middleware,
+  notificatonsApi.middleware,
 ]
 
 const makeStore = () => (
@@ -28,6 +31,7 @@ const makeStore = () => (
       user: UserReducer,
       cart: CartReducer,
       wishlist: WishListReducer,
+      notifications: NotificationsReducer,
       [authApi.reducerPath]: authApi.reducer,
       [userApi.reducerPath]: userApi.reducer,
       [productsApi.reducerPath]: productsApi.reducer,
@@ -35,7 +39,8 @@ const makeStore = () => (
       [cartApi.reducerPath]: cartApi.reducer,
       [wishlistApi.reducerPath]: wishlistApi.reducer,
       [orderApi.reducerPath]: orderApi.reducer,
-      [transactionApi.reducerPath]: transactionApi.reducer
+      [transactionApi.reducerPath]: transactionApi.reducer,
+      [notificatonsApi.reducerPath]: notificatonsApi.reducer
     },
 
     middleware: (getDefaultMiddleware: any) => (
