@@ -2,22 +2,25 @@ import Head from "next/head";
 import React, { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { ToastContainer } from "react-toastify";
 
 import filters from "@/data/productfilters";
 import { productType } from "@/types/product.type";
-import localProducts from "@/data/products";
+import { useLazyGetProductsRequestQuery } from "@/apis/productsApi";
+import { useGetCategoriesDataRequestQuery } from "@/apis/productsApi";
 
 import Header from "@/components/molecules/Header";
 import ProductCard from "@/components/cards/ProductCard";
 import Footer from "@/components/molecules/Footer";
 import ProductQuickView from "@/components/pages/Homepage/ProductQuickView";
-import { useLazyGetProductsRequestQuery } from "@/apis/productsApi";
+import Loading from "@/components/atom/Loading";
 
 const Products = () => {
 	const { query, isReady } = useRouter();
 
 	const [selectedFilter, setSelectedFilter] = useState("");
 	const [products, setProducts] = useState<{ data: productType[]; nextPage: boolean }>({ data: [], nextPage: false });
+	const { data: categoriesData } = useGetCategoriesDataRequestQuery();
 	const [getProductsRequest, { data, isLoading, error }] = useLazyGetProductsRequestQuery();
 	const [page, setPage] = useState(1);
 
@@ -47,7 +50,7 @@ const Products = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<Header />
-			<main className="w-full min-h-screen bg-white relative">
+			<main className="w-full min-h-screen  bg-white relative">
 				<section className="w-full h-[40vh] flex items-center justify-center flex-col  product-hero" id="hero">
 					<h1 className="text-4xl mb-4 font-medium">PRODUCTS</h1>
 
@@ -70,40 +73,55 @@ const Products = () => {
 							<p className="text-xl">Collections</p>
 						</div>
 						<div id="breadcrumbs" className="w-full mt-4 h-auto">
-							{filters.map((filter, index) => (
-								<button
-									key={index}
-									className={`font-medium text-md w-full mb-2 flex justify-between items-center hover:text-brown ${selectedFilter === filter.option ? "text-brown" : ""}`}
-									onClick={() => {
-										setSelectedFilter(filter.option);
-										setPage(1);
-									}}>
-									<p>{filter.name}</p>
-									<p className="text-sm">({filter.option === "all" ? localProducts?.length : localProducts.filter((product) => product.category === filter.option)?.length})</p>
-								</button>
-							))}
-						</div>
-					</article>
-					<article className="w-4/5 flex flex-col items-center justify-center  border-b-[1px] pb-36">
-						<div className="grid grid-cols-3 gap-6 w-full h-auto">
-							{products?.data.map((product, index) => {
-								return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} sx="!h-[320px]" />;
+							{filters.map((filter, index) => {
+								let count = 0;
+								if (categoriesData) {
+									count = categoriesData[filter?.option];
+								}
+
+								return (
+									<button
+										key={index}
+										className={`font-medium text-md w-full mb-2 flex justify-between items-center hover:text-brown ${selectedFilter === filter.option ? "text-brown" : ""}`}
+										onClick={() => {
+											setSelectedFilter(filter.option);
+											setPage(1);
+										}}>
+										<p>{filter.name}</p>
+										<p className="text-sm">({count})</p>
+									</button>
+								);
 							})}
 						</div>
-						{products?.nextPage && (
-							<button
-								className="bg-[white]  text-black relative mt-16 w-[200px] hover:border-brown border-black h-16 group border-[1px] overflow-hidden"
-								onClick={() => setPage((prev) => ++prev)}>
-								<span className="w-full h-full bg-brown absolute transition-all duration-200 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
-								<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase  font-medium text-sm">load more</p>
-							</button>
-						)}
 					</article>
+					{!isLoading && (
+						<article className="w-4/5 flex flex-col items-center justify-center  border-b-[1px] pb-36">
+							<div className="grid grid-cols-3 gap-6 w-full h-auto">
+								{products?.data.map((product, index) => {
+									return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} sx="!h-[320px]" />;
+								})}
+							</div>
+							{products?.nextPage && (
+								<button
+									className="bg-[white]  text-black relative mt-16 w-[200px] hover:border-brown border-black h-16 group border-[1px] overflow-hidden"
+									onClick={() => setPage((prev) => ++prev)}>
+									<span className="w-full h-full bg-brown absolute transition-all duration-200 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
+									<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase  font-medium text-sm">load more</p>
+								</button>
+							)}
+						</article>
+					)}
+					{isLoading && (
+						<div className="w-full h-[50vh] flex items-center justify-center">
+							<Loading />
+						</div>
+					)}
 				</section>
 
 				{previewProduct && <ProductQuickView setPreviewProduct={setPreviewProduct} previewProduct={previewProduct} />}
 			</main>
 			<Footer />
+			<ToastContainer />
 		</>
 	);
 };

@@ -4,46 +4,47 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import SwiperCore from "swiper";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { ToastContainer } from "react-toastify";
 
 import filters from "@/data/productfilters";
 import { productType } from "@/types/product.type";
-import { useLazyGetAProductRequestQuery } from "@/apis/productsApi";
+import { useLazyGetAProductRequestQuery, useLazyGetProductRecommendationsRequestQuery } from "@/apis/productsApi";
 
 import Header from "@/components/molecules/Header";
 import ProductCard from "@/components/cards/ProductCard";
 import Footer from "@/components/molecules/Footer";
 import ProductQuickView from "@/components/pages/Homepage/ProductQuickView";
-
 import RecentViews from "@/components/molecules/RecentViews";
-
 import ProductDetails from "@/components/pages/Product/ProductDetails";
+import NotFound from "@/components/NotFound";
+import Loading from "@/components/atom/Loading";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 const Product = () => {
 	const [product, setProduct] = useState<productType | null>(null);
-	const [loading, setLoading] = useState(true);
 	const { query } = useRouter();
 	const [previewProduct, setPreviewProduct] = useState<null | productType>(null);
 	const [getAProduct, { data, error, isLoading }] = useLazyGetAProductRequestQuery();
+	const [getRecommendations, { data: recommendationsData }] = useLazyGetProductRecommendationsRequestQuery();
 	const [recommendations, setRecommendations] = useState<productType[]>([]);
 
 	useEffect(() => {
 		if (!query?.slugName) return;
-		setLoading(true);
 		getAProduct(query?.slugName);
 	}, [query]);
 
 	useEffect(() => {
 		if (!data) return;
-		setProduct(data?.product || null);
-		setRecommendations(data?.recommendations);
-		setLoading(false);
+		setProduct(data || null);
+
+		getRecommendations(query?.slugName as string);
 	}, [data]);
 
 	useEffect(() => {
-		// 404 page
-	}, [error]);
+		if (!recommendationsData) return;
+		setRecommendations(recommendationsData);
+	}, [recommendationsData]);
 
 	return (
 		<>
@@ -54,8 +55,8 @@ const Product = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<Header />
-			<main className="w-full min-h-screen bg-white relative">
-				{!loading && product && (
+			<main className="w-full min-h-screen flex items-center justify-center bg-white relative">
+				{!isLoading && product && (
 					<>
 						<section className="w-full h-auto py-5 bg-white " id="hero">
 							<nav className="flex items-center justify-start gap-2 px-10">
@@ -86,12 +87,16 @@ const Product = () => {
 									</div>
 								</article>
 							</section>
-
+							<ToastContainer />
 							<RecentViews setPreviewProduct={setPreviewProduct} product={product} />
 							{previewProduct && <ProductQuickView setPreviewProduct={setPreviewProduct} previewProduct={previewProduct} />}
 						</section>
 					</>
 				)}
+
+				{!isLoading && error && <NotFound />}
+
+				{isLoading && <Loading />}
 			</main>
 			<Footer />
 		</>

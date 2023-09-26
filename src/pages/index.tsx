@@ -1,5 +1,6 @@
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 import filters from "@/data/productfilters";
 import { productType } from "@/types/product.type";
@@ -77,6 +78,7 @@ export default function Home() {
 				{previewProduct && <ProductQuickView setPreviewProduct={setPreviewProduct} previewProduct={previewProduct} />}
 
 				<Testimonials />
+				<ToastContainer />
 			</main>
 			<Footer />
 		</>

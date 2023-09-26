@@ -20,6 +20,12 @@ const productsApi = createApi({
         method: 'GET',
       })
     }),
+    getEditPageProductRequest: builder.query({
+      query: (slugname) => ({
+        url: `/edit/${slugname}`,
+        method: 'GET',
+      })
+    }),
     postAProductRequest: builder.mutation({
       query: ({ name, price, category, store, long_desc, short_desc, images }) => ({
         url: ``,
@@ -28,10 +34,10 @@ const productsApi = createApi({
       })
     }),
     updateAProductRequest: builder.mutation({
-      query: ({ data, productId }) => ({
-        url: `/${productId}`,
+      query: ({ data, slugname }) => ({
+        url: `/${slugname}`,
         method: 'PUT',
-        body: { data }
+        body: data
       })
     }),
     deleteAProductRequest: builder.mutation({
@@ -39,7 +45,26 @@ const productsApi = createApi({
         url: `/${productId}`,
         method: 'DELETE',
       })
-    })
+    }),
+    getCategoriesDataRequest: builder.query<any, void>({
+      query: () => ({
+        url: `/categories`,
+        method: 'GET',
+      })
+    }),
+    getProductRecommendationsRequest: builder.query<any, string>({
+      query: (slugname) => ({
+        url: `/${slugname}/recommendations`,
+        method: 'GET',
+      })
+    }),
+    getRecentProductsRequest: builder.mutation<any, string[]>({
+      query: (recents) => ({
+        url: `/recents`,
+        method: 'POST',
+        body: { recents }
+      })
+    }),
   })
 })
 
@@ -48,7 +73,11 @@ export const {
   useLazyGetAProductRequestQuery,
   useUpdateAProductRequestMutation,
   useDeleteAProductRequestMutation,
-  usePostAProductRequestMutation
+  usePostAProductRequestMutation,
+  useLazyGetEditPageProductRequestQuery,
+  useGetCategoriesDataRequestQuery,
+  useLazyGetProductRecommendationsRequestQuery,
+  useGetRecentProductsRequestMutation
 } = productsApi
 
 export default productsApi

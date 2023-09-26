@@ -2,7 +2,7 @@ import React, { useRef, useCallback, useState } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { productType } from "@/types/product.type";
 import { goPrev, goNext } from "@/utils/swiper";
@@ -10,6 +10,8 @@ import filters from "@/data/productfilters";
 import { increaseItemCount } from "@/slices/cart.slice";
 import useCheckIfProductIsInWishList from "@/hooks/useCheckIfProductIsInWishList";
 import { toggleItemInWishList } from "@/slices/wishlist.slice";
+import { useUserSlice } from "@/slices/user.slice";
+import produceError from "@/utils/produceErrorIfUserIsNotLoggedIn";
 
 import Ratings from "@/components/molecules/Ratings";
 import ItemInCartCount from "@/components/molecules/ItemInCartCount";
@@ -25,6 +27,7 @@ const ProductDetails = ({ product }: { product: productType }) => {
 	const [active, setActive] = useState(0);
 	const [cartLoading, setCartLoading] = useState(false);
 	const [tab, setTab] = useState("description");
+	const { user } = useSelector(useUserSlice);
 
 	const partOfWishList = useCheckIfProductIsInWishList(product?._id as string);
 
@@ -102,7 +105,7 @@ const ProductDetails = ({ product }: { product: productType }) => {
 							className={`absolute -top-4 right-5 h-10 w-10 ${
 								partOfWishList ? "text-white bg-brown hover:text-black border-brown" : "hover:text-white hover:bg-brown hover:border-brown text-brown"
 							}  flex items-center justify-center border-[1px] rounded-full`}
-							onClick={() => dispatch(toggleItemInWishList({ wishlistItem: product }))}>
+							onClick={() => produceError(user?._id, () => dispatch(toggleItemInWishList({ wishlistItem: product })))}>
 							<AiOutlineHeart className="text-xl" />
 						</button>
 					</div>

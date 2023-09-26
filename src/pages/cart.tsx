@@ -1,12 +1,12 @@
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { StaticImageData } from "next/image";
 import Link from "next/link";
 import Image from "next/image";
+import { ToastContainer } from "react-toastify";
 
-import localProducts from "@/data/products";
 import { cartItemType, useCartSelector, removeItem } from "@/slices/cart.slice";
+import useCheckoutCart from "@/hooks/useCheckoutCart";
 import useGetCartSubTotal from "@/hooks/useGetCartSubTotal";
 
 import CartItemNumberModerator from "@/components/molecules/CartItemNumberModerator";
@@ -30,7 +30,8 @@ type cartPageItemType = {
 
 const Cart = () => {
 	const cart = useSelector(useCartSelector);
-	// const [products, setProducts] = useState<cartPageItemType[]>([]);
+	const { checkOut, isLoading } = useCheckoutCart();
+
 	const dispatch = useDispatch();
 	const subtotal = useGetCartSubTotal({ cart });
 	const [agreeToTerms, setAgreeToTerms] = useState(false);
@@ -113,13 +114,20 @@ const Cart = () => {
 										</label>
 									</div>
 
-									<Link
-										href="/checkout"
+									<button
+										disabled={isLoading}
+										onClick={() => checkOut()}
 										className={`mt-4 w-[150px] flex items-center justify-center bg-black ${!agreeToTerms && "opacity-70"} text-white relative w-full group h-12 overflow-hidden`}>
-										<span className={`w-full h-full bg-brown absolute transition-all duration-300 top-0 ${agreeToTerms && "group-hover:left-0"} z-[1] -left-[100%]`}></span>
-										<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Checkout</p>
-									</Link>
+										<span
+											className={`w-full h-full bg-brown absolute transition-all duration-300 top-0 ${agreeToTerms && "group-hover:left-0"} z-[1] ${
+												isLoading ? "left-0" : "-left-[100%]"
+											}`}></span>
+										<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">
+											{isLoading ? "Checking out..." : "Checkout"}
+										</p>
+									</button>
 								</div>
+								<ToastContainer />
 							</article>
 						</article>
 					)}

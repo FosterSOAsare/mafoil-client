@@ -18,9 +18,14 @@ const cartApi = createApi({
         body: { cart }
       })
     }),
+    checkoutCartRequest: builder.query<any, void>({
+      query: () => ({
+        url: "/checkout",
+      }),
+    })
   })
 })
 
-export const { useLazyFetchCartRequestQuery, useUploadCartRequestMutation } = cartApi
+export const { useLazyFetchCartRequestQuery, useUploadCartRequestMutation, useLazyCheckoutCartRequestQuery } = cartApi
 
 export default cartApi

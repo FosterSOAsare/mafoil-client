@@ -19,6 +19,7 @@ import PrimaryButton from "@/components/atom/PrimaryButton";
 import PrimaryTextArea from "@/components/atom/PrimaryTextArea";
 import PrimarySelect from "@/components/atom/PrimarySelect";
 import { Loading1 } from "@/components/atom/Loading";
+import NotFound from "@/components/NotFound";
 
 const NewProduct = () => {
 	const { register, handleSubmit, reset } = useSelectedValuesFromHookForm(productSchema);
@@ -26,7 +27,9 @@ const NewProduct = () => {
 	const [uploadAFile, { error: fileUploadError, data: fileUploadSuccess, isLoading: fileUploadLoading }] = useUploadAFileRequestMutation();
 	const [deleteAFile, { error: fileDeleteError, data: fileDeleteSuccess, isLoading: fileDeleteLoading }] = useDeleteAFileRequestMutation();
 	const { push } = useRouter();
+	const { user } = useSelector(useUserSlice);
 	const [images, setImages] = useState<{ url: string; public_id: string }[]>([]);
+	const [notFound, setNotFound] = useState(false);
 
 	function storeNewProduct(data: any) {
 		let { name, price, category, store, long_desc, short_desc } = data;
@@ -49,6 +52,14 @@ const NewProduct = () => {
 		uploadAFile({ file: e.target.files[0] });
 	}
 
+	useEffect(() => {
+		if (!user?.is_admin) {
+			setNotFound(true);
+			return;
+		}
+		setNotFound(false);
+	}, [user]);
+
 	function deleteImage() {}
 	useEffect(() => {
 		if (!data) return;
@@ -67,46 +78,52 @@ const NewProduct = () => {
 	}, [fileUploadSuccess]);
 	return (
 		<MainPageLayout>
-			<h1 className="text-4xl uppercase font-medium">New Product</h1>
-			<form action="" className="newProduct w-full max-w-[720px] h-auto mt-6 flex flex-col items-center justify-center" onSubmit={handleSubmit(storeNewProduct)}>
-				<PrimaryInput name="name" placeholder="Brims hats for men" register={register} label="Product Name" />
-				<PrimaryInput name="price" placeholder="100.00" register={register} label="Product Price" />
+			{!notFound && (
+				<>
+					<h1 className="text-4xl uppercase font-medium">New Product</h1>
+					<form action="" className="newProduct w-full max-w-[720px] h-auto mt-6 flex flex-col items-center justify-center" onSubmit={handleSubmit(storeNewProduct)}>
+						<PrimaryInput name="name" placeholder="Brims hats for men" register={register} label="Product Name" />
+						<PrimaryInput name="price" placeholder="100.00" register={register} label="Product Price" />
 
-				<div className="w-full flex justify-between gap-4 items-center">
-					<PrimarySelect name="category" label="Category" register={register} options={filters?.map((filter) => filter.name)} />
-					<PrimarySelect name="store" label="Store" register={register} options={stores} />
-				</div>
-				<PrimaryTextArea name="short_desc" placeholder="" label="Short Description (255 characters max) " register={register} />
-				<PrimaryTextArea name="long_desc" placeholder="" label="Long Description(optional)" register={register} sx="!h-64" />
-
-				<div className="w-full h-24 mb-4 grid gap-8 grid-cols-4">
-					{images.map((image, index) => (
-						<div key={index} className="w-full h-full bg-[red] relative">
-							<Image src={image?.url as string} alt="Product Image" fill />
+						<div className="w-full flex justify-between gap-4 items-center">
+							<PrimarySelect name="category" label="Category" register={register} options={filters} />
+							<PrimarySelect name="store" label="Store" register={register} options={stores} />
 						</div>
-					))}
-					{images?.length < 4 && (
-						<div className="w-full h-full ">
-							<input type="file" id="image" className="hidden" onChange={storeImage} />
-							<label
-								htmlFor="image"
-								className={`text-white hover:cursor-pointer hover:bg-brown opacity-80 hover:opacity-100 w-full flex items-center justify-center h-full ${
-									fileUploadLoading ? "bg-brown" : "bg-black"
-								} flex-col`}>
-								{!fileUploadLoading && (
-									<>
-										+<p> Add Image</p>
-									</>
-								)}
-								{fileUploadLoading && <Loading1 />}
-							</label>
-						</div>
-					)}
-				</div>
+						<PrimaryTextArea name="short_desc" placeholder="" label="Short Description (255 characters max) " register={register} />
+						<PrimaryTextArea name="long_desc" placeholder="" label="Long Description(optional)" register={register} sx="!h-64" />
 
-				<PrimaryButton text="Create Product" type="submit" disabled={isLoading || fileDeleteLoading || fileUploadLoading} />
-			</form>
-			<ToastContainer />
+						<div className="w-full h-24 mb-4 grid gap-8 grid-cols-4">
+							{images.map((image, index) => (
+								<div key={index} className="w-full h-full bg-[red] relative">
+									<Image src={image?.url as string} alt="Product Image" fill />
+								</div>
+							))}
+							{images?.length < 4 && (
+								<div className="w-full h-full ">
+									<input type="file" id="image" className="hidden" onChange={storeImage} />
+									<label
+										htmlFor="image"
+										className={`text-white hover:cursor-pointer hover:bg-brown opacity-80 hover:opacity-100 w-full flex items-center justify-center h-full ${
+											fileUploadLoading ? "bg-brown" : "bg-black"
+										} flex-col`}>
+										{!fileUploadLoading && (
+											<>
+												+<p> Add Image</p>
+											</>
+										)}
+										{fileUploadLoading && <Loading1 />}
+									</label>
+								</div>
+							)}
+						</div>
+
+						<PrimaryButton text="Create Product" type="submit" disabled={isLoading || fileDeleteLoading || fileUploadLoading} />
+					</form>
+					<ToastContainer />
+				</>
+			)}
+
+			{notFound && <NotFound />}
 		</MainPageLayout>
 	);
 };

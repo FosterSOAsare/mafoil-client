@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { Loading1 } from "./Loading";
 
 type primaryButtonType = {
 	text: string;
@@ -16,12 +17,13 @@ const PrimaryButton = ({ text, handleClick, href, sx = "", type = "button", disa
 			{!href && (
 				<button
 					type={type}
-					className={`${sx} ${disabled ? "opacity-40" : "opacity-80 hover:opacity-100 hover:bg-brown"}  w-full h-12 bg-black mb-4  text-white`}
+					className={`${sx} ${disabled ? "opacity-40" : "opacity-80 hover:opacity-100 hover:bg-brown"} flex items-center justify-center  w-full h-12 bg-black mb-4  text-white`}
 					onClick={() => {
 						if (handleClick) handleClick();
 					}}
 					disabled={disabled}>
-					{text}
+					{disabled && <Loading1 />}
+					{!disabled && text}
 				</button>
 			)}
 			{href && (

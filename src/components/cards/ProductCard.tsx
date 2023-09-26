@@ -1,21 +1,41 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
+import { useUserSlice } from "@/slices/user.slice";
 import { productType } from "@/types/product.type";
 import useCheckIfProductIsInWishList from "@/hooks/useCheckIfProductIsInWishList";
 import { toggleItemInWishList } from "@/slices/wishlist.slice";
+import { increaseItemCount } from "@/slices/cart.slice";
+import produceError from "@/utils/produceErrorIfUserIsNotLoggedIn";
 
 import Ratings from "../molecules/Ratings";
+import { Loading1 } from "../atom/Loading";
 
 import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 
 const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: productType; setPreviewProduct: React.Dispatch<React.SetStateAction<productType | null>>; sx?: string }) => {
 	const { name, price, rating, totalRatings, images, slugname, _id } = product;
+	const { user } = useSelector(useUserSlice);
 	const [showContent, setShowContent] = useState(false);
 	const partOfWishList = useCheckIfProductIsInWishList(product?._id as string);
 	const dispatch = useDispatch();
+
+	// For controlling the loading state
+	const [addingToCart, setAddingToCart] = useState(false);
+
+	function addToCart() {
+		setAddingToCart(true);
+
+		setTimeout(() => {
+			dispatch(increaseItemCount({ product: product }));
+			setAddingToCart(false);
+			toast.success("Item successfully added to cart", { autoClose: 1500 });
+		}, 2000);
+	}
+
 	return (
 		<article className="w-full h-auto bg-white ">
 			<div className={`w-full h-[400px] ${sx} overflow-hidden`}>
@@ -25,17 +45,19 @@ const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: product
 					</div>
 					<aside className="absolute top-4 right-4  w-auto h-auto">
 						<button
-							onClick={() => dispatch(toggleItemInWishList({ wishlistItem: product }))}
+							onClick={() => produceError(user?._id, dispatch(toggleItemInWishList({ wishlistItem: product })))}
 							className={`w-8 h-8 transition-all duration-300 ${showContent ? "scale-100" : "scale-0"} ${
 								partOfWishList ? "bg-brown hover:text-black  text-white" : "hover:bg-brown bg-white  text-black  hover:text-white"
 							} mb-2 flex items-center justify-center`}>
 							<AiOutlineHeart className="text-lg" />
 						</button>
 						<button
-							className={`${
-								showContent ? "scale-100" : "scale-0"
-							} w-8 h-8 bg-white transition-all duration-300 delay-100 hover:bg-brown hover:text-white text-black flex items-center justify-center`}>
-							<AiOutlineShoppingCart className="text-lg" />
+							onClick={() => produceError(user?._id, addToCart)}
+							className={`${showContent ? "scale-100" : "scale-0"} w-8 h-8 ${
+								addingToCart ? "bg-black" : "bg-white"
+							} transition-all duration-300 delay-100 hover:bg-brown hover:text-white text-black flex items-center justify-center`}>
+							{!addingToCart && <AiOutlineShoppingCart className="group-hover:opacity-100 group-hover:text-white text-xl" />}
+							{addingToCart && <Loading1 sx="!w-5 !h-5" />}
 						</button>
 					</aside>
 					<aside className={`absolute ${showContent ? "bottom-4" : "-bottom-[20%]"} transition-all duration-300 w-[93%] left-0 gap-4 right-0 mx-auto flex items-center h-12`}>
