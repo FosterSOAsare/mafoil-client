@@ -12,6 +12,7 @@ import wishlistApi from "./apis/wishListApi";
 import orderApi from "./apis/orderApi";
 import transactionApi from "./apis/transactionsApi";
 import notificatonsApi from "./apis/notificationsApi";
+import newsletterApi from "./apis/newsletterApi";
 
 const middlewares: Array<Middleware> = [
   authApi.middleware,
@@ -23,6 +24,7 @@ const middlewares: Array<Middleware> = [
   orderApi.middleware,
   transactionApi.middleware,
   notificatonsApi.middleware,
+  newsletterApi.middleware
 ]
 
 const makeStore = () => (
@@ -40,7 +42,8 @@ const makeStore = () => (
       [wishlistApi.reducerPath]: wishlistApi.reducer,
       [orderApi.reducerPath]: orderApi.reducer,
       [transactionApi.reducerPath]: transactionApi.reducer,
-      [notificatonsApi.reducerPath]: notificatonsApi.reducer
+      [notificatonsApi.reducerPath]: notificatonsApi.reducer,
+      [newsletterApi.reducerPath]: newsletterApi.reducer
     },
 
     middleware: (getDefaultMiddleware: any) => (
