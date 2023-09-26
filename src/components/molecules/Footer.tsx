@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -7,7 +6,6 @@ import { toast } from "react-toastify";
 import { setData, useUserSlice } from "@/slices/user.slice";
 
 import { FiMail } from "react-icons/fi";
-import { useModerateNewsletterSubscriptionMutation } from "@/apis/newsletterApi";
 import { useModerateNewsletterSubscriptionMutation } from "@/apis/newsletterApi";
 
 const Footer = () => {
