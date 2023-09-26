@@ -22,9 +22,29 @@ const userApi = createApi({
         method: "POST",
         body: { amount, address }
       }),
-    })
+    }),
+    updateUserDetailsRequest: builder.mutation({
+      query: ({ fullname }) => ({
+        url: "/details",
+        method: 'PUT',
+        body: { fullname }
+      }),
+    }),
+    updateUserPasswordRequest: builder.mutation({
+      query: ({ newpassword, oldpassword }) => ({
+        url: "/password",
+        method: 'PUT',
+        body: { newpassword, oldpassword }
+      }),
+    }),
   })
 })
 
-export const { useFetchLoggedInUserRequestQuery, useLazyActivateUserAccountRequestQuery, useWithdrawFundRequestMutation } = userApi
+export const {
+  useFetchLoggedInUserRequestQuery,
+  useLazyActivateUserAccountRequestQuery,
+  useWithdrawFundRequestMutation,
+  useUpdateUserDetailsRequestMutation,
+  useUpdateUserPasswordRequestMutation
+} = userApi
 export default userApi
