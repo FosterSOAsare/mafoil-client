@@ -127,7 +127,7 @@ const ProductDetails = ({ product }: { product: productType }) => {
 						className={`bg-black ${
 							count === 0 ? "opacity-70" : "opacity-100 hover:bg-brown"
 						}  text-white gap-3 w-full h-14 flex items-center justify-center  group transition-all duration-200`}
-						onClick={addToCart}
+						onClick={() => produceError(user?._id, addToCart)}
 						disabled={count === 0}>
 						{cartLoading && <Loading1 />}
 						<p className={`uppercase inline ${count > 0 && "group-hover:text-[14px]"} text-[13px] tracking-[2px]  animate-fadeIn infinite   transition-all duration-150`}>Add to cart</p>
