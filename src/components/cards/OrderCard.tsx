@@ -11,7 +11,7 @@ const OrderCard = ({ createdAt, totalPrice, totalProfit, status, avgProfitPercen
 		<div className="w-full h-auto flex justify-start  items-center gap-4 border-b-[1px]">
 			<div className={"w-1/5 text-center py-4 border-l-[1px] flex items-center justify-center"}>
 				{status === "pending" && <AiOutlineLoading3Quarters className="text-[grey]" />}
-				{status === "complete" && <BsCheckLg className="text-green-500" />}
+				{status === "completed" && <BsCheckLg className="text-green-500" />}
 				{status === "cancelled" && <AiOutlineClose className="text-red-600" />}
 			</div>
 			<p className="w-1/5 text-center py-4 border-l-[1px]">{createDateFromString(createdAt)}</p>

@@ -90,7 +90,7 @@ const OrderPage = () => {
 									<p className="w-[15%] text-center">TOTAL PRICE</p>
 									{data?.status !== "cancelled" && (
 										<>
-											<p className="w-[15%] text-center">{data?.status == "complete" ? "TOTAL" : "EXPECTED"} PROFIT</p>
+											<p className="w-[15%] text-center">{data?.status == "complete" ? "TOTAL" : data?.status === "pending" ? "EXPECTED" : ""} PROFIT</p>
 											<p className="w-[15%] text-center">PROFIT PERCENT</p>
 										</>
 									)}
@@ -128,7 +128,7 @@ const OrderPage = () => {
 									{data?.status !== "cancelled" && (
 										<>
 											<p className={`font-medium text-green-600`}>
-												{data.status === "complete" ? "Total" : "Expected"} Profit: GH₵
+												{data.status === "complete" ? "Total" : data?.status === "pending" ? "Expected" : ""} Profit: GH₵
 												{data?.totalProfit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" "}
 											</p>
 											<p className="font-medium opacity-60 text-sm">
