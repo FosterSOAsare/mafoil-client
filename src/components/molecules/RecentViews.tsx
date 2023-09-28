@@ -30,7 +30,7 @@ const RecentViews = ({ setPreviewProduct, product }: { setPreviewProduct: any; p
 	}, [product]);
 
 	useEffect(() => {
-		setRecentlyViewed(data?.filter((item: productType) => item.slugname !== product.slugname));
+		setRecentlyViewed(data?.filter((item: productType, index: number) => item.slugname !== product.slugname).filter((item: productType, index: number) => index < 4));
 	}, [data]);
 	return (
 		<>
