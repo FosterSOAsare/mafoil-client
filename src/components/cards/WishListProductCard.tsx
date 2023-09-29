@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { productType } from "@/types/product.type";
 import { toggleItemInWishList } from "@/slices/wishlist.slice";
 import { increaseItemCount } from "@/slices/cart.slice";
+import produceError from "@/utils/produceErrorIfUserIsNotLoggedIn";
 
 import Ratings from "../molecules/Ratings";
 import { Loading1 } from "../atom/Loading";
@@ -24,26 +25,26 @@ const WishListProductCard = ({ wishlistItem, setPreviewProduct, sx = "" }: { wis
 	const dispatch = useDispatch();
 	const user = useSelector(useUserSlice);
 
-	const toggleWishListItem = useProduceErrorIfUserIsNotLoggedIn(user?.id, dispatch(toggleItemInWishList({ wishlistItem })));
-	console.log(toggleWishListItem);
+	// const toggleWishListItem = useProduceErrorIfUserIsNotLoggedIn();
+
 	// const { user } = useSelector(useUserSlice);
 
 	// For controlling the loading state
 	const [addingToCart, setAddingToCart] = useState(false);
 
-	// function addToCart() {
-	// 	setAddingToCart(true);
-	// 	if (user._id) {
-	// 		toast.error("Functionality is reserved for logged in users . Please login into your account");
-	// 		return;
-	// 	}
+	function addToCart() {
+		setAddingToCart(true);
+		if (user._id) {
+			toast.error("Functionality is reserved for logged in users . Please login into your account");
+			return;
+		}
 
-	// 	setTimeout(() => {
-	// 		dispatch(increaseItemCount({ product: wishlistItem }));
-	// 		setAddingToCart(false);
-	// 		toast.success("Item successfully added to cart", { autoClose: 1500 });
-	// 	}, 2000);
-	// }
+		setTimeout(() => {
+			dispatch(increaseItemCount({ product: wishlistItem }));
+			setAddingToCart(false);
+			toast.success("Item successfully added to cart", { autoClose: 1500 });
+		}, 2000);
+	}
 	return (
 		<article className="w-full h-auto bg-white ">
 			<div className={`w-full h-[300px] ${sx} overflow-hidden`}>
@@ -53,7 +54,7 @@ const WishListProductCard = ({ wishlistItem, setPreviewProduct, sx = "" }: { wis
 					</div>
 					<aside className="absolute top-4 right-4  w-auto h-auto">
 						<button
-							onClick={() => {}}
+							onClick={() => produceError(user?.id, () => dispatch(toggleItemInWishList({ wishlistItem })))}
 							className={`w-8 h-8 hover:bounce rounded-full transition-all duration-300 hover:bg-brown bg-white  text-black  hover:text-white mb-2 flex items-center justify-center`}>
 							<RiDeleteBin6Line className="text-md" />
 						</button>
@@ -63,7 +64,7 @@ const WishListProductCard = ({ wishlistItem, setPreviewProduct, sx = "" }: { wis
 							className={`border-border border-[1px] hover:border-brown ${
 								addingToCart ? "bg-brown" : "bg-white"
 							} flex items-center justify-center hover:bg-brown  text-black relative w-10 h-10 group`}
-							onClick={() => {}}
+							onClick={() => produceError(user?.id, addToCart)}
 							disabled={addingToCart}>
 							{!addingToCart && <BsCartPlus className="opacity-50 group-hover:opacity-100 group-hover:text-white text-xl" />}
 							{addingToCart && <Loading1 />}
