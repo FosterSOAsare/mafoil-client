@@ -17,17 +17,12 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { AiOutlineEye } from "react-icons/ai";
 import { BsCartPlus } from "react-icons/bs";
 import { useUserSlice } from "@/slices/user.slice";
-import useProduceErrorIfUserIsNotLoggedIn from "@/hooks/useProduceErrorIfUserIsNotLoggedIn";
 
 const WishListProductCard = ({ wishlistItem, setPreviewProduct, sx = "" }: { wishlistItem: productType; setPreviewProduct: React.Dispatch<React.SetStateAction<productType | null>>; sx?: string }) => {
 	const { name, price, rating, totalRatings, images, slugname } = wishlistItem;
 	const [showContent, setShowContent] = useState(false);
 	const dispatch = useDispatch();
-	const user = useSelector(useUserSlice);
-
-	// const toggleWishListItem = useProduceErrorIfUserIsNotLoggedIn();
-
-	// const { user } = useSelector(useUserSlice);
+	const { user } = useSelector(useUserSlice);
 
 	// For controlling the loading state
 	const [addingToCart, setAddingToCart] = useState(false);
@@ -54,7 +49,7 @@ const WishListProductCard = ({ wishlistItem, setPreviewProduct, sx = "" }: { wis
 					</div>
 					<aside className="absolute top-4 right-4  w-auto h-auto">
 						<button
-							onClick={() => produceError(user?.id, () => dispatch(toggleItemInWishList({ wishlistItem })))}
+							onClick={() => produceError(user?._id, () => dispatch(toggleItemInWishList({ wishlistItem })))}
 							className={`w-8 h-8 hover:bounce rounded-full transition-all duration-300 hover:bg-brown bg-white  text-black  hover:text-white mb-2 flex items-center justify-center`}>
 							<RiDeleteBin6Line className="text-md" />
 						</button>
@@ -64,7 +59,7 @@ const WishListProductCard = ({ wishlistItem, setPreviewProduct, sx = "" }: { wis
 							className={`border-border border-[1px] hover:border-brown ${
 								addingToCart ? "bg-brown" : "bg-white"
 							} flex items-center justify-center hover:bg-brown  text-black relative w-10 h-10 group`}
-							onClick={() => produceError(user?.id, addToCart)}
+							onClick={() => produceError(user?._id, addToCart)}
 							disabled={addingToCart}>
 							{!addingToCart && <BsCartPlus className="opacity-50 group-hover:opacity-100 group-hover:text-white text-xl" />}
 							{addingToCart && <Loading1 />}

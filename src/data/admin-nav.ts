@@ -28,6 +28,6 @@ const adminNav = [{
   href: '/admin/settings',
   name: 'Settings',
   icon: GoGear
-},]
+}]
 
 export default adminNav
