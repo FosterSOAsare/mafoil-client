@@ -20,7 +20,7 @@ const OrderCard = ({ createdAt, totalPrice, totalProfit, status, avgProfitPercen
 			<p className="w-1/5 text-center py-4 border-l-[1px] ">{avgProfitPercent}%</p>
 
 			<div className="w-12 flex items-center justify-center border-l-[1px]">
-				<Link href={`/account/orders/${_id}`} className="h-7 w-7 flex items-center justify-center hover:bg-slate-200 rounded-full" title="View Order">
+				<Link href={`/orders/${_id}`} className="h-7 w-7 flex items-center justify-center hover:bg-slate-200 rounded-full" title="View Order">
 					<AiOutlineEye />
 				</Link>
 			</div>

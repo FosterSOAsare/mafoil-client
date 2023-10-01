@@ -8,10 +8,13 @@ const transactionApi = createApi({
   endpoints: (builder) => ({
     fetchTransactions: builder.query<string, any>({
       query: (sort) => `?filter=${sort}`
-    })
+    }),
+    adminFetchTransactions: builder.query<string, any>({
+      query: (sort) => `/admin?filter=${sort}`
+    }),
   })
 
 })
 
-export const { useLazyFetchTransactionsQuery } = transactionApi
+export const { useLazyFetchTransactionsQuery, useLazyAdminFetchTransactionsQuery } = transactionApi
 export default transactionApi

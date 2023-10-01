@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import { useUserSlice } from "@/slices/user.slice";
-import { useLazyFetchTransactionsQuery } from "@/apis/transactionsApi";
+import { useLazyAdminFetchTransactionsQuery } from "@/apis/transactionsApi";
 
 import Loading from "@/components/atom/Loading";
 import AdminLayout from "@/components/layouts/admin.layout";
@@ -12,7 +12,7 @@ const transactions = () => {
 	const { user } = useSelector(useUserSlice);
 	const [sort, setSort] = useState("all");
 
-	const [fetchTransaction, { data, error, isLoading }]: any = useLazyFetchTransactionsQuery();
+	const [fetchTransaction, { data, error, isLoading }]: any = useLazyAdminFetchTransactionsQuery();
 
 	useEffect(() => {
 		if (!user._id) return;

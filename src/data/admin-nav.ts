@@ -24,10 +24,12 @@ const adminNav = [{
   href: '/admin/transactions',
   name: 'Transactions',
   icon: AiOutlineTransaction
-}, {
-  href: '/admin/settings',
-  name: 'Settings',
-  icon: GoGear
-}]
+},
+  //  {
+  //   href: '/admin/settings',
+  //   name: 'Settings',
+  //   icon: GoGear
+  // }
+]
 
 export default adminNav
