@@ -42,12 +42,19 @@ const Notifications = ({ setShowNotifications }: { setShowNotifications: React.D
 			</div>
 
 			<div className="h-[110vh] w-full">
-				{notifications?.map((notification: notificationType, index: number) => (
-					<button key={index} className="w-full flex items-center justify-start p-2 text-sm text-left border-b-[1px] mb-2 gap-2" onClick={() => markAsRead(notification._id)}>
-						{notification?.status === "unread" && <span className="w-[5px] h-[5px] bg-blue  rounded-full block"></span>}
-						<p className="w-[calc(100%-7px)]">{notification.desc}</p>
-					</button>
-				))}
+				{notifications?.length > 0 &&
+					notifications?.map((notification: notificationType, index: number) => (
+						<button key={index} className="w-full flex items-center justify-start p-2 text-sm text-left border-b-[1px] mb-2 gap-2" onClick={() => markAsRead(notification._id)}>
+							{notification?.status === "unread" && <span className="w-[5px] h-[5px] bg-blue  rounded-full block"></span>}
+							<p className="w-[calc(100%-7px)]">{notification.desc}</p>
+						</button>
+					))}
+
+				{notifications?.length === 0 && (
+					<div className="flex items-center justify-center h-full w-full">
+						<p>There are currently no notifications</p>
+					</div>
+				)}
 			</div>
 
 			<ToastContainer />
