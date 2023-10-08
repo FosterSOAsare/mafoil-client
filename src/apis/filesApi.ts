@@ -21,7 +21,7 @@ const filesApi = createApi({
     }),
     deleteAFileRequest: builder.mutation({
       query: ({ public_id }) => ({
-        url: `/${public_id}`,
+        url: `/?public_id=${public_id}`,
         method: 'DELETE',
       })
     })

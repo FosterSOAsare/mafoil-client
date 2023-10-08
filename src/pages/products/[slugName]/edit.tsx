@@ -13,7 +13,6 @@ import filters from "@/data/productfilters";
 import { useUpdateAProductRequestMutation } from "@/apis/productsApi";
 import { useDeleteAFileRequestMutation } from "@/apis/filesApi";
 import { useLazyGetEditPageProductRequestQuery } from "@/apis/productsApi";
-
 import useUploadAnImageHook from "@/hooks/useUploadAnImageHook";
 
 import MainPageLayout from "@/components/layouts/mainpage.layout";
@@ -23,17 +22,19 @@ import PrimaryTextArea from "@/components/atom/PrimaryTextArea";
 import PrimarySelect from "@/components/atom/PrimarySelect";
 import Loading, { Loading1 } from "@/components/atom/Loading";
 import NotFound from "@/components/NotFound";
+import ProductFormImageComponent from "@/components/pages/Product/ProductFormImageComponent";
 
 const NewProduct = () => {
-	const { register, handleSubmit, reset } = useSelectedValuesFromHookForm(productSchema);
-	const [updateAProductRequest, { error, data, isLoading }] = useUpdateAProductRequestMutation();
-	const { query } = useRouter();
-	const [deleteAFile, { error: fileDeleteError, data: fileDeleteSuccess, isLoading: fileDeleteLoading }] = useDeleteAFileRequestMutation();
-	const [getAProduct, { data: productData, error: productError, isLoading: productIsLoading }] = useLazyGetEditPageProductRequestQuery();
-	const { push } = useRouter();
 	const { user } = useSelector(useUserSlice);
+	const { query, push } = useRouter();
 	const [images, setImages] = useState<{ url: string; public_id: string }[]>([]);
 	const [notFound, setNotFound] = useState(false);
+
+	const { register, handleSubmit, reset } = useSelectedValuesFromHookForm(productSchema);
+	const [getAProduct, { data: productData, error: productError, isLoading: productIsLoading }] = useLazyGetEditPageProductRequestQuery();
+	const [deleteAFile, { error: fileDeleteError, data: fileDeleteSuccess, isLoading: fileDeleteLoading }] = useDeleteAFileRequestMutation();
+	const [updateAProductRequest, { error, data, isLoading }] = useUpdateAProductRequestMutation();
+
 	const { storeImage, fileUploadLoading, fileUploadError } = useUploadAnImageHook((data: any) => setImages((prev) => [...prev, data]));
 
 	// Fetch product data
@@ -84,7 +85,7 @@ const NewProduct = () => {
 	}, [data]);
 
 	return (
-		<MainPageLayout>
+		<>
 			{!notFound && !productIsLoading && (
 				<>
 					<h1 className="text-4xl uppercase font-medium">Edit Product</h1>
@@ -100,11 +101,10 @@ const NewProduct = () => {
 						<PrimaryTextArea name="long_desc" placeholder="" label="Long Description(optional)" register={register} sx="!h-64" />
 
 						<div className="w-full h-28 mb-4 grid gap-8 grid-cols-4">
-							{images.map((image, index) => (
-								<div key={index} className="w-full h-full bg-[#F5F2EC] relative">
-									<Image src={image?.url as string} alt="Product Image" fill />
-								</div>
-							))}
+							{images.map((image, index) => {
+								console.log(image);
+								return <ProductFormImageComponent key={index} url={image?.url as string} public_id={image.public_id} setImages={setImages} />;
+							})}
 							{images?.length < 4 && (
 								<div className="w-full h-full ">
 									<input type="file" id="image" className="hidden" onChange={storeImage} />
@@ -135,8 +135,16 @@ const NewProduct = () => {
 				</div>
 			)}
 			{notFound && <NotFound />}
+		</>
+	);
+};
+
+const index = () => {
+	return (
+		<MainPageLayout>
+			<NewProduct />
 		</MainPageLayout>
 	);
 };
 
-export default NewProduct;
+export default index;

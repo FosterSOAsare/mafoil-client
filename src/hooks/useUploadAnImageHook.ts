@@ -17,8 +17,6 @@ const useUploadAnImageHook = (cb?: any) => {
     }
 
     uploadAFile({ file: compressed });
-
-
   }
 
   useEffect(() => {
