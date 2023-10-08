@@ -29,15 +29,11 @@ const WishListProductCard = ({ wishlistItem, setPreviewProduct, sx = "" }: { wis
 
 	function addToCart() {
 		setAddingToCart(true);
-		if (user._id) {
-			toast.error("Functionality is reserved for logged in users . Please login into your account");
-			return;
-		}
 
 		setTimeout(() => {
 			dispatch(increaseItemCount({ product: wishlistItem }));
-			setAddingToCart(false);
 			toast.success("Item successfully added to cart", { autoClose: 1500 });
+			setAddingToCart(false);
 		}, 2000);
 	}
 	return (

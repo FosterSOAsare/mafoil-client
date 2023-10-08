@@ -47,7 +47,7 @@ const OrderPage = () => {
 			<Header />
 			<main className="w-full min-h-screen bg-white relative pb-6">
 				<section className="w-full h-[30vh] flex items-center justify-center flex-col " id="hero">
-					<h1 className="text-4xl mb-6 font-bold">MY ORDER</h1>
+					<h1 className="text-4xl mb-6 font-bold">AN ORDER</h1>
 
 					{data?.status !== "cancelled" && !isLoading && (
 						<div className="flex items-center justify-between h-auto w-1/3 overflow-hidden rounded-[5px]">

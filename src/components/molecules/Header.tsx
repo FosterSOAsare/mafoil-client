@@ -72,8 +72,8 @@ const Header = () => {
 				<Link href="/" className="font-playfair px-4 text-4xl font-medium">
 					Mafo.il
 				</Link>
-				<Link href="/" className="text-sm font-medium hover:text-brown">
-					BLOG
+				<Link href="/faq" className="text-sm font-medium hover:text-brown">
+					FAQ
 				</Link>
 				<Link href="/" className="text-sm font-medium hover:text-brown">
 					ABOUT US

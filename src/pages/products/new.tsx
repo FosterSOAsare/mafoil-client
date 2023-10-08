@@ -20,6 +20,7 @@ import PrimaryTextArea from "@/components/atom/PrimaryTextArea";
 import PrimarySelect from "@/components/atom/PrimarySelect";
 import { Loading1 } from "@/components/atom/Loading";
 import NotFound from "@/components/NotFound";
+import compressImage from "@/utils/compressImage";
 
 const NewProduct = () => {
 	const { register, handleSubmit, reset } = useSelectedValuesFromHookForm(productSchema);
@@ -47,9 +48,17 @@ const NewProduct = () => {
 	useCreateErrorFromApiRequest(fileUploadError);
 	useCreateErrorFromApiRequest(fileDeleteError);
 
-	function storeImage(e: any) {
+	async function storeImage(e: any) {
 		if (e.target.files.length === 0) return;
-		uploadAFile({ file: e.target.files[0] });
+		console.log(e.target.files[0]);
+
+		let compressed = await compressImage(e.target.files[0]);
+		if (compressed?.error) {
+			toast.error("An error has occurred", { autoClose: 1500 });
+			return;
+		}
+
+		uploadAFile({ file: compressed });
 	}
 
 	useEffect(() => {
