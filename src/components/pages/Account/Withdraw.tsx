@@ -40,7 +40,7 @@ const Withdraw = ({ closeModal }: { closeModal: React.Dispatch<React.SetStateAct
 					<PrimaryInput name="address" placeholder="" register={register} label="Enter USDT(TRC-20) address" />
 					<PrimaryInput name="amount" placeholder="100.00" register={register} label="Enter Amount To Withdraw" />
 
-					<PrimaryButton text="WITHDRAW FUNDS" type="submit" />
+					<PrimaryButton text="WITHDRAW FUNDS" type="submit" disabled={isLoading} />
 					<SecondaryButton text="CANCEL" handleClick={() => closeModal(false)} />
 				</form>
 			</div>

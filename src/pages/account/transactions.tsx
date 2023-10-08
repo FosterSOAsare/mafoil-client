@@ -21,7 +21,7 @@ const transactions = () => {
 	const [showWithdrawalModal, setShowWithdrawalModal] = useState(false);
 	const [showDepositModal, setShowDepositModal] = useState(false);
 
-	const [fetchTransaction, { data, error, isLoading }]: any = useLazyFetchTransactionsQuery();
+	const [fetchTransaction, { data, error, isFetching: isLoading }]: any = useLazyFetchTransactionsQuery();
 
 	useEffect(() => {
 		if (!user._id) return;
@@ -52,7 +52,7 @@ const transactions = () => {
 				</div>
 
 				{isLoading && (
-					<div className="w-1/2 h-[20vh] flex items-center justify-center">
+					<div className="w-1/4 h-[20vh] flex items-center justify-center">
 						<Loading sx="!w-8 !h-8" />
 					</div>
 				)}

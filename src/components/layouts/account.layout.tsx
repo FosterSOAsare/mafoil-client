@@ -12,7 +12,7 @@ import ProtectedRoute from "../ProtectedRoute";
 const AccountLayout = ({ children, active, title }: { children: ReactNode; active: string; title: string }) => {
 	const { user } = useSelector(useUserSlice);
 	return (
-		<ProtectedRoute loginRequired={true}>
+		<>
 			<Header />
 			<div className="w-full max-w-7xl mx-auto flex items-center justify-end h-12">
 				<Link href="/account/transactions" className="font-medium hover:text-brown">
@@ -41,8 +41,18 @@ const AccountLayout = ({ children, active, title }: { children: ReactNode; activ
 				<ToastContainer />
 			</div>
 			<Footer />
+		</>
+	);
+};
+
+const index = ({ children, active, title }: { children: ReactNode; active: string; title: string }) => {
+	return (
+		<ProtectedRoute loginRequired={true}>
+			<AccountLayout active={active} title={title}>
+				{children}
+			</AccountLayout>
 		</ProtectedRoute>
 	);
 };
 
-export default AccountLayout;
+export default index;

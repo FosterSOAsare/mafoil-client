@@ -20,7 +20,11 @@ const AccountComponent = () => {
 							</Link>
 						</p>
 					</div>
-
+					{user?.is_admin && (
+						<Link href="/admin" className="block px-4 pt-2 p-[4px] text-sm text-black hover:text-brown">
+							Admin
+						</Link>
+					)}
 					<Link href="/account/transactions" className="block px-4 pt-2 p-[4px] text-sm text-black hover:text-brown">
 						Transactions
 					</Link>

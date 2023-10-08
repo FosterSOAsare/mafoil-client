@@ -75,7 +75,7 @@ const Header = () => {
 				<Link href="/faq" className="text-sm font-medium hover:text-brown">
 					FAQ
 				</Link>
-				<Link href="/" className="text-sm font-medium hover:text-brown">
+				<Link href="/about" className="text-sm font-medium hover:text-brown">
 					ABOUT US
 				</Link>
 			</nav>

@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children, loginRequired = false }: ProtectedRouteProps
 
 	useEffect(() => {
 		if (!isLoading && !loginRequired && !error && user?._id) {
-			router.replace("/app");
+			router.replace("/");
 		}
 		if (!isLoading && loginRequired && (!user?._id || error)) {
 			router.replace("/auth/login");

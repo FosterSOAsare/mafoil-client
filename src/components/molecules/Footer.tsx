@@ -48,16 +48,16 @@ const Footer = () => {
 					<div className="w-1/2">
 						<h3 className="uppercase mb-6 font-medium">Account</h3>
 						<nav className=" ">
-							<Link href="/" className="block hover:underline text-black hover:text-brown text-sm mb-2">
+							<Link href="/account" className="block hover:underline text-black hover:text-brown text-sm mb-2">
 								Profile
 							</Link>
-							<Link href="/" className="block hover:underline text-black hover:text-brown text-sm mb-2">
+							<Link href="/products" className="block hover:underline text-black hover:text-brown text-sm mb-2">
 								Products
 							</Link>
-							<Link href="/" className="block hover:underline text-black hover:text-brown text-sm mb-2 ">
+							<Link href="/cart" className="block hover:underline text-black hover:text-brown text-sm mb-2 ">
 								Cart
 							</Link>
-							<Link href="/" className="block hover:underline text-black hover:text-brown text-sm mb-2">
+							<Link href="/wishlist" className="block hover:underline text-black hover:text-brown text-sm mb-2">
 								Wish List
 							</Link>
 						</nav>
@@ -65,16 +65,16 @@ const Footer = () => {
 					<div className="w-1/2">
 						<h3 className="uppercase mb-6 font-medium">HELP</h3>
 						<nav className="text-black hover:text-brown">
-							<Link href="/" className="block hover:underline text-black hover:text-brown text-sm mb-2">
+							<Link href="/faq" className="block hover:underline text-black hover:text-brown text-sm mb-2">
 								FAQ
 							</Link>
-							<Link href="/" className="block hover:underline text-black hover:text-brown text-sm mb-2">
+							<Link href="/tcs" className="block hover:underline text-black hover:text-brown text-sm mb-2">
 								Terms and conditions
 							</Link>
-							<Link href="/" className="block hover:underline text-black hover:text-brown text-sm mb-2">
+							<Link href="/contact" className="block hover:underline text-black hover:text-brown text-sm mb-2">
 								Contact
 							</Link>
-							<Link href="/" className="block hover:underline text-black hover:text-brown text-sm mb-2">
+							<Link href="/about" className="block hover:underline text-black hover:text-brown text-sm mb-2">
 								About us
 							</Link>
 						</nav>

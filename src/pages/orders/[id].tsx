@@ -5,11 +5,12 @@ import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
 
 import { useLazyFetchAnOrderRequestQuery, useLazyCancelOrderRequestQuery } from "@/apis/orderApi";
+import useCreateErrorFromApiRequest from "@/hooks/useCreateErrorFromApiRequest";
 
 import Header from "@/components/molecules/Header";
 import Footer from "@/components/molecules/Footer";
 import Loading from "@/components/atom/Loading";
-import useCreateErrorFromApiRequest from "@/hooks/useCreateErrorFromApiRequest";
+import { Loading1 } from "@/components/atom/Loading";
 
 const OrderPage = () => {
 	const { query, isReady } = useRouter();
@@ -135,9 +136,12 @@ const OrderPage = () => {
 													className={`w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:-left-0 z-[1] ${
 														cancelOrderLoading ? "left-0" : "-left-[100%]"
 													}`}></span>
-												<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">
-													{cancelOrderLoading ? "Cancelling Order..." : "Cancel Order"}
-												</p>
+
+												{cancelOrderLoading ? (
+													<Loading1 />
+												) : (
+													<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Cancel Order</p>
+												)}
 											</button>
 										</div>
 									)}

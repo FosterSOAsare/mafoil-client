@@ -7,6 +7,7 @@ import useGetCartSubTotal from "@/hooks/useGetCartSubTotal";
 import useCheckoutCart from "@/hooks/useCheckoutCart";
 
 import PreviewCartItemCard from "../cards/PreviewCartItemCard";
+import { Loading1 } from "../atom/Loading";
 
 import { AiOutlineClose } from "react-icons/ai";
 import { productType } from "@/types/product.type";
@@ -71,7 +72,8 @@ const CartPreview = ({ setShowCart }: { setShowCart: React.Dispatch<React.SetSta
 									className={`w-full h-full bg-brown absolute transition-all duration-300 top-0 ${agreeToTerms && "group-hover:left-0"} z-[1] ${
 										isLoading ? "left-0" : "-left-[100%]"
 									}`}></span>
-								<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">{isLoading ? "Checking out..." : "Checkout"}</p>
+								{isLoading && <Loading1 />}
+								{!isLoading && <p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Checkout</p>}
 							</button>
 
 							<Link href="/cart" className={`mt-4 flex items-center justify-center border-black text-black hover:border-brown border-[1px] relative w-full group h-12 overflow-hidden`}>

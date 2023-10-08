@@ -11,7 +11,7 @@ import useCreateErrorFromApiRequest from "@/hooks/useCreateErrorFromApiRequest";
 import { stores } from "@/data/newproduct.helpers";
 import filters from "@/data/productfilters";
 import { usePostAProductRequestMutation } from "@/apis/productsApi";
-import { useDeleteAFileRequestMutation, useUploadAFileRequestMutation } from "@/apis/filesApi";
+import useUploadAnImageHook from "@/hooks/useUploadAnImageHook";
 
 import MainPageLayout from "@/components/layouts/mainpage.layout";
 import PrimaryInput from "@/components/atom/PrimaryInput";
@@ -20,17 +20,16 @@ import PrimaryTextArea from "@/components/atom/PrimaryTextArea";
 import PrimarySelect from "@/components/atom/PrimarySelect";
 import { Loading1 } from "@/components/atom/Loading";
 import NotFound from "@/components/NotFound";
-import compressImage from "@/utils/compressImage";
+import ProductFormImageComponent from "@/components/pages/Product/ProductFormImageComponent";
 
 const NewProduct = () => {
 	const { register, handleSubmit, reset } = useSelectedValuesFromHookForm(productSchema);
 	const [postAProductRequest, { error, data, isLoading }] = usePostAProductRequestMutation();
-	const [uploadAFile, { error: fileUploadError, data: fileUploadSuccess, isLoading: fileUploadLoading }] = useUploadAFileRequestMutation();
-	const [deleteAFile, { error: fileDeleteError, data: fileDeleteSuccess, isLoading: fileDeleteLoading }] = useDeleteAFileRequestMutation();
 	const { push } = useRouter();
 	const { user } = useSelector(useUserSlice);
 	const [images, setImages] = useState<{ url: string; public_id: string }[]>([]);
 	const [notFound, setNotFound] = useState(false);
+	const { storeImage, fileUploadLoading, fileUploadError } = useUploadAnImageHook((data: any) => setImages((prev) => [...prev, data]));
 
 	function storeNewProduct(data: any) {
 		let { name, price, category, store, long_desc, short_desc } = data;
@@ -46,20 +45,6 @@ const NewProduct = () => {
 	// Create toastify to notify errors
 	useCreateErrorFromApiRequest(error);
 	useCreateErrorFromApiRequest(fileUploadError);
-	useCreateErrorFromApiRequest(fileDeleteError);
-
-	async function storeImage(e: any) {
-		if (e.target.files.length === 0) return;
-		console.log(e.target.files[0]);
-
-		let compressed = await compressImage(e.target.files[0]);
-		if (compressed?.error) {
-			toast.error("An error has occurred", { autoClose: 1500 });
-			return;
-		}
-
-		uploadAFile({ file: compressed });
-	}
 
 	useEffect(() => {
 		if (!user?.is_admin) {
@@ -79,12 +64,6 @@ const NewProduct = () => {
 		}, 2000);
 	}, [data]);
 
-	useEffect(() => {
-		if (!fileUploadSuccess) return;
-
-		toast("Image uploaded successfully");
-		setImages((prev) => [...prev, fileUploadSuccess]);
-	}, [fileUploadSuccess]);
 	return (
 		<MainPageLayout>
 			{!notFound && (
@@ -103,9 +82,7 @@ const NewProduct = () => {
 
 						<div className="w-full h-24 mb-4 grid gap-8 grid-cols-4">
 							{images.map((image, index) => (
-								<div key={index} className="w-full h-full bg-[red] relative">
-									<Image src={image?.url as string} alt="Product Image" fill />
-								</div>
+								<ProductFormImageComponent key={index} {...image} setImages={setImages} />
 							))}
 							{images?.length < 4 && (
 								<div className="w-full h-full ">
@@ -126,7 +103,7 @@ const NewProduct = () => {
 							)}
 						</div>
 
-						<PrimaryButton text="Create Product" type="submit" disabled={isLoading || fileDeleteLoading || fileUploadLoading} />
+						<PrimaryButton text="Create Product" type="submit" disabled={isLoading || fileUploadLoading} />
 					</form>
 					<ToastContainer />
 				</>

@@ -12,7 +12,7 @@ const orders = () => {
 	const [sort, setSort] = useState("all");
 	const { user } = useSelector(useUserSlice);
 
-	const [fetchOrder, { data, isLoading, error }] = useLazyFetchOrdersRequestQuery();
+	const [fetchOrder, { data, isFetching: isLoading, error }] = useLazyFetchOrdersRequestQuery();
 
 	useEffect(() => {
 		if (!user._id) return;
@@ -47,7 +47,7 @@ const orders = () => {
 				)}
 				{isLoading && (
 					<div className="w-1/2 h-[40vh] flex items-center justify-center">
-						<Loading />
+						<Loading sx="!h-8 !w-8" />
 					</div>
 				)}
 
