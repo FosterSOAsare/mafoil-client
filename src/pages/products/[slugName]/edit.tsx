@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import { useSelector } from "react-redux";
 
 import { useUserSlice } from "@/slices/user.slice";
@@ -32,7 +31,6 @@ const NewProduct = () => {
 
 	const { register, handleSubmit, reset } = useSelectedValuesFromHookForm(productSchema);
 	const [getAProduct, { data: productData, error: productError, isLoading: productIsLoading }] = useLazyGetEditPageProductRequestQuery();
-	const [deleteAFile, { error: fileDeleteError, data: fileDeleteSuccess, isLoading: fileDeleteLoading }] = useDeleteAFileRequestMutation();
 	const [updateAProductRequest, { error, data, isLoading }] = useUpdateAProductRequestMutation();
 
 	const { storeImage, fileUploadLoading, fileUploadError } = useUploadAnImageHook((data: any) => setImages((prev) => [...prev, data]));
@@ -69,16 +67,16 @@ const NewProduct = () => {
 
 		updateAProductRequest({ data: { name, price: parsedNumber, category, store, long_desc, short_desc, images }, slugname: query?.slugName });
 	}
+
 	// Create toastify to notify errors
 	useCreateErrorFromApiRequest(error);
 	useCreateErrorFromApiRequest(fileUploadError);
-	useCreateErrorFromApiRequest(fileDeleteError);
 
 	function deleteImage() {}
 	useEffect(() => {
 		if (!data) return;
 		reset();
-		toast("Prooduct Edited Successfully");
+		toast("Prooduct Edited Successfully", { autoClose: 1500 });
 		setTimeout(() => {
 			push(`/products/${data?.slugname}`);
 		}, 2000);
@@ -101,10 +99,9 @@ const NewProduct = () => {
 						<PrimaryTextArea name="long_desc" placeholder="" label="Long Description(optional)" register={register} sx="!h-64" />
 
 						<div className="w-full h-28 mb-4 grid gap-8 grid-cols-4">
-							{images.map((image, index) => {
-								console.log(image);
-								return <ProductFormImageComponent key={index} url={image?.url as string} public_id={image.public_id} setImages={setImages} />;
-							})}
+							{images.map((image, index) => (
+								<ProductFormImageComponent key={index} url={image?.url as string} public_id={image.public_id} images={images} setImages={setImages} />
+							))}
 							{images?.length < 4 && (
 								<div className="w-full h-full ">
 									<input type="file" id="image" className="hidden" onChange={storeImage} />
@@ -124,7 +121,7 @@ const NewProduct = () => {
 							)}
 						</div>
 
-						<PrimaryButton text="Edit Product" type="submit" disabled={isLoading || fileDeleteLoading || fileUploadLoading} />
+						<PrimaryButton text="Edit Product" type="submit" disabled={isLoading} />
 					</form>
 					<ToastContainer />
 				</>

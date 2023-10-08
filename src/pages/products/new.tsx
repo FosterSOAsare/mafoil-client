@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import Image from "next/image";
 
 import { useUserSlice } from "@/slices/user.slice";
 import { productSchema } from "@/libs/hookform";
@@ -82,7 +81,7 @@ const NewProduct = () => {
 
 						<div className="w-full h-24 mb-4 grid gap-8 grid-cols-4">
 							{images.map((image, index) => (
-								<ProductFormImageComponent key={index} {...image} setImages={setImages} />
+								<ProductFormImageComponent key={index} {...image} setImages={setImages} images={images} />
 							))}
 							{images?.length < 4 && (
 								<div className="w-full h-full ">
@@ -103,7 +102,7 @@ const NewProduct = () => {
 							)}
 						</div>
 
-						<PrimaryButton text="Create Product" type="submit" disabled={isLoading || fileUploadLoading} />
+						<PrimaryButton text="Create Product" type="submit" disabled={isLoading} />
 					</form>
 					<ToastContainer />
 				</>
