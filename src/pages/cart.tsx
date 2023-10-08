@@ -12,6 +12,7 @@ import useGetCartSubTotal from "@/hooks/useGetCartSubTotal";
 import CartItemNumberModerator from "@/components/molecules/CartItemNumberModerator";
 import Header from "@/components/molecules/Header";
 import Footer from "@/components/molecules/Footer";
+import { Loading1 } from "@/components/atom/Loading";
 
 type cartPageItemType = {
 	name: string;
@@ -122,9 +123,8 @@ const Cart = () => {
 											className={`w-full h-full bg-brown absolute transition-all duration-300 top-0 ${agreeToTerms && "group-hover:left-0"} z-[1] ${
 												isLoading ? "left-0" : "-left-[100%]"
 											}`}></span>
-										<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">
-											{isLoading ? "Checking out..." : "Checkout"}
-										</p>
+										{!isLoading && <p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Checkout</p>}
+										{isLoading && <Loading1 />}
 									</button>
 								</div>
 								<ToastContainer />

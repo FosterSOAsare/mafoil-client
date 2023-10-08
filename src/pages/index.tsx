@@ -11,12 +11,13 @@ import ProductCard from "@/components/cards/ProductCard";
 import Testimonials from "@/components/pages/Homepage/Testimonials";
 import Footer from "@/components/molecules/Footer";
 import ProductQuickView from "@/components/pages/Homepage/ProductQuickView";
+import Loading from "@/components/atom/Loading";
 
 export default function Home() {
 	const [selectedFilter, setSelectedFilter] = useState("all");
 	const [products, setProducts] = useState<{ data: productType[]; nextPage: boolean }>({ data: [], nextPage: false });
 	const [page, setPage] = useState(1);
-	const [getProductsRequest, { data, isLoading, error }] = useLazyGetProductsRequestQuery();
+	const [getProductsRequest, { data, isFetching: isLoading, error }] = useLazyGetProductsRequestQuery();
 
 	const [previewProduct, setPreviewProduct] = useState<null | productType>(null);
 
@@ -67,9 +68,11 @@ export default function Home() {
 						{products?.nextPage && (
 							<button
 								className="bg-[white]  text-black relative mt-16 w-[200px] hover:border-brown border-black h-16 group border-[1px] overflow-hidden"
+								disabled={isLoading}
 								onClick={() => setPage((prev) => ++prev)}>
 								<span className="w-full h-full bg-brown absolute transition-all duration-200 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
-								<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase  font-medium text-sm">load more</p>
+								{!isLoading && <p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase  font-medium text-sm">load more</p>}
+								{isLoading && <Loading sx="!w-8 !h-8 mx-auto" />}
 							</button>
 						)}
 					</article>
