@@ -51,3 +51,8 @@ export const withdrawSchema = z.object({
 export const updateDetailsSchema = z.object({
   fullname: z.string().min(1, { message: "Please enter your fullname" }).min(3, { message: 'Full name should not be less than 3 characters' }),
 });
+
+export const reviewProductSchema = z.object({
+  title: z.string().min(1, { message: "Please enter a title for the review" }).min(10, { message: 'Title must be at least 10 characters in length' }),
+  comment: z.string().min(1, { message: "Please enter review's description" }).min(25, { message: 'Comment must be at least 25 characters in length' }),
+})

@@ -61,12 +61,12 @@ const transactions = () => {
 						<>
 							{data && data?.length > 0 && (
 								<div className="w-full">
-									<div className="w-full h-auto flex justify-between mt-6 border-b-[1px] items-center">
-										<p className="w-1/5 text-center pb-3 font-bold border-l-[1px]">Txn Type</p>
-										<p className="w-1/5 text-center pb-3 font-bold border-l-[1px] border-r-[1px]">Desc</p>
-										<p className="w-1/5 text-center pb-3 font-bold border-l-[1px]">Amount</p>
-										<p className="w-1/5 text-center pb-3 font-bold border-l-[1px]">Date</p>
-										<p className="w-1/5 text-center pb-3 font-bold border-l-[1px] border-r-[1px]">Status</p>
+									<div className="w-full h-auto flex justify-between mt-6 border-y-[1px] items-stretch">
+										<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Txn Type</p>
+										<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Desc</p>
+										<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Amount</p>
+										<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Date</p>
+										<p className="w-1/5 text-center py-3 font-bold border-l-[1px] border-r-[1px]">Status</p>
 									</div>
 								</div>
 							)}
@@ -74,15 +74,15 @@ const transactions = () => {
 							{data && data?.length > 0 && (
 								<main className="w-full h-auto  block">
 									{data.map((order: any, index: number) => (
-										<div className="w-full h-auto flex justify-start  items-center border-b-[1px]" key={index}>
-											<div className={"w-1/5 text-center py-4 border-l-[1px] flex items-center justify-center h-full"}>
+										<div className={`w-full h-auto ${index % 2 === 0 && "bg-slate-100"} flex justify-start  items-stretch border-b-[1px]`} key={index}>
+											<div className={"w-1/5 text-center py-4 border-l-[1px] flex items-center justify-center"}>
 												{order?.type === "deposit" && <AiOutlinePlus className="text-green-500" />}
 												{order?.type === "withdraw" && <AiOutlineMinus className="text-red-600" />}
 											</div>
 											<p className="w-1/5 text-center py-4 border-l-[1px]">{order?.desc}</p>
 											<p className="w-1/5 text-center py-4 border-l-[1px]">GH₵{order?.amount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 											<p className="w-1/5 text-center py-4 border-l-[1px]">{createDateFromString(order?.createdAt)}</p>
-											<div className="w-1/5 h-full text-center py-4 border-l-[1px]  flex items-center justify-center border-r-[1px]">
+											<div className="w-1/5 text-center py-4 border-l-[1px]  flex items-center justify-center border-r-[1px]">
 												{order?.status === "pending" && <AiOutlineLoading3Quarters className="text-[grey]" />}
 												{order?.status === "completed" && <BsCheckLg className="text-green-500" />}
 												{order?.status === "cancelled" && <AiOutlineClose className="text-red-600" />}

@@ -27,10 +27,15 @@ const orderApi = createApi({
       query: (orderId) => ({
         url: `/cancel/${orderId}`,
       }),
-    })
+    }),
+    adminFetchOrdersRequests: builder.query<any, string>({
+      query: (sort) => ({
+        url: `/admin?filter=${sort}`,
+      }),
+    }),
   })
 })
 
-export const { useLazyFetchOrdersRequestQuery, useLazyFetchAnOrderRequestQuery, usePostOrderRequestMutation, useLazyCancelOrderRequestQuery } = orderApi
+export const { useLazyFetchOrdersRequestQuery, useLazyFetchAnOrderRequestQuery, usePostOrderRequestMutation, useLazyCancelOrderRequestQuery, useLazyAdminFetchOrdersRequestsQuery } = orderApi
 
 export default orderApi

@@ -20,14 +20,18 @@ import { Loading1 } from "@/components/atom/Loading";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsCheck } from "react-icons/bs";
+import ReviewForm from "./ReviewForm";
 
-const ProductDetails = ({ product }: { product: productType }) => {
+const ProductDetails = ({ product, reviews }: { product: productType; reviews: any[] }) => {
 	const swiperRef = useRef<any>(null);
 	const [count, setCount] = useState(0);
 	const [active, setActive] = useState(0);
 	const [cartLoading, setCartLoading] = useState(false);
 	const [tab, setTab] = useState("description");
 	const { user } = useSelector(useUserSlice);
+	const [showReviewForm, setShowReviewForm] = useState(false);
+
+	// Fetch user reviews
 
 	const partOfWishList = useCheckIfProductIsInWishList(product?._id as string);
 
@@ -127,7 +131,7 @@ const ProductDetails = ({ product }: { product: productType }) => {
 						className={`bg-black ${
 							count === 0 ? "opacity-70" : "opacity-100 hover:bg-brown"
 						}  text-white gap-3 w-full h-14 flex items-center justify-center  group transition-all duration-200`}
-						onClick={addToCart}
+						onClick={() => produceError(user?._id, addToCart)}
 						disabled={count === 0}>
 						{cartLoading && <Loading1 />}
 						<p className={`uppercase inline ${count > 0 && "group-hover:text-[14px]"} text-[13px] tracking-[2px]  animate-fadeIn infinite   transition-all duration-150`}>Add to cart</p>
@@ -147,12 +151,7 @@ const ProductDetails = ({ product }: { product: productType }) => {
 				</div>
 				<div className="w-full h-auto">
 					<div className={`w-full  py-16  ${tab !== "review" ? "border-b-[1px]" : ""} `}>
-						{tab === "description" && (
-							<p className="w-4/5 text-left text-sm leading-[35px] opacity-80 mx-auto">
-								Get a fresh 'fit for spring with the Free People Love Letter Ivory Floral Jacquard Cropped Cami Top! Stretchy jacquard fabric, with a textured floral design throughout,
-								shapes this cami top that has wide straps, a high square neckline, and a fitted bodice that ends at a cropped hem with lettuce-edge trim.
-							</p>
-						)}
+						{tab === "description" && <p className="w-4/5 text-left text-sm leading-[35px] opacity-80 mx-auto">{product?.long_desc ? product?.long_desc : product?.short_desc}</p>}
 						{tab === "refund" && (
 							<div className="w-4/5 mx-auto">
 								<p className="text-left text-sm leading-[35px] opacity-80 mx-auto">You can choose to ask for a refund on a full priced items after purchase.</p>
@@ -166,8 +165,25 @@ const ProductDetails = ({ product }: { product: productType }) => {
 						{tab === "review" && (
 							<div className="w-4/5 mx-auto">
 								<h3 className="text-3xl font-medium mb-4">Customer Reviews</h3>
+								<div className="flex justify-between items-center">
+									{reviews?.length === 0 && <p className="text-sm opacity-80">No reviews yet</p>}
+									{reviews?.length > 0 && (
+										<p className="text-sm opacity-80">
+											<Ratings rating={product?.rating} totalRatings={product?.totalRatings} />
+										</p>
+									)}
 
-								<p className="text-sm opacity-80">No reviews yet</p>
+									<button
+										onClick={() => setShowReviewForm((prev: boolean) => !prev)}
+										className={`mt-4 !w-[180px] flex items-center justify-center bg-transparent hover:border-brown text-black border-[1px] border-black relative group h-12 overflow-hidden`}>
+										<span className={`w-full h-full bg-brown -left-[100%] absolute transition-all duration-300 top-0 group-hover:-left-0 z-[1] `}></span>
+										<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">
+											{showReviewForm ? "Cancel" : "Write A Review"}
+										</p>
+									</button>
+								</div>
+
+								{showReviewForm && <ReviewForm slugname={product?.slugname} setShowReviewForm={setShowReviewForm} />}
 							</div>
 						)}
 					</div>

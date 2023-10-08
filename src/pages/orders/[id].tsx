@@ -11,21 +11,6 @@ import Footer from "@/components/molecules/Footer";
 import Loading from "@/components/atom/Loading";
 import useCreateErrorFromApiRequest from "@/hooks/useCreateErrorFromApiRequest";
 
-type cartPageItemType = {
-	name: string;
-	price: number;
-	rating: number;
-	totalRatings: number;
-	store: string;
-	short_desc?: string;
-	long_desc?: string;
-	_id: string;
-	images: { url: string; public_id: string }[];
-	slugname: string;
-	category: "cloth" | "bag" | "accessories" | "shoe";
-	count: number;
-};
-
 const OrderPage = () => {
 	const { query, isReady } = useRouter();
 
@@ -62,7 +47,7 @@ const OrderPage = () => {
 			<Header />
 			<main className="w-full min-h-screen bg-white relative pb-6">
 				<section className="w-full h-[30vh] flex items-center justify-center flex-col " id="hero">
-					<h1 className="text-4xl mb-6 font-bold">MY ORDER</h1>
+					<h1 className="text-4xl mb-6 font-bold">AN ORDER</h1>
 
 					{data?.status !== "cancelled" && !isLoading && (
 						<div className="flex items-center justify-between h-auto w-1/3 overflow-hidden rounded-[5px]">
@@ -90,7 +75,7 @@ const OrderPage = () => {
 									<p className="w-[15%] text-center">TOTAL PRICE</p>
 									{data?.status !== "cancelled" && (
 										<>
-											<p className="w-[15%] text-center">{data?.status == "complete" ? "TOTAL" : "EXPECTED"} PROFIT</p>
+											<p className="w-[15%] text-center">{data?.status == "complete" ? "TOTAL" : data?.status === "pending" ? "EXPECTED" : ""} PROFIT</p>
 											<p className="w-[15%] text-center">PROFIT PERCENT</p>
 										</>
 									)}
@@ -128,7 +113,7 @@ const OrderPage = () => {
 									{data?.status !== "cancelled" && (
 										<>
 											<p className={`font-medium text-green-600`}>
-												{data.status === "complete" ? "Total" : "Expected"} Profit: GH₵
+												{data.status === "complete" ? "Total" : data?.status === "pending" ? "Expected" : ""} Profit: GH₵
 												{data?.totalProfit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" "}
 											</p>
 											<p className="font-medium opacity-60 text-sm">

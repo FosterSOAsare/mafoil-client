@@ -93,6 +93,9 @@ html {
 .newProduct label {
 	@apply !font-medium;
 }
+.normallabel label {
+	@apply !font-normal;
+}
 .progress {
 	@apply relative;
 }

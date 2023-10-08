@@ -31,13 +31,13 @@ const orders = () => {
 				</div>
 
 				{data && !isLoading && data?.length > 0 && (
-					<div className="w-full h-auto flex justify-start mt-6 border-b-[1px] items-center gap-4">
-						<p className="w-1/5 text-center pb-3 font-bold border-l-[1px] ">Status</p>
-						<p className="w-1/5 text-center pb-3 font-bold border-l-[1px] ">Date</p>
-						<p className="w-1/5 text-center pb-3 font-bold border-l-[1px] ">Total Price</p>
-						<p className="w-1/5 text-center pb-3 font-bold border-l-[1px] ">Total Profit</p>
-						<p className="w-1/5 text-center pb-3 font-bold border-l-[1px]  border-r-[1px]">Average Profit(%)</p>
-						<button className="w-8 block"></button>
+					<div className="w-full h-auto flex justify-start mt-6 border-y-[1px] items-stretch gap-4">
+						<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Status</p>
+						<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Date</p>
+						<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Total Price</p>
+						<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Total Profit</p>
+						<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Average Profit(%)</p>
+						<button className="w-12 block border-l-[1px]"></button>
 					</div>
 				)}
 				{data && !isLoading && data?.length === 0 && (

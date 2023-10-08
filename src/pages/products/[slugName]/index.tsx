@@ -8,7 +8,7 @@ import { ToastContainer } from "react-toastify";
 
 import filters from "@/data/productfilters";
 import { productType } from "@/types/product.type";
-import { useLazyGetAProductRequestQuery, useLazyGetProductRecommendationsRequestQuery } from "@/apis/productsApi";
+import { useLazyGetAProductRequestQuery, useLazyGetProductRecommendationsRequestQuery, useLazyGetProductReviewsRequestQuery } from "@/apis/productsApi";
 
 import Header from "@/components/molecules/Header";
 import ProductCard from "@/components/cards/ProductCard";
@@ -27,7 +27,10 @@ const Product = () => {
 	const [previewProduct, setPreviewProduct] = useState<null | productType>(null);
 	const [getAProduct, { data, error, isLoading }] = useLazyGetAProductRequestQuery();
 	const [getRecommendations, { data: recommendationsData }] = useLazyGetProductRecommendationsRequestQuery();
+
+	const [getReviews, { data: reviewsData }] = useLazyGetProductReviewsRequestQuery();
 	const [recommendations, setRecommendations] = useState<productType[]>([]);
+	const [reviews, setReviews] = useState<any>([]);
 
 	useEffect(() => {
 		if (!query?.slugName) return;
@@ -37,14 +40,19 @@ const Product = () => {
 	useEffect(() => {
 		if (!data) return;
 		setProduct(data || null);
-
 		getRecommendations(query?.slugName as string);
+		getReviews(query?.slugName as string);
 	}, [data]);
 
 	useEffect(() => {
 		if (!recommendationsData) return;
-		setRecommendations(recommendationsData);
+		setRecommendations(recommendationsData.filter((i: productType, index: number) => index < 4));
 	}, [recommendationsData]);
+
+	useEffect(() => {
+		if (!reviewsData) return;
+		setReviews(reviewsData);
+	}, [reviewsData]);
 
 	return (
 		<>
@@ -75,7 +83,7 @@ const Product = () => {
 								<p className="capitalize">{product?.name.toLowerCase()}</p>
 							</nav>
 
-							<ProductDetails product={product} />
+							<ProductDetails product={product} reviews={[]} />
 
 							<section id="recommendations" className="px-20 pt-12 h-auto flex flex-col items-center justify-center w-full">
 								<h3 className="text-center mb-8 text-3xl font-medium">YOU MAY ALSO LIKE</h3>

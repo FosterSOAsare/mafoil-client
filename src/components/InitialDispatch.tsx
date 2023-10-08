@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 
 import { useFetchLoggedInUserRequestQuery } from "@/apis/userApi";
 import { setData, setError, setIsLoading } from "@/slices/user.slice";
@@ -10,11 +11,10 @@ import { useLazyFetchUserNotificationsRequestQuery } from "@/apis/notificationsA
 import { setNotificationsData } from "@/slices/notifications.slice";
 import useDebounce from "@/hooks/useDebounce";
 import makeStore from "@/store";
-
-import { BsArrowUp } from "react-icons/bs";
-import { useRouter } from "next/router";
 import { useLazyFetchWishListRequestQuery, useUploadWishListRequestMutation } from "@/apis/wishListApi";
 import { productType } from "@/types/product.type";
+
+import { BsArrowUp } from "react-icons/bs";
 
 const store = makeStore();
 

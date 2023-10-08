@@ -45,7 +45,7 @@ const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: product
 					</div>
 					<aside className="absolute top-4 right-4  w-auto h-auto">
 						<button
-							onClick={() => produceError(user?._id, dispatch(toggleItemInWishList({ wishlistItem: product })))}
+							onClick={() => produceError(user?._id, () => dispatch(toggleItemInWishList({ wishlistItem: product })))}
 							className={`w-8 h-8 transition-all duration-300 ${showContent ? "scale-100" : "scale-0"} ${
 								partOfWishList ? "bg-brown hover:text-black  text-white" : "hover:bg-brown bg-white  text-black  hover:text-white"
 							} mb-2 flex items-center justify-center`}>
