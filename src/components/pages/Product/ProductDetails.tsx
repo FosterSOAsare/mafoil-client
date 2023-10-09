@@ -12,6 +12,7 @@ import useCheckIfProductIsInWishList from "@/hooks/useCheckIfProductIsInWishList
 import { toggleItemInWishList } from "@/slices/wishlist.slice";
 import { useUserSlice } from "@/slices/user.slice";
 import produceError from "@/utils/produceErrorIfUserIsNotLoggedIn";
+import { createDateFromString } from "@/utils/createDate";
 
 import Ratings from "@/components/molecules/Ratings";
 import ItemInCartCount from "@/components/molecules/ItemInCartCount";
@@ -30,8 +31,6 @@ const ProductDetails = ({ product, reviews }: { product: productType; reviews: a
 	const [tab, setTab] = useState("description");
 	const { user } = useSelector(useUserSlice);
 	const [showReviewForm, setShowReviewForm] = useState(false);
-
-	console.log(reviews);
 
 	// Fetch user reviews
 
@@ -102,7 +101,7 @@ const ProductDetails = ({ product, reviews }: { product: productType; reviews: a
 						</Link>
 
 						<h1 className="text-2xl font-medium">{product?.name}</h1>
-						<Ratings rating={product?.rating} totalRatings={product?.totalRatings} />
+						<Ratings rating={product?.rating?.avgRating as number} totalRatings={product?.rating?.totalRatings as number} />
 
 						<h3 className="text-xl text-brown font-medium">GH₵{product?.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
 						<p className="text-center opacity-80">{product?.short_desc}</p>
@@ -170,8 +169,8 @@ const ProductDetails = ({ product, reviews }: { product: productType; reviews: a
 								<div className="flex justify-between items-center">
 									{reviews?.length === 0 && <p className="text-sm opacity-80">No reviews yet</p>}
 									{reviews?.length > 0 && (
-										<p className="text-sm opacity-80">
-											<Ratings rating={product?.rating} totalRatings={product?.totalRatings} />
+										<p className="text-sm opacity-80 flex items-center gap-2">
+											<Ratings rating={product?.rating.avgRating} sx="!text-lg " /> Based on {product.rating.totalRatings} review
 										</p>
 									)}
 
@@ -186,6 +185,23 @@ const ProductDetails = ({ product, reviews }: { product: productType; reviews: a
 								</div>
 
 								{showReviewForm && <ReviewForm slugname={product?.slugname} setShowReviewForm={setShowReviewForm} />}
+								{reviews?.length > 0 && (
+									<div className="w-full mt-6 h-auto">
+										{reviews?.map((review, index) => (
+											<div className="w-full border-[1px] mb-6 min-h-36 p-6">
+												<div className="w-full flex gap-2">
+													<Ratings rating={review?.rating} />
+													<p className="text-slate-400 text-sm">
+														{review?.name} on {createDateFromString(review?.createdAt)}
+													</p>
+												</div>
+
+												<h3 className="font-medium text-lg mt-2">{review?.title}</h3>
+												<p className="text-sm mt-2">{review?.comment}</p>
+											</div>
+										))}
+									</div>
+								)}
 							</div>
 						)}
 					</div>

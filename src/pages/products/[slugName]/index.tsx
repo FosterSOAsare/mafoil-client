@@ -23,15 +23,13 @@ import Loading from "@/components/atom/Loading";
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 const Product = () => {
-	const [product, setProduct] = useState<productType | null>(null);
 	const { query } = useRouter();
 	const [previewProduct, setPreviewProduct] = useState<null | productType>(null);
-	const [getAProduct, { data, error, isLoading }] = useLazyGetAProductRequestQuery();
+	const [getAProduct, { data: product, error, isLoading }] = useLazyGetAProductRequestQuery();
 	const [getRecommendations, { data: recommendationsData }] = useLazyGetProductRecommendationsRequestQuery();
 
 	const [getReviews, { data: reviewsData }] = useLazyGetProductReviewsRequestQuery();
 	const [recommendations, setRecommendations] = useState<productType[]>([]);
-	const [reviews, setReviews] = useState<any>([]);
 
 	useEffect(() => {
 		if (!query?.slugName) return;
@@ -39,21 +37,15 @@ const Product = () => {
 	}, [query]);
 
 	useEffect(() => {
-		if (!data) return;
-		setProduct(data || null);
+		if (!product) return;
 		getRecommendations(query?.slugName as string);
 		getReviews(query?.slugName as string);
-	}, [data]);
+	}, [product]);
 
 	useEffect(() => {
 		if (!recommendationsData) return;
 		setRecommendations(recommendationsData.filter((i: productType, index: number) => index < 4));
 	}, [recommendationsData]);
-
-	useEffect(() => {
-		if (!reviewsData) return;
-		setReviews(reviewsData);
-	}, [reviewsData]);
 
 	return (
 		<>
@@ -83,9 +75,7 @@ const Product = () => {
 								))}
 								<p className="capitalize">{product?.name.toLowerCase()}</p>
 							</nav>
-
 							<ProductDetails product={product} reviews={reviewsData ? reviewsData : []} />
-
 							<section id="recommendations" className="px-20 pt-12 h-auto flex flex-col items-center justify-center w-full">
 								<h3 className="text-center mb-8 text-3xl font-medium">YOU MAY ALSO LIKE</h3>
 								<article className="w-full flex flex-col items-center justify-center pb-12">

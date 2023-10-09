@@ -17,7 +17,7 @@ import { Loading1 } from "../atom/Loading";
 import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 
 const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: productType; setPreviewProduct: React.Dispatch<React.SetStateAction<productType | null>>; sx?: string }) => {
-	const { name, price, rating, totalRatings, images, slugname, _id } = product;
+	const { name, price, rating, images, slugname, _id } = product;
 	const { user } = useSelector(useUserSlice);
 	const [showContent, setShowContent] = useState(false);
 	const partOfWishList = useCheckIfProductIsInWishList(product?._id as string);
@@ -73,7 +73,7 @@ const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: product
 				</div>
 			</div>
 			<div className="h-[150px] flex items-center shadow-md justify-center flex-col">
-				<Ratings rating={rating} totalRatings={totalRatings} />
+				<Ratings rating={rating?.avgRating} totalRatings={rating.totalRatings} />
 				<Link href={`/products/${slugname}`} className="text-sm my-2">
 					{name}
 				</Link>

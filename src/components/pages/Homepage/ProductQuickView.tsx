@@ -8,7 +8,7 @@ import { productType } from "@/types/product.type";
 import { AiOutlineClose } from "react-icons/ai";
 
 const ProductQuickView = ({ setPreviewProduct, previewProduct }: { setPreviewProduct: React.Dispatch<React.SetStateAction<productType | null>>; previewProduct: productType }) => {
-	const { name, store, images, price, rating, totalRatings, short_desc, slugname } = previewProduct;
+	const { name, store, images, price, rating, short_desc, slugname } = previewProduct;
 
 	const [show, setShow] = useState(false);
 
@@ -35,7 +35,7 @@ const ProductQuickView = ({ setPreviewProduct, previewProduct }: { setPreviewPro
 						<AiOutlineClose />
 					</button>
 					<div className="border-r-[2px] border-black px-2">
-						<Ratings rating={rating} totalRatings={totalRatings} />
+						<Ratings rating={rating.avgRating} totalRatings={rating.totalRatings} />
 						<div className="w-full h-auto pb-6 border-b-[1px]  mt-4">
 							<h3 className="uppercase mb-2 text-xl font-medium">{name}</h3>
 							<p className="mb-2">
