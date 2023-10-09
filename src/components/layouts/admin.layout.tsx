@@ -29,7 +29,9 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
 				<main className="w-full h-auto min-h-screen relative">
 					<div className="w-full h-full max-w-7xl mx-auto flex justify-between items-stretch">
 						<aside className="w-1/4 py-6 flex flex-col h-screen sticky top-0 left-0 px-8 border-r-[1px] border-sec">
-							<h3 className="text-3xl px-2 font-bold font-playfair mb-6">Mafo.il</h3>
+							<Link href="/" className="text-3xl px-2 font-bold font-playfair mb-6">
+								Mafo.il
+							</Link>
 
 							<nav className="w-full">
 								{adminNav.map((nav, index) => (

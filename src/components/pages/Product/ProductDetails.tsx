@@ -21,7 +21,35 @@ import { Loading1 } from "@/components/atom/Loading";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsCheck } from "react-icons/bs";
+import { BiChevronUp, BiChevronDown } from "react-icons/bi";
 import ReviewForm from "./ReviewForm";
+
+const ReviewCard = ({ rating, createdAt, name, comment, title }: { createdAt: string; name: string; comment: string; title: string; rating: number }) => {
+	const [show, setShow] = useState(false);
+	return (
+		<div className="w-full border-[1px] mb-6 min-h-36 p-6">
+			<div className="w-full flex gap-4">
+				<div className="w-full">
+					<div className="w-full flex gap-2 items-center">
+						<Ratings rating={rating} />
+						<p className="text-slate-400 text-sm">
+							{name} on {createDateFromString(createdAt)}
+						</p>
+					</div>
+					<h3 className="font-medium text-lg mt-2">{title}</h3>
+				</div>
+
+				<button className="w-10 h-10 bg-slate-100 hover:bg-slate-400 text-3xl flex items-center justify-center" onClick={() => setShow((prev) => !prev)}>
+					{show ? <BiChevronUp /> : <BiChevronDown />}
+				</button>
+			</div>
+
+			<div className={`w-full ${show ? "h-full" : "h-0"}  overflow-hidden`}>
+				<p className="text-sm mt-2">{comment}</p>
+			</div>
+		</div>
+	);
+};
 
 const ProductDetails = ({ product, reviews }: { product: productType; reviews: any[] }) => {
 	const swiperRef = useRef<any>(null);
@@ -188,17 +216,7 @@ const ProductDetails = ({ product, reviews }: { product: productType; reviews: a
 								{reviews?.length > 0 && (
 									<div className="w-full mt-6 h-auto">
 										{reviews?.map((review, index) => (
-											<div className="w-full border-[1px] mb-6 min-h-36 p-6">
-												<div className="w-full flex gap-2">
-													<Ratings rating={review?.rating} />
-													<p className="text-slate-400 text-sm">
-														{review?.name} on {createDateFromString(review?.createdAt)}
-													</p>
-												</div>
-
-												<h3 className="font-medium text-lg mt-2">{review?.title}</h3>
-												<p className="text-sm mt-2">{review?.comment}</p>
-											</div>
+											<ReviewCard key={index} {...review} />
 										))}
 									</div>
 								)}

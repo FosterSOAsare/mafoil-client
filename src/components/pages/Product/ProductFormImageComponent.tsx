@@ -37,7 +37,6 @@ const ProductFormImageComponent = ({
 	return (
 		<div className="w-full h-full bg-[#F5F2EC] relative hover:cursor-pointer">
 			<Image src={url} alt="Product Image" fill />
-
 			<button
 				className="w-8 h-8 bg-slate-200 text-[red] flex items-center justify-center absolute z-[10] bottom-0 right-0"
 				type="button"
