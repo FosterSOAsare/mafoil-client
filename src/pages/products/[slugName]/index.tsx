@@ -8,7 +8,8 @@ import { ToastContainer } from "react-toastify";
 
 import filters from "@/data/productfilters";
 import { productType } from "@/types/product.type";
-import { useLazyGetAProductRequestQuery, useLazyGetProductRecommendationsRequestQuery, useLazyGetProductReviewsRequestQuery } from "@/apis/productsApi";
+import { useLazyGetAProductRequestQuery, useLazyGetProductRecommendationsRequestQuery } from "@/apis/productsApi";
+import { useLazyGetProductReviewsRequestQuery } from "@/apis/reviewsApi";
 
 import Header from "@/components/molecules/Header";
 import ProductCard from "@/components/cards/ProductCard";
@@ -83,7 +84,7 @@ const Product = () => {
 								<p className="capitalize">{product?.name.toLowerCase()}</p>
 							</nav>
 
-							<ProductDetails product={product} reviews={[]} />
+							<ProductDetails product={product} reviews={reviewsData ? reviewsData : []} />
 
 							<section id="recommendations" className="px-20 pt-12 h-auto flex flex-col items-center justify-center w-full">
 								<h3 className="text-center mb-8 text-3xl font-medium">YOU MAY ALSO LIKE</h3>

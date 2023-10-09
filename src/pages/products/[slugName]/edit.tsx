@@ -52,7 +52,7 @@ const NewProduct = () => {
 	useEffect(() => {
 		if (!productData) return;
 		const { _id, images, ...rest } = productData;
-		reset(rest);
+		reset({ ...rest, price: "" + rest?.price });
 		setImages(images);
 	}, [productData]);
 

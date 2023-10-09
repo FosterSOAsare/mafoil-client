@@ -31,6 +31,8 @@ const ProductDetails = ({ product, reviews }: { product: productType; reviews: a
 	const { user } = useSelector(useUserSlice);
 	const [showReviewForm, setShowReviewForm] = useState(false);
 
+	console.log(reviews);
+
 	// Fetch user reviews
 
 	const partOfWishList = useCheckIfProductIsInWishList(product?._id as string);

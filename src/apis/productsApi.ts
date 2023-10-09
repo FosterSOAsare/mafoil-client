@@ -65,19 +65,7 @@ const productsApi = createApi({
         body: { recents }
       })
     }),
-    getProductReviewsRequest: builder.query<any, string>({
-      query: (slugname) => ({
-        url: `/${slugname}/reviews`,
-        method: 'GET',
-      })
-    }),
-    postProductReviewRequest: builder.mutation({
-      query: ({ slugname, data }) => ({
-        url: `/${slugname}/reviews`,
-        method: 'POST',
-        body: data
-      })
-    })
+
   })
 })
 
@@ -91,8 +79,6 @@ export const {
   useGetCategoriesDataRequestQuery,
   useLazyGetProductRecommendationsRequestQuery,
   useGetRecentProductsRequestMutation,
-  useLazyGetProductReviewsRequestQuery,
-  usePostProductReviewRequestMutation
 } = productsApi
 
 export default productsApi

@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 import useSelectedValuesFromHookForm from "@/hooks/useSelectedValuesFromHookForm";
 import { reviewProductSchema } from "@/libs/hookform";
-import { usePostProductReviewRequestMutation } from "@/apis/productsApi";
+import { usePostProductReviewRequestMutation } from "@/apis/reviewsApi";
 import useCreateErrorFromApiRequest from "@/hooks/useCreateErrorFromApiRequest";
 
 import PrimaryInput from "@/components/atom/PrimaryInput";

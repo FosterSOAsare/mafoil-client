@@ -13,6 +13,7 @@ import orderApi from "./apis/orderApi";
 import transactionApi from "./apis/transactionsApi";
 import notificatonsApi from "./apis/notificationsApi";
 import newsletterApi from "./apis/newsletterApi";
+import reviewsApi from "./apis/reviewsApi";
 
 const middlewares: Array<Middleware> = [
   authApi.middleware,
@@ -24,7 +25,8 @@ const middlewares: Array<Middleware> = [
   orderApi.middleware,
   transactionApi.middleware,
   notificatonsApi.middleware,
-  newsletterApi.middleware
+  newsletterApi.middleware,
+  reviewsApi.middleware
 ]
 
 const makeStore = () => (
@@ -43,7 +45,8 @@ const makeStore = () => (
       [orderApi.reducerPath]: orderApi.reducer,
       [transactionApi.reducerPath]: transactionApi.reducer,
       [notificatonsApi.reducerPath]: notificatonsApi.reducer,
-      [newsletterApi.reducerPath]: newsletterApi.reducer
+      [newsletterApi.reducerPath]: newsletterApi.reducer,
+      [reviewsApi.reducerPath]: reviewsApi.reducer
     },
 
     middleware: (getDefaultMiddleware: any) => (
