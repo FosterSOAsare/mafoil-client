@@ -11,6 +11,7 @@ import { notificationType, useNotificationsSelector } from "@/slices/notificatio
 import CartPreview from "./CartPreview";
 import AccountComponent from "../AccountComponent";
 import Notifications from "./Notifications";
+import PhoneMenu from "./PhoneMenu";
 
 import { AiOutlinePhone, AiOutlineUser, AiOutlineHeart, AiOutlineShoppingCart, AiOutlineBell } from "react-icons/ai";
 import { BiSearch, BiMenuAltRight } from "react-icons/bi";
@@ -22,6 +23,7 @@ const Header = () => {
 	const wishList = useSelector(useWishListSelector);
 	const [showAccountMenuComponent, setShowAccountMenuComponent] = useState(false);
 	const [showNotifications, setShowNotifications] = useState(false);
+	const [showMenu, setShowMenu] = useState(false);
 	const accountMenuComponentParentRef = useRef<any>(null);
 	const { pathname } = useRouter();
 
@@ -113,14 +115,23 @@ const Header = () => {
 					</>
 				)}
 			</div>
-
-			<button className="w-10 h-10 flex items-center justify-center lg:hidden bg-slate-100 hover:bg-slate-400">
-				<BiMenuAltRight className="text-3xl" />
-			</button>
+			<div className="lg:hidden flex items-center gap-6">
+				<button className="relative" onClick={() => setShowNotifications(true)}>
+					<AiOutlineBell className="hover:cursor-pointer text-2xl" />
+					<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>
+						{unreadNotificationsCount > 9 ? "9+" : unreadNotificationsCount}
+					</span>
+				</button>
+				<button className="w-10 h-10 flex items-center justify-center bg-slate-100 hover:bg-slate-400" onClick={() => setShowMenu(true)}>
+					<BiMenuAltRight className="text-3xl" />
+				</button>
+			</div>
 
 			{showCart && <CartPreview setShowCart={setShowCart} />}
 
 			{showNotifications && <Notifications setShowNotifications={setShowNotifications} />}
+
+			{showMenu && <PhoneMenu setShowMenu={setShowMenu} />}
 		</header>
 	);
 };
