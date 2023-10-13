@@ -37,14 +37,14 @@ const Footer = () => {
 		toast.error(error?.data?.error, { autoClose: 1500 });
 	}, [error]);
 	return (
-		<footer className="w-full h-auto flex items-center justify-center flex-col bg-[#F8F5F4] py-24 px-10">
-			<h3 className="text-4xl font-playfair mb-12">Mafo.il</h3>
-			<div className="w-full h-48 mb-6 flex items-start justify-between">
-				<div className="w-1/4">
+		<footer className="w-full h-auto flex items-center justify-center flex-col bg-[#F8F5F4] py-24 px-4 md:px-10">
+			<h3 className="text-4xl font-playfair mr-auto md:mx-auto mb-12">Mafo.il</h3>
+			<div className="w-full h-auto md:h-48 mb-6 flex flex-col md:flex-row items-start justify-between">
+				<div className="w-full md:w-1/4">
 					<p>+866.597.2742</p>
 					<p>support@mafoilcom</p>
 				</div>
-				<article className="w-1/2 flex items-start justify-start">
+				<article className="w-full md:w-1/2 flex mt-6 md:mt-0 items-start justify-start">
 					<div className="w-1/2">
 						<h3 className="uppercase mb-6 font-medium">Account</h3>
 						<nav className=" ">
@@ -80,7 +80,7 @@ const Footer = () => {
 						</nav>
 					</div>
 				</article>
-				<div className="w-1/4">
+				<div className="w-full md:w-1/4 mt-6 md:mt-0">
 					<h3 className="uppercase mb-6 font-medium">Newsletter</h3>
 					<p>New subscribers receive 10% off their first purchase</p>
 

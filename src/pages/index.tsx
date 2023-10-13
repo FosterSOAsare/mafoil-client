@@ -40,14 +40,14 @@ export default function Home() {
 			</Head>
 			<Header />
 			<main className="w-full min-h-screen bg-white relative">
-				<section className="w-full h-screen bg-[green]" id="hero"></section>
+				<section className="w-full h-[50vh] lg:h-screen bg-[green]" id="hero"></section>
 
-				<section id="products" className="px-10 w-full h-auto mt-8">
+				<section id="products" className="px-4 md:px-10 w-full h-auto mt-8">
 					<div id="breadcrumbs" className="w-full mb-8 h-auto flex items-center gap-4">
 						{filters.map((filter, index) => (
 							<React.Fragment key={index}>
 								<button
-									className={`font-medium text-md block  hover:text-brown ${selectedFilter === filter.option ? "text-brown" : ""}`}
+									className={`font-medium text-[12px] md:text-md block  hover:text-brown ${selectedFilter === filter.option ? "text-brown" : ""}`}
 									onClick={() => {
 										setSelectedFilter(filter.option);
 										setPage(1);
@@ -59,15 +59,15 @@ export default function Home() {
 						))}
 					</div>
 
-					<article id="products" className="flex flex-col items-center justify-center w-full border-b-[1px] pb-36">
-						<div className="grid grid-cols-3 gap-12 w-full h-auto">
+					<article id="products" className="flex flex-col items-center justify-center w-full border-b-[1px] pb-12 md:pb-36">
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-12 w-full h-auto">
 							{products?.data.map((product, index) => {
 								return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} />;
 							})}
 						</div>
 						{products?.nextPage && (
 							<button
-								className="bg-[white]  text-black relative mt-16 w-[200px] hover:border-brown border-black h-16 group border-[1px] overflow-hidden"
+								className="bg-[white]  text-black relative mt-16 w-full md:w-[200px] hover:border-brown border-black h-16 group border-[1px] overflow-hidden"
 								disabled={isLoading}
 								onClick={() => setPage((prev) => ++prev)}>
 								<span className="w-full h-full bg-brown absolute transition-all duration-200 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>

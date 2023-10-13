@@ -13,6 +13,10 @@ module.exports = {
 				playfair: ["'Playfair Display', serif"],
 				jost: ["'Jost', serif"],
 			},
+			screens: {
+				xl: "1280px", // Add a new breakpoint named 'xl'
+				"2xl": "1536px", // Add another breakpoint named '2xl'
+			},
 			maxWidth: {
 				"6xl": "1024px",
 				"7xl": "1224px",

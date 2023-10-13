@@ -17,7 +17,7 @@ const Testimonials = () => {
 	const swiperRef = useRef<any>(null);
 
 	return (
-		<section id="testimonials" className="w-full py-6 pt-12  xl:py-32 h-auto px-16">
+		<section id="testimonials" className="w-full py-6 pt-12  xl:py-32 h-auto px-4 md:px-16">
 			<div className="w-full h-full  flex flex-col items-center justify-center relative">
 				<div className="w-full  mx-auto h-full flex justify-between items-center gap-4">
 					<button className={`hidden md:flex items-center justify-center hover:text-brown text-sec `} onClick={() => goPrev(swiperRef)}>
