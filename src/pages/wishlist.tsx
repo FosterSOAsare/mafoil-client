@@ -29,7 +29,7 @@ const WishList = () => {
 			<ProtectedRoute loginRequired={true}>
 				<main className="w-full min-h-screen bg-white relative">
 					<section className="w-full h-[30vh] flex items-center justify-center flex-col " id="hero">
-						<h1 className="text-4xl mb-4 font-medium">WISHLIST</h1>
+						<h1 className="text-2xl md:text-4xl mb-4 font-medium">WISHLIST</h1>
 
 						<nav className="flex items-center justify-start gap-2 text-sm">
 							{[{ name: "Home", link: "/" }].map((crumb, index, arr) => (
@@ -44,10 +44,10 @@ const WishList = () => {
 						</nav>
 					</section>
 
-					<section id="products" className="px-10 py-4 h-auto mt-8 w-full flex items-start gap-6 justify-between">
-						<article className="w-full flex flex-col items-center justify-center  border-b-[1px] pb-36">
+					<section id="products" className="px-4 md:px-10 py-4 h-auto mt-8 w-full flex items-start gap-6 justify-between">
+						<article className="w-full flex flex-col items-center justify-center  border-b-[1px] pb-12 md:pb-36">
 							{wishlist?.length > 0 && (
-								<div className="grid grid-cols-4 gap-4 w-full h-auto">
+								<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full h-auto">
 									{wishlist?.map((wishlistItem: productType, index: number) => {
 										return <WishListProductCard key={index} wishlistItem={wishlistItem} setPreviewProduct={setPreviewProduct} />;
 									})}

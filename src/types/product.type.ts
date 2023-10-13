@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image";
 
-export type productType = {
+export interface productType {
   name: string;
   price: number;
   store: string;

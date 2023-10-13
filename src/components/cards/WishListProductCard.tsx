@@ -73,7 +73,7 @@ const WishListProductCard = ({ wishlistItem, setPreviewProduct, sx = "" }: { wis
 					</aside>
 				</div>
 			</div>
-			<div className="h-[150px] flex items-start justify-center flex-col">
+			<div className="py-4 md:py-0 md:h-[150px] flex items-start justify-center flex-col">
 				<Ratings rating={rating.avgRating} totalRatings={rating.totalRatings} />
 				<Link href={`/products/${slugname}`} className="text-sm my-2">
 					{name}
