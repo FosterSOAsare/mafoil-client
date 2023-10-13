@@ -37,7 +37,7 @@ const Footer = () => {
 		toast.error(error?.data?.error, { autoClose: 1500 });
 	}, [error]);
 	return (
-		<footer className="w-full h-auto flex items-center justify-center flex-col bg-[#F8F5F4] py-24 px-4 md:px-10">
+		<footer className="w-full h-auto flex items-center justify-center flex-col bg-[#F8F5F4] py-12 md:py-24 px-4 md:px-10">
 			<h3 className="text-4xl font-playfair mr-auto md:mx-auto mb-12">Mafo.il</h3>
 			<div className="w-full h-auto md:h-48 mb-6 flex flex-col md:flex-row items-start justify-between">
 				<div className="w-full md:w-1/4">

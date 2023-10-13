@@ -67,7 +67,7 @@ export default function Home() {
 						</div>
 						{products?.nextPage && (
 							<button
-								className="bg-[white]  text-black relative mt-16 w-full md:w-[200px] hover:border-brown border-black h-16 group border-[1px] overflow-hidden"
+								className="bg-[white]  text-black relative mt-16 md:w-[400px] lg:w-[200px] hover:border-brown border-black h-20 lg:h-16 group border-[1px] overflow-hidden"
 								disabled={isLoading}
 								onClick={() => setPage((prev) => ++prev)}>
 								<span className="w-full h-full bg-brown absolute transition-all duration-200 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
