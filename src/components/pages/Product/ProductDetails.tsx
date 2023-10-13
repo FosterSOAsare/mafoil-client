@@ -27,7 +27,7 @@ import ReviewForm from "./ReviewForm";
 const ReviewCard = ({ rating, createdAt, name, comment, title }: { createdAt: string; name: string; comment: string; title: string; rating: number }) => {
 	const [show, setShow] = useState(false);
 	return (
-		<div className="w-full border-[1px] mb-6 min-h-36 p-6">
+		<div className="w-full border-[1px] mb-6 min-h-36 p-4 md:p-6">
 			<div className="w-full flex gap-4">
 				<div className="w-full">
 					<div className="w-full flex gap-2 items-center">
@@ -84,9 +84,9 @@ const ProductDetails = ({ product, reviews }: { product: productType; reviews: a
 
 	return (
 		<section className="w-full h-auto">
-			<div className="w-full h-auto mt-4 flex items-start justify-between">
-				<article className="w-3/5 h-auto">
-					<div className="w-full relative h-screen group hover:cursor-pointer">
+			<div className="w-full h-auto mt-4 flex flex-col lg:flex-row items-start justify-between">
+				<article className="w-full lg:w-3/5 h-auto">
+					<div className="w-full relative h-auto lg:h-screen group hover:cursor-pointer">
 						<button
 							className={`w-7 h-10 absolute bg-white hover:bg-brown hover:text-white scale-0 ${
 								active == 0 ? "" : "group-hover:scale-100"
@@ -97,8 +97,8 @@ const ProductDetails = ({ product, reviews }: { product: productType; reviews: a
 						</button>
 						<Swiper spaceBetween={30} slidesPerView={1} autoplay={true} ref={swiperRef} className="overflow-y-visible w-full h-full relative" onSwiper={handleSwiper}>
 							{[1, 2, 3, 4].map((_i, index: number) => (
-								<SwiperSlide key={index} className=" w-full bg-[#f5f2ec] flex items-center justify-center h-full">
-									<div className="w-[500px] h-[500px] relative ">
+								<SwiperSlide key={index} className="w-full bg-[#f5f2ec] flex items-center justify-center h-full">
+									<div className="w-[500px] h-[300px] md:h-[500px] relative ">
 										<Image fill src={product?.images[0]?.url} alt="Product Image" sizes="(max-width: 767px) 100vw, 50vw" />
 									</div>
 								</SwiperSlide>
@@ -114,15 +114,15 @@ const ProductDetails = ({ product, reviews }: { product: productType; reviews: a
 						</button>
 					</div>
 
-					<div className="w-4/5 mx-auto h-[30vh] flex items-center gap-4 justify-between bg-white">
+					<div className="md:w-4/5 mx-auto h-[20vh] lg:h-[30vh] flex items-center gap-4 justify-between bg-white">
 						{[1, 2, 3, 4].map((_i, index) => (
-							<div key={index} className={`w-full bg-[red]  h-[20vh] relative ${active === index ? "opacity-100" : "opacity-40"} transition-all duration-200`}>
+							<div key={index} className={`w-full h-[10vh] lg:h-[20vh] relative ${active === index ? "opacity-100" : "opacity-40"} transition-all duration-200`}>
 								<Image fill src={product?.images[0]?.url} alt="Product Image" />
 							</div>
 						))}
 					</div>
 				</article>
-				<article className="w-2/5 h-[130vh] pl-6 flex items-center justify-start flex-col">
+				<article className="w-full lg:w-2/5 lg:h-[130vh] px-4 md:0 md:pl-6 flex items-center justify-start flex-col">
 					<div className="pb-8 border-b-[1px] flex items-center gap-2 relative justify-start flex-col w-full">
 						<Link href={`/products?type=${product?.category}`} className="uppercase hover:text-brown opacity-60">
 							{filters?.find((filt) => filt.option === product?.category)?.name}
@@ -159,7 +159,7 @@ const ProductDetails = ({ product, reviews }: { product: productType; reviews: a
 					<button
 						className={`bg-black ${
 							count === 0 ? "opacity-70" : "opacity-100 hover:bg-brown"
-						}  text-white gap-3 w-full h-14 flex items-center justify-center  group transition-all duration-200`}
+						}  text-white gap-3 w-full h-14 flex items-center justify-center max-w-[500px] group transition-all duration-200`}
 						onClick={() => produceError(user?._id, addToCart)}
 						disabled={count === 0}>
 						{cartLoading && <Loading1 />}
@@ -168,9 +168,9 @@ const ProductDetails = ({ product, reviews }: { product: productType; reviews: a
 				</article>
 			</div>
 
-			<div className="w-full h-auto  mt-8 flex flex-col justify-center items-center">
+			<div className="w-full h-auto mt-8 flex flex-col justify-center items-center">
 				<div className="w-full h-auto border-b-[1px]">
-					<div className="h-12 w-1/3 mx-auto px-4 flex justify-between items-center">
+					<div className="h-12 md:w-2/3 lg:w-1/3 mx-auto px-4 flex justify-between items-center">
 						{["Description", "Review", "Refund"].map((t, index) => (
 							<button key={index} className={`h-full px-2 ${tab === t.toLocaleLowerCase() ? "active-tab text-black  font-medium relative" : ""}`} onClick={() => setTab(t.toLowerCase())}>
 								{t}
@@ -179,22 +179,24 @@ const ProductDetails = ({ product, reviews }: { product: productType; reviews: a
 					</div>
 				</div>
 				<div className="w-full h-auto">
-					<div className={`w-full  py-16  ${tab !== "review" ? "border-b-[1px]" : ""} `}>
-						{tab === "description" && <p className="w-4/5 text-left text-sm leading-[35px] opacity-80 mx-auto">{product?.long_desc ? product?.long_desc : product?.short_desc}</p>}
+					<div className={`w-full px-4 py-8 lg:py-16  ${tab !== "review" ? "border-b-[1px]" : ""} `}>
+						{tab === "description" && (
+							<p className="w-full md:px-10 lg:px-0 lg:w-4/5 text-left text-sm leading-[35px] opacity-80 mx-auto">{product?.long_desc ? product?.long_desc : product?.short_desc}</p>
+						)}
 						{tab === "refund" && (
-							<div className="w-4/5 mx-auto">
+							<div className="w-full md:px-10 lg:px-0 lg:w-4/5 mx-auto">
 								<p className="text-left text-sm leading-[35px] opacity-80 mx-auto">You can choose to ask for a refund on a full priced items after purchase.</p>
 
-								<ul className="list-disc px-10 text-sm opacity-80">
+								<ul className="list-disc px-4 md:px-10 text-sm opacity-80">
 									<li className="mb-2">Customer has ability to ask for a refund within 2 hours of purchase</li>
 									<li className="mb-2">Occassionally free items are not eligible for a refund</li>
 								</ul>
 							</div>
 						)}
 						{tab === "review" && (
-							<div className="w-4/5 mx-auto">
+							<div className="w-full md:px-10 lg;px-0 lg:w-4/5 mx-auto">
 								<h3 className="text-3xl font-medium mb-4">Customer Reviews</h3>
-								<div className="flex justify-between items-center">
+								<div className="flex flex-col md:flex-row justify-between md:items-center">
 									{reviews?.length === 0 && <p className="text-sm opacity-80">No reviews yet</p>}
 									{reviews?.length > 0 && (
 										<p className="text-sm opacity-80 flex items-center gap-2">

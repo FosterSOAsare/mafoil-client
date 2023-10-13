@@ -63,7 +63,7 @@ const ReviewForm = ({ slugname, setShowReviewForm }: { slugname: string; setShow
 				register={register}
 				label={`Body Of Review`}
 				divsx="mt-2 !py-2 !border-slate-200 !text-sm"
-				sx="h-[400px]"
+				sx="h-[200px] lg:h-[400px]"
 				labelsx="!font-[400]"
 			/>
 

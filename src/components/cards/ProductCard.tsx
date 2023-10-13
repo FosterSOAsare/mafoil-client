@@ -68,7 +68,7 @@ const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: product
 							<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
 							<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">View Product</p>
 						</Link>
-						<button className="bg-[white] hidden md:block text-black relative w-1/2 group h-full overflow-hidden" onClick={() => setPreviewProduct(product)}>
+						<button className="bg-[white] hidden lg:block text-black relative w-1/2 group h-full overflow-hidden" onClick={() => setPreviewProduct(product)}>
 							<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
 							<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Quickview</p>
 						</button>

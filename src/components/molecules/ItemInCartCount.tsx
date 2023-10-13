@@ -6,7 +6,7 @@ import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 
 const ItemInCartCount = ({ product, increaseCount, decreaseCount, itemCount }: { product: productType; increaseCount: any; decreaseCount: any; itemCount: number }) => {
 	return (
-		<div className="flex w-full py-6 items-center gap-2">
+		<div className="flex w-full max-w-[500px] py-6 items-center gap-2">
 			<div className="w-full p-3 h-auto border-black border-[1px] flex gap-2 items-center">
 				<div className="w-16 h-16 relative">
 					<Image src={product?.images[0]?.url} alt="product Image" fill />

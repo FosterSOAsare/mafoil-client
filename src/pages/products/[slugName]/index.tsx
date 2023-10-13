@@ -60,26 +60,26 @@ const Product = () => {
 				{!isLoading && product && (
 					<>
 						<section className="w-full h-auto py-5 bg-white " id="hero">
-							<nav className="flex items-center justify-start gap-2 px-10">
+							<nav className="flex items-center justify-start gap-2 px-4 md:px-10">
 								{[
 									{ name: "Home", link: "/" },
 									{ name: "Products", link: "/products" },
 									{ name: filters?.find((filt) => filt.option === product?.category)?.name, link: `/products?type=${product?.category}` },
 								].map((crumb, index, arr) => (
 									<Fragment key={index}>
-										<Link href={crumb?.link} className="hover:text-brown capitalize">
+										<Link href={crumb?.link} className="hover:text-brown text-[12px] md:text-[16px] capitalize">
 											{crumb.name}
 										</Link>
 										<p>&gt;</p>
 									</Fragment>
 								))}
-								<p className="capitalize">{product?.name.toLowerCase()}</p>
+								<p className="capitalize text-[12px] md:text-[16px]">{product?.name.toLowerCase()}</p>
 							</nav>
 							<ProductDetails product={product} reviews={reviewsData ? reviewsData : []} />
-							<section id="recommendations" className="px-20 pt-12 h-auto flex flex-col items-center justify-center w-full">
-								<h3 className="text-center mb-8 text-3xl font-medium">YOU MAY ALSO LIKE</h3>
+							<section id="recommendations" className="px-4 md:px-8 lg:px-20 pt-6 md:pt-12 h-auto flex flex-col items-center justify-center w-full">
+								<h3 className="text-center mb-8 text-2xl md:text-3xl font-medium">YOU MAY ALSO LIKE</h3>
 								<article className="w-full flex flex-col items-center justify-center pb-12">
-									<div className="grid grid-cols-4 gap-6 w-full h-auto">
+									<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-6 w-full h-auto">
 										{recommendations.map((product, index) => {
 											return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} sx="!h-[300px]" />;
 										})}
