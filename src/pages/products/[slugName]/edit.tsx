@@ -86,19 +86,19 @@ const NewProduct = () => {
 		<>
 			{!notFound && !productIsLoading && (
 				<>
-					<h1 className="text-4xl uppercase font-medium">Edit Product</h1>
-					<form action="" className="newProduct w-full max-w-[720px] h-auto mt-6 flex flex-col items-center justify-center" onSubmit={handleSubmit(editProduct)}>
+					<h1 className="text-2xl md:text-4xl uppercase font-medium">Edit Product</h1>
+					<form action="" className="newProduct w-full px-4 max-w-[720px] h-auto mt-6 flex flex-col items-center justify-center" onSubmit={handleSubmit(editProduct)}>
 						<PrimaryInput name="name" placeholder="Brims hats for men" register={register} label="Product Name" />
 						<PrimaryInput name="price" placeholder="100.00" register={register} label="Product Price" />
 
-						<div className="w-full flex justify-between gap-4 items-center">
+						<div className="w-full flex flex-col md:flex-row justify-between gap-4 items-center">
 							<PrimarySelect name="category" label="Category" register={register} options={filters} />
 							<PrimarySelect name="store" label="Store" register={register} options={stores} />
 						</div>
 						<PrimaryTextArea name="short_desc" placeholder="" label="Short Description (255 characters max) " register={register} />
 						<PrimaryTextArea name="long_desc" placeholder="" label="Long Description(optional)" register={register} sx="!h-64" />
 
-						<div className="w-full h-28 mb-4 grid gap-8 grid-cols-4">
+						<div className="w-full h-16 md:h-28 mb-4 grid gap-8 grid-cols-4">
 							{images.map((image, index) => (
 								<ProductFormImageComponent key={index} url={image?.url as string} public_id={image.public_id} images={images} setImages={setImages} />
 							))}
@@ -112,7 +112,7 @@ const NewProduct = () => {
 										} flex-col`}>
 										{!fileUploadLoading && (
 											<>
-												+<p> Add Image</p>
+												+<p className="hidden md:block"> Add Image</p>
 											</>
 										)}
 										{fileUploadLoading && <Loading1 />}
@@ -121,7 +121,7 @@ const NewProduct = () => {
 							)}
 						</div>
 
-						<PrimaryButton text="Edit Product" type="submit" disabled={isLoading} />
+						<PrimaryButton text="Edit Product" type="submit" sx="mt-4 max-w-[400px] h-16 md:h-20" disabled={isLoading} />
 					</form>
 					<ToastContainer />
 				</>
