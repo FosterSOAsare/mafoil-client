@@ -28,13 +28,13 @@ const index = () => {
 		toast.error(error?.data?.error, { autoClose: 1500 });
 	}, [error]);
 	return (
-		<AccountLayout active="dashboard" title="MY ACCOUNT">
-			<div className="w-full h-auto pb-12">
+		<AccountLayout title="MY ACCOUNT">
+			<div className="w-full h-auto pb-12 ">
 				<p>Hello {user?.fullname} </p>
 				<p>Email: {user?.email}</p>
 
 				{!user?.accountVerified && (
-					<div className="mt-6 w-3/4 bg-slate-200 p-4">
+					<div className="mt-6 w-full md:w-3/4 bg-slate-200 p-4">
 						<h3 className="text-red-500 mb-4">Your account hasn't been activated</h3>
 						<p>
 							To unlock full access to the website's features and functionalities, a $40 deposit is necessary. Please refer to our {""}
@@ -54,7 +54,7 @@ const index = () => {
 				)}
 
 				{user?.accountVerified && (
-					<div className="mt-6 w-3/4 bg-slate-200 p-4">
+					<div className="mt-2 md:mt-6 w-full md:w-3/4 bg-slate-200 p-4">
 						<h3 className="text-green-500 mb-4">Your account has been activated</h3>
 						<p>
 							You now have unrestricted access to all of the website's features and capabilities. Explore our{" "}

@@ -8,36 +8,54 @@ import { useUserSlice } from "@/slices/user.slice";
 import Header from "../molecules/Header";
 import Footer from "../molecules/Footer";
 import ProtectedRoute from "../ProtectedRoute";
+import adminNav from "@/data/admin-nav";
+import { useRouter } from "next/router";
 
-const AccountLayout = ({ children, active, title }: { children: ReactNode; active: string; title: string }) => {
+const accountLinks = [
+	{ name: "Dashboard", link: "" },
+	{ name: "My Orders", link: "/orders" },
+	{ name: "Transactions", link: "/transactions" },
+	{ name: "Settings", link: "/settings" },
+];
+
+const AccountLayout = ({ children, title }: { children: ReactNode; title: string }) => {
 	const { user } = useSelector(useUserSlice);
+	const { pathname } = useRouter();
 	return (
 		<>
 			<Header />
-			<div className="w-full max-w-7xl mx-auto flex items-center justify-end h-12">
+			<div className="w-full max-w-7xl mx-auto flex px-4 text-sm md:text-[16px] items-center justify-end h-12">
 				<Link href="/account/transactions" className="font-medium hover:text-brown">
 					Balance : <span className="font-bold">GH₵{(user?.balance || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
 				</Link>
 			</div>
-			<h3 className="text-5xl font-bold text-center mt-16 mb-8">{title}</h3>
-			<div className="w-full flex gap-8 items-center min-h-[50vh] justify-between max-w-7xl mx-auto">
-				<div className="w-1/4 h-auto bg-slate-200 flex flex-col">
-					<Link href="/account" className={`w-full ${active === "dashboard" ? "bg-brown text-white" : "text-black bg-transparent border-black hover:text-brown"} p-3 border-b-[1px]`}>
-						Dashboard
-					</Link>
-					<Link href="/account/orders" className={`w-full ${active === "orders" ? "bg-brown text-white" : "text-black bg-transparent border-black hover:text-brown"} p-3 border-b-[1px]`}>
-						My Orders
-					</Link>
-					<Link
-						href="/account/transactions"
-						className={`w-full ${active === "transactions" ? "bg-brown text-white" : "text-black bg-transparent border-black hover:text-brown"} p-3 border-b-[1px]`}>
-						Transactions
-					</Link>
-					<Link href="/account/settings" className={`w-full ${active === "settings" ? "bg-brown text-white" : "text-black bg-transparent hover:text-brown"} p-3 border-b-[1px]`}>
-						Settings
-					</Link>
+			<h3 className="text-2xl md:text-4xl font-bold text-center mt-6 md:mt-16 mb-8">{title}</h3>
+			<div className="w-full flex flex-col md:flex-row gap-4 md:gap-8 items-start md:min-h-[50vh] justify-between max-w-7xl mx-auto">
+				<div className="hidden w-1/4 h-auto bg-slate-200 md:flex flex-col">
+					{accountLinks.map((link, index) => (
+						<Link
+							href={`/account${link?.link}`}
+							key={index}
+							className={`w-full ${
+								pathname === `/account${link?.link}` ? "bg-brown text-white" : index !== accountLinks.length - 1 ? "border-black" : "text-black bg-transparent hover:text-brown"
+							} p-3 border-b-[1px]`}>
+							{link?.name}
+						</Link>
+					))}
 				</div>
-				<div className="w-[70%]">{children}</div>
+				<div id="breadcrumbs" className="md:hidden w-full h-auto flex px-4 items-center gap-4">
+					{accountLinks.map((link, index) => (
+						<React.Fragment key={index}>
+							<Link
+								href={link?.link}
+								className={`font-medium ${pathname === `/account${link?.link}` ? "text-brown font-bold" : "hover:text-brown"} w-full text-[12px] md:text-md block}`}>
+								{link.name}
+							</Link>
+							{index !== accountLinks?.length - 1 && <p>/</p>}
+						</React.Fragment>
+					))}
+				</div>
+				<div className="w-full md:w-[70%] px-4 md:px-0">{children}</div>
 				<ToastContainer />
 			</div>
 			<Footer />
@@ -45,12 +63,10 @@ const AccountLayout = ({ children, active, title }: { children: ReactNode; activ
 	);
 };
 
-const index = ({ children, active, title }: { children: ReactNode; active: string; title: string }) => {
+const index = ({ children, active, title }: { children: ReactNode; active?: string; title: string }) => {
 	return (
 		<ProtectedRoute loginRequired={true}>
-			<AccountLayout active={active} title={title}>
-				{children}
-			</AccountLayout>
+			<AccountLayout title={title}>{children}</AccountLayout>
 		</ProtectedRoute>
 	);
 };
