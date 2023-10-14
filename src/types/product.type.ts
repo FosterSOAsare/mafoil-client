@@ -1,10 +1,8 @@
 import { StaticImageData } from "next/image";
 
-export type productType = {
+export interface productType {
   name: string;
   price: number;
-  rating: number;
-  totalRatings: number;
   store: string;
   short_desc?: string;
   long_desc?: string;
@@ -12,5 +10,10 @@ export type productType = {
   images: { url: string, public_id: string }[];
   slugname: string;
   category: 'cloth' | 'bag' | 'accessories' | 'shoe';
-  purchased?: boolean
+  purchased?: boolean;
+  rating: {
+    totalRatings: number,
+    avgRating: number,
+    accumulatedRating: number,
+  }
 }

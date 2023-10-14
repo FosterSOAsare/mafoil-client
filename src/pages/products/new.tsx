@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import Image from "next/image";
 
 import { useUserSlice } from "@/slices/user.slice";
 import { productSchema } from "@/libs/hookform";
@@ -68,21 +67,21 @@ const NewProduct = () => {
 		<MainPageLayout>
 			{!notFound && (
 				<>
-					<h1 className="text-4xl uppercase font-medium">New Product</h1>
-					<form action="" className="newProduct w-full max-w-[720px] h-auto mt-6 flex flex-col items-center justify-center" onSubmit={handleSubmit(storeNewProduct)}>
+					<h1 className="text-2xl md:text-4xl uppercase font-medium">New Product</h1>
+					<form action="" className="newProduct w-full px-4 max-w-[720px] h-auto mt-6 flex flex-col items-center justify-center" onSubmit={handleSubmit(storeNewProduct)}>
 						<PrimaryInput name="name" placeholder="Brims hats for men" register={register} label="Product Name" />
 						<PrimaryInput name="price" placeholder="100.00" register={register} label="Product Price" />
 
-						<div className="w-full flex justify-between gap-4 items-center">
+						<div className="w-full flex flex-col md:flex-row justify-between md:gap-4 items-center">
 							<PrimarySelect name="category" label="Category" register={register} options={filters} />
 							<PrimarySelect name="store" label="Store" register={register} options={stores} />
 						</div>
 						<PrimaryTextArea name="short_desc" placeholder="" label="Short Description (255 characters max) " register={register} />
 						<PrimaryTextArea name="long_desc" placeholder="" label="Long Description(optional)" register={register} sx="!h-64" />
 
-						<div className="w-full h-24 mb-4 grid gap-8 grid-cols-4">
+						<div className="w-full h-16 md:h-28 mb-4 grid gap-8 grid-cols-4">
 							{images.map((image, index) => (
-								<ProductFormImageComponent key={index} {...image} setImages={setImages} />
+								<ProductFormImageComponent key={index} {...image} setImages={setImages} images={images} />
 							))}
 							{images?.length < 4 && (
 								<div className="w-full h-full ">
@@ -94,7 +93,7 @@ const NewProduct = () => {
 										} flex-col`}>
 										{!fileUploadLoading && (
 											<>
-												+<p> Add Image</p>
+												+<p className="hidden md:block"> Add Image</p>
 											</>
 										)}
 										{fileUploadLoading && <Loading1 />}
@@ -103,7 +102,7 @@ const NewProduct = () => {
 							)}
 						</div>
 
-						<PrimaryButton text="Create Product" type="submit" disabled={isLoading || fileUploadLoading} />
+						<PrimaryButton text="Create Product" type="submit" sx="mt-4 max-w-[400px] h-16 md:h-20" disabled={isLoading} />
 					</form>
 					<ToastContainer />
 				</>

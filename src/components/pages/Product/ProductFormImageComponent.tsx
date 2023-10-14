@@ -9,7 +9,17 @@ import { BsTrashFill } from "react-icons/bs";
 import { toast } from "react-toastify";
 import useCreateErrorFromApiRequest from "@/hooks/useCreateErrorFromApiRequest";
 
-const ProductFormImageComponent = ({ url, public_id, setImages }: { url: string; public_id: string; setImages: React.Dispatch<React.SetStateAction<{ url: string; public_id: string }[]>> }) => {
+const ProductFormImageComponent = ({
+	url,
+	public_id,
+	setImages,
+	images,
+}: {
+	url: string;
+	public_id: string;
+	setImages: React.Dispatch<React.SetStateAction<{ url: string; public_id: string }[]>>;
+	images: { url: string; public_id: string }[];
+}) => {
 	const [deleteAFile, { error, data, isLoading }]: any = useDeleteAFileRequestMutation();
 
 	useEffect(() => {
@@ -27,8 +37,16 @@ const ProductFormImageComponent = ({ url, public_id, setImages }: { url: string;
 	return (
 		<div className="w-full h-full bg-[#F5F2EC] relative hover:cursor-pointer">
 			<Image src={url} alt="Product Image" fill />
-
-			<button className="w-8 h-8 bg-slate-200 text-[red] flex items-center justify-center absolute z-[10] bottom-0 right-0" type="button" onClick={() => deleteAFile({ public_id })}>
+			<button
+				className="w-8 h-8 bg-slate-200 text-[red] flex items-center justify-center absolute z-[10] bottom-0 right-0"
+				type="button"
+				onClick={() => {
+					if (images?.length === 1) {
+						toast.error("You are not allowed to have no uploaded images", { autoClose: 1500 });
+						return;
+					}
+					deleteAFile({ public_id });
+				}}>
 				{!isLoading && <BsTrashFill />}
 				{isLoading && <Loading1 />}
 			</button>

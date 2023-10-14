@@ -19,7 +19,7 @@ import { BsCartPlus } from "react-icons/bs";
 import { useUserSlice } from "@/slices/user.slice";
 
 const WishListProductCard = ({ wishlistItem, setPreviewProduct, sx = "" }: { wishlistItem: productType; setPreviewProduct: React.Dispatch<React.SetStateAction<productType | null>>; sx?: string }) => {
-	const { name, price, rating, totalRatings, images, slugname } = wishlistItem;
+	const { name, price, rating, images, slugname } = wishlistItem;
 	const [showContent, setShowContent] = useState(false);
 	const dispatch = useDispatch();
 	const { user } = useSelector(useUserSlice);
@@ -73,8 +73,8 @@ const WishListProductCard = ({ wishlistItem, setPreviewProduct, sx = "" }: { wis
 					</aside>
 				</div>
 			</div>
-			<div className="h-[150px] flex items-start justify-center flex-col">
-				<Ratings rating={rating} totalRatings={totalRatings} />
+			<div className="py-4 md:py-0 md:h-[150px] flex items-start justify-center flex-col">
+				<Ratings rating={rating.avgRating} totalRatings={rating.totalRatings} />
 				<Link href={`/products/${slugname}`} className="text-sm my-2">
 					{name}
 				</Link>

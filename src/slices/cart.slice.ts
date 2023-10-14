@@ -1,18 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-export type cartItemType = {
+import { productType } from "@/types/product.type";
+
+export interface cartItemType extends productType {
   count: number;
-  name: string;
-  price: number;
-  rating: number;
-  totalRatings: number;
-  store: string;
-  short_desc?: string;
-  _id: string;
-  images: { url: string, public_id: string }[];
-  slugname: string;
-  category: 'cloth' | 'bag' | 'accessories' | 'shoe';
-  purchased?: boolean
+  purchase?: boolean
 }
+
 
 const initialState: cartItemType[] = []
 

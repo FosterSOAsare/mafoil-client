@@ -8,7 +8,8 @@ import { ToastContainer } from "react-toastify";
 
 import filters from "@/data/productfilters";
 import { productType } from "@/types/product.type";
-import { useLazyGetAProductRequestQuery, useLazyGetProductRecommendationsRequestQuery, useLazyGetProductReviewsRequestQuery } from "@/apis/productsApi";
+import { useLazyGetAProductRequestQuery, useLazyGetProductRecommendationsRequestQuery } from "@/apis/productsApi";
+import { useLazyGetProductReviewsRequestQuery } from "@/apis/reviewsApi";
 
 import Header from "@/components/molecules/Header";
 import ProductCard from "@/components/cards/ProductCard";
@@ -22,15 +23,13 @@ import Loading from "@/components/atom/Loading";
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 const Product = () => {
-	const [product, setProduct] = useState<productType | null>(null);
 	const { query } = useRouter();
 	const [previewProduct, setPreviewProduct] = useState<null | productType>(null);
-	const [getAProduct, { data, error, isLoading }] = useLazyGetAProductRequestQuery();
+	const [getAProduct, { data: product, error, isLoading }] = useLazyGetAProductRequestQuery();
 	const [getRecommendations, { data: recommendationsData }] = useLazyGetProductRecommendationsRequestQuery();
 
 	const [getReviews, { data: reviewsData }] = useLazyGetProductReviewsRequestQuery();
 	const [recommendations, setRecommendations] = useState<productType[]>([]);
-	const [reviews, setReviews] = useState<any>([]);
 
 	useEffect(() => {
 		if (!query?.slugName) return;
@@ -38,21 +37,15 @@ const Product = () => {
 	}, [query]);
 
 	useEffect(() => {
-		if (!data) return;
-		setProduct(data || null);
+		if (!product) return;
 		getRecommendations(query?.slugName as string);
 		getReviews(query?.slugName as string);
-	}, [data]);
+	}, [product]);
 
 	useEffect(() => {
 		if (!recommendationsData) return;
 		setRecommendations(recommendationsData.filter((i: productType, index: number) => index < 4));
 	}, [recommendationsData]);
-
-	useEffect(() => {
-		if (!reviewsData) return;
-		setReviews(reviewsData);
-	}, [reviewsData]);
 
 	return (
 		<>
@@ -67,28 +60,26 @@ const Product = () => {
 				{!isLoading && product && (
 					<>
 						<section className="w-full h-auto py-5 bg-white " id="hero">
-							<nav className="flex items-center justify-start gap-2 px-10">
+							<nav className="flex items-center justify-start gap-2 px-4 md:px-10">
 								{[
 									{ name: "Home", link: "/" },
 									{ name: "Products", link: "/products" },
 									{ name: filters?.find((filt) => filt.option === product?.category)?.name, link: `/products?type=${product?.category}` },
 								].map((crumb, index, arr) => (
 									<Fragment key={index}>
-										<Link href={crumb?.link} className="hover:text-brown capitalize">
+										<Link href={crumb?.link} className="hover:text-brown text-[12px] md:text-[16px] capitalize">
 											{crumb.name}
 										</Link>
 										<p>&gt;</p>
 									</Fragment>
 								))}
-								<p className="capitalize">{product?.name.toLowerCase()}</p>
+								<p className="capitalize text-[12px] md:text-[16px]">{product?.name.toLowerCase()}</p>
 							</nav>
-
-							<ProductDetails product={product} reviews={[]} />
-
-							<section id="recommendations" className="px-20 pt-12 h-auto flex flex-col items-center justify-center w-full">
-								<h3 className="text-center mb-8 text-3xl font-medium">YOU MAY ALSO LIKE</h3>
+							<ProductDetails product={product} reviews={reviewsData ? reviewsData : []} />
+							<section id="recommendations" className="px-4 md:px-8 lg:px-20 pt-6 md:pt-12 h-auto flex flex-col items-center justify-center w-full">
+								<h3 className="text-center mb-8 text-2xl md:text-3xl font-medium">YOU MAY ALSO LIKE</h3>
 								<article className="w-full flex flex-col items-center justify-center pb-12">
-									<div className="grid grid-cols-4 gap-6 w-full h-auto">
+									<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-6 w-full h-auto">
 										{recommendations.map((product, index) => {
 											return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} sx="!h-[300px]" />;
 										})}

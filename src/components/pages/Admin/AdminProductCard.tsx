@@ -8,7 +8,7 @@ import useCheckClickOutsideParent from "@/hooks/useCheckClickOutsideParent";
 import Ratings from "@/components/molecules/Ratings";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 
-const AdminProductCard = ({ images, name, rating, totalRatings, price, slugname }: productType) => {
+const AdminProductCard = ({ images, name, rating, price, slugname }: productType) => {
 	const [show, setShow] = useState(false);
 	const parentRef = useRef<any>(null);
 	useCheckClickOutsideParent({ parentRef, setShow });
@@ -26,7 +26,7 @@ const AdminProductCard = ({ images, name, rating, totalRatings, price, slugname 
 			<p className="w-1/5 flex flex-col items-center justify-center">GH₵{price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
 			<p className="w-1/5 text-right flex justify-center text-sm font-medium">
-				<Ratings rating={rating} totalRatings={totalRatings} />
+				<Ratings rating={rating.avgRating} totalRatings={rating.totalRatings} />
 			</p>
 			<div className="w-8 relative" ref={parentRef}>
 				<button className="w-8 rounded-full flex items-center justify-center hover:bg-slate-200 h-8" onClick={() => setShow((prev) => !prev)}>

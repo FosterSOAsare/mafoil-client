@@ -11,9 +11,10 @@ import { notificationType, useNotificationsSelector } from "@/slices/notificatio
 import CartPreview from "./CartPreview";
 import AccountComponent from "../AccountComponent";
 import Notifications from "./Notifications";
+import PhoneMenu from "./PhoneMenu";
 
 import { AiOutlinePhone, AiOutlineUser, AiOutlineHeart, AiOutlineShoppingCart, AiOutlineBell } from "react-icons/ai";
-import { BiSearch } from "react-icons/bi";
+import { BiSearch, BiMenuAltRight } from "react-icons/bi";
 
 const Header = () => {
 	const cart = useSelector(useCartSelector);
@@ -22,6 +23,7 @@ const Header = () => {
 	const wishList = useSelector(useWishListSelector);
 	const [showAccountMenuComponent, setShowAccountMenuComponent] = useState(false);
 	const [showNotifications, setShowNotifications] = useState(false);
+	const [showMenu, setShowMenu] = useState(false);
 	const accountMenuComponentParentRef = useRef<any>(null);
 	const { pathname } = useRouter();
 
@@ -55,14 +57,17 @@ const Header = () => {
 	}, [notifications]);
 
 	return (
-		<header className="w-full bg-white shadow-md sticky top-0 left-0 z-[6] h-20 flex items-center justify-between px-10">
-			<Link href="tel:+8665972742" className="flex items-center text-sm gap-2 group font-medium">
+		<header className="w-full bg-white shadow-md sticky top-0 left-0 z-[6] h-20 flex items-center justify-between px-4 lg:px-10">
+			<Link href="tel:+8665972742" className="hidden lg:flex items-center text-sm gap-2 group font-medium">
 				<div className="w-10 h-10 rounded-full border-[1px] group-hover:bg-brown group-hover:text-white flex items-center justify-center">
 					<AiOutlinePhone className="text-xl rotate-90" />
 				</div>
 				<p className="group-hover:text-brown">+866.597.2742</p>
 			</Link>
-			<nav className="w-auto gap-10 flex items-center justify-between">
+			<Link href="/" className="lg:hidden font-playfair px-4 text-3xl font-medium">
+				Mafo.il
+			</Link>
+			<nav className="w-auto gap-10 hidden lg:flex items-center justify-between">
 				<Link href="/" className="text-sm font-medium hover:text-brown">
 					HOME
 				</Link>
@@ -79,7 +84,7 @@ const Header = () => {
 					ABOUT US
 				</Link>
 			</nav>
-			<div className="flex items-center gap-4 text-2xl h-12 font-thin">
+			<div className="hidden lg:flex items-center gap-4 text-2xl h-12 font-thin">
 				<BiSearch className="hover:cursor-pointer" />
 				<div className="relative" ref={accountMenuComponentParentRef}>
 					<button className="w-full block" onClick={() => setShowAccountMenuComponent(true)}>
@@ -110,10 +115,25 @@ const Header = () => {
 					</>
 				)}
 			</div>
+			<div className="lg:hidden flex items-center gap-6">
+				{user?._id && (
+					<button className="relative" onClick={() => setShowNotifications(true)}>
+						<AiOutlineBell className="hover:cursor-pointer text-2xl" />
+						<span className={`w-5 h-5 flex items-center justify-center bg-brown text-white absolute rounded-full text-[10px] font-bold -right-3 -top-2`}>
+							{unreadNotificationsCount > 9 ? "9+" : unreadNotificationsCount}
+						</span>
+					</button>
+				)}
+				<button className="w-10 h-10 flex items-center justify-center bg-slate-100 hover:bg-slate-400" onClick={() => setShowMenu(true)}>
+					<BiMenuAltRight className="text-3xl" />
+				</button>
+			</div>
 
 			{showCart && <CartPreview setShowCart={setShowCart} />}
 
 			{showNotifications && <Notifications setShowNotifications={setShowNotifications} />}
+
+			{showMenu && <PhoneMenu setShowMenu={setShowMenu} />}
 		</header>
 	);
 };

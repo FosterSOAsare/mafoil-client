@@ -47,35 +47,35 @@ const Cart = () => {
 			</Head>
 			<Header />
 			<main className="w-full min-h-screen bg-white relative pb-12">
-				<section className="w-full h-[30vh] flex items-center justify-center flex-col " id="hero">
-					<h1 className="text-4xl mb-8 font-medium">SHOPPING CART</h1>
+				<section className="w-full py-8 md:py-0 md:h-[30vh] flex items-center justify-center flex-col " id="hero">
+					<h1 className="text-2xl md:text-4xl mb-2 md:mb-8 font-medium">SHOPPING CART</h1>
 
-					<div className="bg-[#14C100] h-2 w-1/3 rounded-[5px]"></div>
+					<div className="bg-[#14C100] h-[3px] md:h-2 w-1/3 rounded-[5px]"></div>
 				</section>
 
-				<section id="products" className="px-10 py-4 h-auto mt-8 w-full gap-6 justify-between">
+				<section id="products" className="px-4 md:px-10 md:py-4 h-auto mt-8 w-full gap-6 justify-between">
 					{cart?.length > 0 && (
-						<article className="w-full flex flex-col items-center max-w-5xl mx-auto justify-center">
+						<article className="w-full flex  flex-col items-center max-w-5xl mx-auto justify-center">
 							<div className="w-full font-medium h-auto pb-3 flex items-center justify-between border-b-[1px]">
-								<p className="w-1/3">PRODUCT</p>
-								<p className="w-1/5 text-center">QUANTITY</p>
+								<p className="w-1/3 md:w-1/3">PRODUCT</p>
+								<p className="w-1/4 md:w-1/5 text-center">QUANTITY</p>
 
-								<p className="w-1/5  text-right">TOTAL</p>
+								<p className="w-1/4 md:w-1/5  text-right">TOTAL</p>
 							</div>
 							{cart?.map((product: cartItemType, index: number) => {
 								const { count, ...rest } = product;
 								return (
 									<div key={index} className="w-full h-auto py-8 flex items-center justify-between border-b-[1px]">
-										<div className="w-1/3 h-full flex items-center gap-4">
-											<div className="w-28 h-20 relative">
+										<div className="w-1/3 md:w-1/3 h-full flex items-center gap-2 md:gap-4">
+											<div className="w-28 md:block hidden h-20 relative">
 												<Image src={product?.images[0]?.url} alt="product Image" fill />
 											</div>
 											<div>
-												<h3 className="text-sm text-bold text-black mb-2">{product?.name}</h3>
+												<h3 className="text-[12px] md:text-sm text-bold text-black mb-2">{product?.name}</h3>
 												<p className="text-[12px]">GH₵{(product?.price).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 											</div>
 										</div>
-										<div className="w-1/5 flex flex-col items-center justify-center">
+										<div className="w-1/4 md:w-1/5 flex flex-col items-center justify-center">
 											<div className="w-24 mx-auto h-8 border-[1px] px-2">
 												<CartItemNumberModerator itemCount={count} product={rest} />
 											</div>
@@ -84,13 +84,13 @@ const Cart = () => {
 											</button>
 										</div>
 
-										<p className="w-1/5 text-right text-sm font-medium">
+										<p className="w-1/4 md:w-1/5 text-right text-[12px] md:text-sm font-medium">
 											GH₵{(product?.price * product?.count).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
 										</p>
 									</div>
 								);
 							})}
-							<article className="w-[45%] mr-auto mt-8">
+							<article className="w-full md:w-[45%] mr-auto mt-8">
 								<h3 className="font-medium">Subtotal: GH₵{subtotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} </h3>
 								<p className="text-sm italic">Taxes and shipping calculated at checkout</p>
 								<p className="text-sm mt-4">

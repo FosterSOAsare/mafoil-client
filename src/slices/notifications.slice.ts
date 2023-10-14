@@ -28,9 +28,12 @@ const notificationsSlice = createSlice({
       });
       return newData
     },
+    insertNewNotification: (state, action) => {
+      return [...action.payload, ...state]
+    }
   }
 })
 
 export const useNotificationsSelector = (state: any) => state.notifications
-export const { setNotificationsData, markNotificationAsRead } = notificationsSlice.actions
+export const { setNotificationsData, markNotificationAsRead, insertNewNotification } = notificationsSlice.actions
 export default notificationsSlice.reducer

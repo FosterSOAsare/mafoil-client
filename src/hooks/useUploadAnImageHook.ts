@@ -22,7 +22,7 @@ const useUploadAnImageHook = (cb?: any) => {
   useEffect(() => {
     if (!fileUploadSuccess) return;
 
-    toast("Image uploaded successfully");
+    toast("Image uploaded successfully", { autoClose: 1500 });
     cb(fileUploadSuccess)
   }, [fileUploadSuccess]);
   return { storeImage, fileUploadSuccess, fileUploadLoading, fileUploadError }

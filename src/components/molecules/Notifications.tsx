@@ -31,7 +31,7 @@ const Notifications = ({ setShowNotifications }: { setShowNotifications: React.D
 	}, [data]);
 
 	return (
-		<aside className="w-1/4 bg-white shadow-md  fixed right-0 flex items-center justify-start pb-6 flex-col top-[12.7vh] z-[2] h-[88vh] overflow-y-auto">
+		<aside className="w-full md:w-2/3 lg:w-1/4 bg-white shadow-md  fixed right-0 flex items-center justify-start  flex-col top-0 md:top-[8vh] lg:top-[12.7vh] z-[12] h-screen px-2 lg:h-[88vh] overflow-y-auto">
 			<div className="w-full bg-white sticky top-0 left-0 z-[2] shadow-sm">
 				<div className="flex items-center justify-between">
 					<h3 className="text-xl font-bold text-center mx-auto">Notifications</h3>
@@ -41,7 +41,7 @@ const Notifications = ({ setShowNotifications }: { setShowNotifications: React.D
 				</div>
 			</div>
 
-			<div className="h-[110vh] w-full">
+			<div className="h-auto pb-6 w-full">
 				{notifications?.length > 0 &&
 					notifications?.map((notification: notificationType, index: number) => (
 						<button
