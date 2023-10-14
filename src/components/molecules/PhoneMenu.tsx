@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+
+import { useUserSlice } from "@/slices/user.slice";
 
 import { AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/router";
@@ -22,17 +25,29 @@ const phoneMenuLinks = [
 		link: "/about",
 	},
 	{
+		name: "Contact Us",
+		link: "/contact",
+	},
+	{
 		name: "Account",
 		link: "/account",
+		loginRequired: true,
+	},
+	{
+		name: "Wishlist",
+		link: "/wishlist",
+		loginRequired: true,
 	},
 	{
 		name: "Cart",
 		link: "/cart",
+		loginRequired: true,
 	},
 ];
 
 const PhoneMenu = ({ setShowMenu }: { setShowMenu: React.Dispatch<React.SetStateAction<boolean>> }) => {
 	const { pathname } = useRouter();
+	const { user } = useSelector(useUserSlice);
 
 	return (
 		<aside className="w-full h-screen flex flex-col  overflow-y-auto bg-white fixed top-0 left-0 p-4 md:hidden z-[10]">
@@ -47,16 +62,20 @@ const PhoneMenu = ({ setShowMenu }: { setShowMenu: React.Dispatch<React.SetState
 
 			<nav className="text-black mt-6 w-auto gap-2 flex flex-col items-start justify-between">
 				{phoneMenuLinks.map((link, index) => (
-					<Link
-						href={link?.link}
-						onClick={() => {
-							if (pathname === link.link) return;
-							setShowMenu(false);
-						}}
-						key={index}
-						className={`uppercase w-full py-4 text-sm font-medium ${pathname === link.link ? "bg-brown text-white" : " hover:bg-brown hover:text-white"} px-4`}>
-						{link?.name}
-					</Link>
+					<>
+						{(!link.loginRequired || (user?._id && link.loginRequired)) && (
+							<Link
+								href={link?.link}
+								onClick={() => {
+									if (pathname === link.link) return;
+									setShowMenu(false);
+								}}
+								key={index}
+								className={`uppercase w-full py-4 text-sm font-medium ${pathname === link.link ? "bg-brown text-white" : " hover:bg-brown hover:text-white"} px-4`}>
+								{link?.name}
+							</Link>
+						)}
+					</>
 				))}
 			</nav>
 		</aside>
