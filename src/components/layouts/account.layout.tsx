@@ -47,7 +47,7 @@ const AccountLayout = ({ children, title }: { children: ReactNode; title: string
 					{accountLinks.map((link, index) => (
 						<React.Fragment key={index}>
 							<Link
-								href={link?.link}
+								href={`/account${link?.link}`}
 								className={`font-medium ${pathname === `/account${link?.link}` ? "text-brown font-bold" : "hover:text-brown"} w-full text-[12px] md:text-md block}`}>
 								{link.name}
 							</Link>
