@@ -35,8 +35,8 @@ const orders = () => {
 						<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Status</p>
 						<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Date</p>
 						<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Total Price</p>
-						<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Total Profit</p>
-						<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Average Profit(%)</p>
+						{/* <p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Total Profit</p>
+						<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Average Profit(%)</p> */}
 						<button className="w-12 block border-l-[1px]"></button>
 					</div>
 				)}

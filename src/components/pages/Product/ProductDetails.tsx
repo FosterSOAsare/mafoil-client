@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState } from "react";
+import React, { useRef, useCallback, useState, useMemo } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
@@ -82,6 +82,14 @@ const ProductDetails = ({ product, reviews }: { product: productType; reviews: a
 		}, 2000);
 	};
 
+	const images = useMemo(() => {
+		let arr: { public_id: string; url: string }[] = product.images;
+		for (let i = arr.length; i < 4; i++) {
+			arr = [...arr, arr[0]];
+		}
+		return arr;
+	}, [product?.images]);
+
 	return (
 		<section className="w-full h-auto">
 			<div className="w-full h-auto mt-4 flex flex-col lg:flex-row items-start justify-between">
@@ -96,10 +104,10 @@ const ProductDetails = ({ product, reviews }: { product: productType; reviews: a
 							<FiChevronLeft />
 						</button>
 						<Swiper spaceBetween={30} slidesPerView={1} autoplay={true} ref={swiperRef} className="overflow-y-visible w-full h-full relative" onSwiper={handleSwiper}>
-							{[1, 2, 3, 4].map((_i, index: number) => (
+							{images.map((image, index: number) => (
 								<SwiperSlide key={index} className="w-full bg-[#f5f2ec] flex items-center justify-center h-full">
-									<div className="w-[500px] h-[300px] md:h-[500px] relative ">
-										<Image fill src={product?.images[0]?.url} alt="Product Image" sizes="(max-width: 767px) 100vw, 50vw" />
+									<div className="w-full h-full relative ">
+										<Image fill src={image?.url} alt="Product Image" sizes="(max-width: 767px) 100vw, 50vw" />
 									</div>
 								</SwiperSlide>
 							))}
@@ -115,9 +123,9 @@ const ProductDetails = ({ product, reviews }: { product: productType; reviews: a
 					</div>
 
 					<div className="md:w-4/5 mx-auto h-[20vh] lg:h-[30vh] flex items-center gap-4 justify-between bg-white">
-						{[1, 2, 3, 4].map((_i, index) => (
+						{images.map((image, index) => (
 							<div key={index} className={`w-full h-[10vh] lg:h-[20vh] relative ${active === index ? "opacity-100" : "opacity-40"} transition-all duration-200`}>
-								<Image fill src={product?.images[0]?.url} alt="Product Image" />
+								<Image fill src={image?.url as string} alt="Product Image" />
 							</div>
 						))}
 					</div>

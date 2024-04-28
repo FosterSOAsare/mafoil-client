@@ -74,12 +74,12 @@ const OrderPage = () => {
 									<p className="w-[40%]">PRODUCT</p>
 									<p className="w-[15%] text-center">QUANTITY</p>
 									<p className="w-[15%] text-center">TOTAL PRICE</p>
-									{data?.status !== "cancelled" && (
+									{/* {data?.status !== "cancelled" && (
 										<>
 											<p className="w-[15%] text-center">{data?.status == "complete" ? "TOTAL" : data?.status === "pending" ? "EXPECTED" : ""} PROFIT</p>
 											<p className="w-[15%] text-center">PROFIT PERCENT</p>
 										</>
-									)}
+									)} */}
 								</div>
 								{data?.cart?.map((product: any, index: number) => {
 									const { count, price, totalItemsProfit, profitPercent } = product;
@@ -98,20 +98,22 @@ const OrderPage = () => {
 											<p className="w-[15%] text-center text-sm font-medium">
 												GH₵{(price * count).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
 											</p>
-											{data.status !== "cancelled" && (
+											{/* Removed all stuff related to profit */}
+
+											{/* {data.status !== "cancelled" && (
 												<>
 													<p className={`w-[15%] ${data?.status === "complete" ? "text-green-500" : "text-slate-500"} font-bold text-center`}>
 														GH₵{totalItemsProfit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
 													</p>
 													<p className={`w-[15%] ${data?.status === "complete" ? "text-green-500" : "text-slate-500"} font-bold text-center`}>{profitPercent}%</p>
 												</>
-											)}
+											)} */}
 										</div>
 									);
 								})}
 								<article className="w-[45%] mr-auto mt-8">
 									<h3 className="font-bold">Subtotal: GH₵{data?.totalPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} </h3>
-									{data?.status !== "cancelled" && (
+									{/* {data?.status !== "cancelled" && (
 										<>
 											<p className={`font-medium text-green-600`}>
 												{data.status === "complete" ? "Total" : data?.status === "pending" ? "Expected" : ""} Profit: GH₵
@@ -121,7 +123,7 @@ const OrderPage = () => {
 												Average Profit Percentage: {data?.avgProfitPercent.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%
 											</p>
 										</>
-									)}
+									)} */}
 
 									{data?.step === 1 && data?.status === "pending" && (
 										<div className="w-full mt-4">

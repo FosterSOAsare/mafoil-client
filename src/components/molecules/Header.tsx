@@ -68,19 +68,19 @@ const Header = () => {
 				Mafo.il
 			</Link>
 			<nav className="w-auto gap-10 hidden lg:flex items-center justify-between">
-				<Link href="/" className="text-sm font-medium hover:text-brown">
+				<Link href="/" className={`text-sm font-medium ${pathname === "/" ? "text-brown" : "text-black hover:text-brown"}`}>
 					HOME
 				</Link>
-				<Link href="/products" className="text-sm font-medium hover:text-brown">
+				<Link href="/products" className={`${pathname.startsWith("/products") ? "text-brown" : "text-black hover:text-brown"} text-sm font-medium `}>
 					SHOP
 				</Link>
 				<Link href="/" className="font-playfair px-4 text-4xl font-medium">
 					Mafo.il
 				</Link>
-				<Link href="/faq" className="text-sm font-medium hover:text-brown">
+				<Link href="/faq" className={`${pathname.startsWith("/faq") ? "text-brown" : "text-black hover:text-brown"} text-sm font-medium`}>
 					FAQ
 				</Link>
-				<Link href="/about" className="text-sm font-medium hover:text-brown">
+				<Link href="/about" className={`${pathname.startsWith("/about") ? "text-brown" : "text-black hover:text-brown"} text-sm font-medium`}>
 					ABOUT US
 				</Link>
 			</nav>
