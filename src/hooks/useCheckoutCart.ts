@@ -12,7 +12,7 @@ const useCheckoutCart = () => {
   const { user } = useSelector(useUserSlice)
 
 
-  const [checkoutCart, { data, error, isLoading }]: any = useLazyCheckoutCartRequestQuery()
+  const [checkoutCart, { data, error, isFetching: isLoading }]: any = useLazyCheckoutCartRequestQuery()
   async function checkOut() {
     checkoutCart()
   }
@@ -20,10 +20,9 @@ const useCheckoutCart = () => {
   useEffect(() => {
     if (!data) return
     toast.success('Order has been successfully added', { autoClose: 1500 })
-    console.log(data)
+
     setTimeout(() => {
       dispatch(clearCart())
-      dispatch(setData({ balance: user?.balance - data?.total }))
     }, 2000)
   }, [data])
 

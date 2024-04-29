@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
 
-import { useLazyFetchAnOrderRequestQuery, useLazyCancelOrderRequestQuery } from "@/apis/orderApi";
+import { useLazyFetchAnOrderRequestQuery, useCancelOrderRequestMutation } from "@/apis/orderApi";
 import useCreateErrorFromApiRequest from "@/hooks/useCreateErrorFromApiRequest";
 
 import Header from "@/components/molecules/Header";
@@ -16,7 +16,7 @@ const OrderPage = () => {
 	const { query, isReady } = useRouter();
 
 	const [fetchOrder, { data, error, isLoading }]: any = useLazyFetchAnOrderRequestQuery();
-	const [cancelOrder, { data: order, error: cancelError, isLoading: cancelOrderLoading }]: any = useLazyCancelOrderRequestQuery();
+	const [cancelOrder, { data: order, error: cancelError, isLoading: cancelOrderLoading }]: any = useCancelOrderRequestMutation();
 
 	useEffect(() => {
 		if (!isReady) return;
@@ -30,9 +30,6 @@ const OrderPage = () => {
 	useEffect(() => {
 		if (!order) return;
 		toast.success("Order has successfully been cancelled", { autoClose: 1500 });
-		setTimeout(() => {
-			window.location.reload();
-		}, 2000);
 	}, [order]);
 	// Handle error from cancelling and fetching order
 	useCreateErrorFromApiRequest(error);
@@ -134,14 +131,13 @@ const OrderPage = () => {
 													cancelOrder(query?.id);
 												}}
 												className={`mt-4 !w-[180px] flex items-center justify-center bg-black text-white relative group h-12 overflow-hidden`}>
-												<span
-													className={`w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:-left-0 z-[1] ${
+												<div
+													className={`w-full h-full bg-brown absolute flex items-center justify-center transition-all duration-300 top-0 group-hover:-left-0 z-[1] ${
 														cancelOrderLoading ? "left-0" : "-left-[100%]"
-													}`}></span>
-
-												{cancelOrderLoading ? (
-													<Loading1 />
-												) : (
+													}`}>
+													{cancelOrderLoading && <Loading1 />}
+												</div>
+												{!cancelOrderLoading && (
 													<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Cancel Order</p>
 												)}
 											</button>

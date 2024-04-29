@@ -68,11 +68,12 @@ const CartPreview = ({ setShowCart }: { setShowCart: React.Dispatch<React.SetSta
 								disabled={isLoading}
 								onClick={() => checkOut()}
 								className={`mt-4 w-[150px] flex items-center justify-center bg-black ${!agreeToTerms && "opacity-70"} text-white relative w-full group h-12 overflow-hidden`}>
-								<span
-									className={`w-full h-full bg-brown absolute transition-all duration-300 top-0 ${agreeToTerms && "group-hover:left-0"} z-[1] ${
+								<div
+									className={`w-full h-full bg-brown absolute transition-all flex items-center justify-center duration-300 top-0 ${agreeToTerms && "group-hover:left-0"} z-[1] ${
 										isLoading ? "left-0" : "-left-[100%]"
-									}`}></span>
-								{isLoading && <Loading1 />}
+									}`}>
+									{isLoading && <Loading1 />}
+								</div>
 								{!isLoading && <p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Checkout</p>}
 							</button>
 

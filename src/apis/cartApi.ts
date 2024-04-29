@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import userApi from './userApi';
 
 const cartApi = createApi({
   reducerPath: 'cartApi',
@@ -22,6 +23,10 @@ const cartApi = createApi({
       query: () => ({
         url: "/checkout",
       }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        await queryFulfilled;
+        dispatch(userApi.util.invalidateTags(["User"]));
+      },
     })
   })
 })
