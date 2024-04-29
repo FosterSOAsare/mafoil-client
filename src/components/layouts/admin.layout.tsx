@@ -34,17 +34,21 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
 							</Link>
 
 							<nav className="w-full">
-								{adminNav.map((nav, index) => (
-									<Link
-										key={index}
-										className={`flex items-center gap-2 ${
-											pathname?.endsWith(nav?.href) ? "bg-slate-300" : "bg-transparent hover:bg-slate-300 text-slate-600"
-										} font-medium mb-4 p-2 rounded-[5px]`}
-										href={nav?.href}>
-										<nav.icon />
-										{nav?.name}
-									</Link>
-								))}
+								{adminNav.map((nav, index) => {
+									return (
+										<Link
+											key={index}
+											className={`flex items-center gap-2 ${
+												(!nav?.href && pathname == "/admin") || (nav?.href && pathname?.startsWith(`/admin${nav?.href}`))
+													? "bg-slate-300"
+													: "bg-transparent hover:bg-slate-300 text-slate-600"
+											} font-medium mb-4 p-2 rounded-[5px]`}
+											href={`/admin${nav?.href}`}>
+											<nav.icon />
+											{nav?.name}
+										</Link>
+									);
+								})}
 							</nav>
 
 							<button className="w-full h-10 font-medium text-[red] gap-4 rounded-[5px] flex items-center mt-auto">
