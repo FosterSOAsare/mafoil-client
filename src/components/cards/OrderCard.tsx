@@ -14,8 +14,8 @@ const OrderCard = ({ createdAt, totalPrice, totalProfit, status, avgProfitPercen
 				{status === "completed" && <BsCheckLg className="text-green-500" />}
 				{status === "cancelled" && <AiOutlineClose className="text-red-600" />}
 			</div>
-			<p className="w-1/3 text-center py-4 border-l-[1px]">{createDateFromString(createdAt)}</p>
-			<p className="w-1/3 text-center py-4 border-l-[1px]">GH₵{totalPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+			<p className="w-1/3 text-center py-4 text-sm md:text-[16px] border-l-[1px]">{createDateFromString(createdAt)}</p>
+			<p className="w-1/3 text-center py-4 text-sm md:text-[16px] border-l-[1px]">GH₵{totalPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 			{/* <p className="w-1/5 text-center py-4 border-l-[1px]">GH₵{totalProfit?.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 			<p className="w-1/5 text-center py-4 border-l-[1px] ">{avgProfitPercent}%</p> */}
 

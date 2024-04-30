@@ -37,8 +37,8 @@ const transactions = () => {
 	return (
 		<ProtectedRoute loginRequired={true}>
 			<Header />
-			<main className="w-full py-12  min-h-screen  max-w-7xl mx-auto  mb-12">
-				<div className="w-auto flex item-center justify-end gap-4">
+			<main className="w-full py-4 md:py-12 px-4  min-h-screen max-w-7xl mx-auto  mb-12">
+				<div className="mb-6 md:mb-0 w-auto flex item-center  justify-end gap-4">
 					<button className="bg-black text-white relative group h-12 px-5 overflow-hidden" onClick={() => setShowDepositModal(true)}>
 						<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
 						<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Deposit Funds</p>
@@ -49,7 +49,7 @@ const transactions = () => {
 					</button>
 				</div>
 				<h3 className="text-2xl font-medium">My Transactions</h3>
-				<div className="w-1/4 mt-4 h-12 flex items-center justify-between">
+				<div className="w-1/4 mt-4 h-12 flex gap-4 items-center justify-between">
 					{["All", "Pending", "Completed"].map((filter, index) => (
 						<button key={index} className={`${filter.toLowerCase() === sort ? "text-brown font-bold" : "hover:text-brown"}`} onClick={() => setSort(filter.toLowerCase())}>
 							{filter}
@@ -64,9 +64,9 @@ const transactions = () => {
 				)}
 				<div className="w-full min-h-[50vh]">
 					{!isLoading && (
-						<>
+						<div className="w-full overflow-x-auto">
 							{data && data?.length > 0 && (
-								<div className="w-full">
+								<div className="w-[200%] md:w-full">
 									<div className="w-full h-auto flex justify-between mt-6 border-y-[1px] items-stretch">
 										<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Txn Type</p>
 										<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Desc</p>
@@ -78,7 +78,7 @@ const transactions = () => {
 							)}
 
 							{data && data?.length > 0 && (
-								<main className="w-full h-auto  block">
+								<main className="w-[200%] md:w-full h-auto  block">
 									{data.map((order: any, index: number) => (
 										<div className={`w-full h-auto ${index % 2 === 0 && "bg-slate-100"} flex justify-start  items-stretch border-b-[1px]`} key={index}>
 											<div className={"w-1/5 text-center py-4 border-l-[1px] flex items-center justify-center"}>
@@ -102,7 +102,7 @@ const transactions = () => {
 									<p>There is no data here ...</p>
 								</div>
 							)}
-						</>
+						</div>
 					)}
 				</div>
 				{showDepositModal && <Deposit closeModal={setShowDepositModal} />}

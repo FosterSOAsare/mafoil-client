@@ -93,7 +93,7 @@ const ProductDetails = ({ product, reviews }: { product: productType; reviews: a
 	return (
 		<section className="w-full h-auto">
 			<div className="w-full h-auto mt-4 flex flex-col lg:flex-row items-start justify-between">
-				<article className="w-full lg:w-3/5 h-auto">
+				<article className="w-full lg:w-3/5 h-auto md:h-auto">
 					<div className="w-full relative h-auto lg:h-screen group hover:cursor-pointer">
 						<button
 							className={`w-7 h-10 absolute bg-white hover:bg-brown hover:text-white scale-0 ${
@@ -103,7 +103,7 @@ const ProductDetails = ({ product, reviews }: { product: productType; reviews: a
 							disabled={active === 0}>
 							<FiChevronLeft />
 						</button>
-						<Swiper spaceBetween={30} slidesPerView={1} autoplay={true} ref={swiperRef} className="overflow-y-visible w-full h-full relative" onSwiper={handleSwiper}>
+						<Swiper spaceBetween={30} slidesPerView={1} autoplay={true} ref={swiperRef} className="overflow-y-visible w-full h-[300px] md:h-full relative" onSwiper={handleSwiper}>
 							{images.map((image, index: number) => (
 								<SwiperSlide key={index} className="w-full bg-[#f5f2ec] flex items-center justify-center h-full">
 									<div className="w-full h-full relative ">

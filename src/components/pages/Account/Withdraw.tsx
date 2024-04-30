@@ -32,14 +32,14 @@ const Withdraw = ({ closeModal }: { closeModal: React.Dispatch<React.SetStateAct
 	useCreateErrorFromApiRequest(error);
 	return (
 		<aside className="w-full h-screen bg-slate-400 bg-opacity-40 fixed top-0 left-0 right-0 bottom-0 m-auto flex items-center justify-center z-[6] p-4">
-			<div className="w-2/5 h-auto p-6 shadow-md bg-white">
+			<div className="w-full md:w-2/5 h-auto p-6 shadow-md bg-white">
 				<h3 className="text-2xl font-medium rounded-[5px">Withdraw Funds</h3>
 
 				<form action="" onSubmit={handleSubmit(withdrawFunds)}>
 					<PrimaryInput name="address" placeholder="" register={register} label="Enter Your Account Number" />
 					<PrimaryInput name="amount" placeholder="100.00" register={register} label="Enter Amount To Withdraw" />
 
-					<div className="w-full flex items-center justify-between gap-6">
+					<div className="w-full flex flex-col md:flex-row items-center justify-between md:gap-6">
 						<PrimaryButton text="WITHDRAW FUNDS" type="submit" disabled={isLoading} />
 						<SecondaryButton text="CANCEL" handleClick={() => closeModal(false)} />
 					</div>
