@@ -17,6 +17,7 @@ import Status from "@/components/pages/Account/Status";
 
 import { AiOutlineLoading3Quarters, AiOutlineClose, AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { BsCheckLg } from "react-icons/bs";
+import Breadcrumb from "@/components/molecules/Breadcrumb";
 
 const transactions = () => {
 	const { user } = useSelector(useUserSlice);
@@ -48,7 +49,9 @@ const transactions = () => {
 						<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Withdraw Funds</p>
 					</button>
 				</div>
-				<h3 className="text-2xl font-medium">My Transactions</h3>
+
+				<Breadcrumb />
+				<h3 className="text-2xl mt-6 font-medium">My Transactions</h3>
 				<div className="w-1/4 mt-4 h-12 flex gap-4 items-center justify-between">
 					{["All", "Pending", "Completed"].map((filter, index) => (
 						<button key={index} className={`${filter.toLowerCase() === sort ? "text-brown font-bold" : "hover:text-brown"}`} onClick={() => setSort(filter.toLowerCase())}>
