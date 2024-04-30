@@ -23,10 +23,10 @@ export const resetPasswordSchema = z.object({
 });
 
 export const contactSchema = z.object({
+  title: z.string().min(1, { message: "Please enter a title" }).min(4, { message: 'Subject must be at least 4 characters' }),
   email: z.string().min(1, { message: "Please enter your email address" }).email({ message: "Please enter a valid email address" }),
-  name: z.string().min(1, { message: "Please enter your name" }),
+  ticket: z.string(),
   message: z.string().min(1, { message: "Please enter your message" }).min(25, { message: "Message must be at least 25 characters" }),
-  subject: z.string().min(1, { message: "Please enter a subject" }).min(4, { message: 'Subject must be at least 4 characters' })
 });
 
 export const changePasswordSchema = z.object({
@@ -45,7 +45,7 @@ export const productSchema = z.object({
 });
 
 export const withdrawSchema = z.object({
-  address: z.string().min(1, { message: "Please enter address to withdraw funds to" }).min(30, { message: "Please enter a valid withdrawal address" }),
+  address: z.string().min(1, { message: "Please enter address to withdraw funds to" }).min(8, { message: "Please enter a valid withdrawal address" }),
   amount: z.string().min(1, { message: "Please enter an amount to withdraw" }),
 });
 export const updateDetailsSchema = z.object({
@@ -56,3 +56,4 @@ export const reviewProductSchema = z.object({
   title: z.string().min(1, { message: "Please enter a title for the review" }).min(10, { message: 'Title must be at least 10 characters in length' }),
   comment: z.string().min(1, { message: "Please enter review's description" }).min(25, { message: 'Comment must be at least 25 characters in length' }),
 })
+

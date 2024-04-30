@@ -5,11 +5,14 @@ const userApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl:
       '/api/user'
-  }), endpoints: (builder) => ({
+  }),
+  tagTypes: ["User"],
+  endpoints: (builder) => ({
     fetchLoggedInUserRequest: builder.query<any, void>({
       query: () => ({
         url: "",
       }),
+      providesTags: () => [{ type: 'User' }]
     }),
     activateUserAccountRequest: builder.query<any, void>({
       query: () => ({
@@ -22,13 +25,15 @@ const userApi = createApi({
         method: "POST",
         body: { amount, address }
       }),
+      invalidatesTags: [{ type: 'User' }]
     }),
     updateUserDetailsRequest: builder.mutation({
       query: ({ fullname }) => ({
         url: "/details",
         method: 'PUT',
-        body: { fullname }
+        body: { fullname },
       }),
+      invalidatesTags: [{ type: 'User' }]
     }),
     updateUserPasswordRequest: builder.mutation({
       query: ({ newpassword, oldpassword }) => ({
@@ -37,6 +42,21 @@ const userApi = createApi({
         body: { newpassword, oldpassword }
       }),
     }),
+    createDepositCheckoutSessionRequest: builder.mutation<{ url: string }, { amount: number }>({
+      query: ({ amount }) => ({
+        url: "/deposit-checkout",
+        method: 'POST',
+        body: { amount }
+      }),
+    }),
+    validateSessionPayment: builder.mutation<{ success: boolean }, { session_id: string }>({
+      query: ({ session_id }) => ({
+        url: `/validate-checkout`,
+        method: 'PUT',
+        body: { sessionId: session_id }
+      }),
+      invalidatesTags: [{ type: 'User' }]
+    })
   })
 })
 
@@ -45,6 +65,8 @@ export const {
   useLazyActivateUserAccountRequestQuery,
   useWithdrawFundRequestMutation,
   useUpdateUserDetailsRequestMutation,
-  useUpdateUserPasswordRequestMutation
+  useUpdateUserPasswordRequestMutation,
+  useCreateDepositCheckoutSessionRequestMutation,
+  useValidateSessionPaymentMutation
 } = userApi
 export default userApi

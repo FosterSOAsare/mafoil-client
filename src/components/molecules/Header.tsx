@@ -58,29 +58,29 @@ const Header = () => {
 
 	return (
 		<header className="w-full bg-white shadow-md sticky top-0 left-0 z-[6] h-20 flex items-center justify-between px-4 lg:px-10">
-			<Link href="tel:+8665972742" className="hidden lg:flex items-center text-sm gap-2 group font-medium">
+			<Link href="tel:+233550529015" className="hidden lg:flex items-center text-sm gap-2 group font-medium">
 				<div className="w-10 h-10 rounded-full border-[1px] group-hover:bg-brown group-hover:text-white flex items-center justify-center">
 					<AiOutlinePhone className="text-xl rotate-90" />
 				</div>
-				<p className="group-hover:text-brown">+866.597.2742</p>
+				<p className="group-hover:text-brown">+233.55.052.9015</p>
 			</Link>
 			<Link href="/" className="lg:hidden font-playfair px-4 text-3xl font-medium">
 				Mafo.il
 			</Link>
 			<nav className="w-auto gap-10 hidden lg:flex items-center justify-between">
-				<Link href="/" className="text-sm font-medium hover:text-brown">
+				<Link href="/" className={`text-sm font-medium ${pathname === "/" ? "text-brown" : "text-black hover:text-brown"}`}>
 					HOME
 				</Link>
-				<Link href="/products" className="text-sm font-medium hover:text-brown">
+				<Link href="/products" className={`${pathname.startsWith("/products") ? "text-brown" : "text-black hover:text-brown"} text-sm font-medium `}>
 					SHOP
 				</Link>
 				<Link href="/" className="font-playfair px-4 text-4xl font-medium">
 					Mafo.il
 				</Link>
-				<Link href="/faq" className="text-sm font-medium hover:text-brown">
+				<Link href="/faq" className={`${pathname.startsWith("/faq") ? "text-brown" : "text-black hover:text-brown"} text-sm font-medium`}>
 					FAQ
 				</Link>
-				<Link href="/about" className="text-sm font-medium hover:text-brown">
+				<Link href="/about" className={`${pathname.startsWith("/about") ? "text-brown" : "text-black hover:text-brown"} text-sm font-medium`}>
 					ABOUT US
 				</Link>
 			</nav>

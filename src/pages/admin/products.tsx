@@ -21,7 +21,7 @@ const products = () => {
 
 	useEffect(() => {
 		// if (!selectedFilter) return;
-		getProductsRequest({ category: "all" });
+		getProductsRequest({ category: "all", size: "all" });
 	}, []);
 
 	useEffect(() => {

@@ -8,10 +8,10 @@ const productsApi = createApi({
   }),
   endpoints: (builder) => ({
     getProductsRequest: builder.query({
-      query: ({ page, category }) => ({
+      query: ({ page, category, size }) => ({
         url: '',
         method: 'GET',
-        params: { page, category }
+        params: { page, category, size }
       })
     }),
     getAProductRequest: builder.query({

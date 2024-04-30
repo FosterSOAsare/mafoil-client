@@ -5,23 +5,23 @@ import { GoGear } from "react-icons/go";
 import { RiTodoLine } from 'react-icons/ri'
 
 const adminNav = [{
-  href: '/admin',
+  href: '',
   name: 'Dashboard',
   icon: TbLayoutDashboard
 }, {
-  href: '/admin/products',
+  href: '/products',
   name: 'Products',
   icon: CgFileDocument
 }, {
-  href: '/admin/orders',
+  href: '/orders',
   name: 'Orders',
   icon: RiTodoLine
 }, {
-  href: '/admin/reviews',
+  href: '/reviews',
   name: 'Reviews',
   icon: AiOutlineComment
 }, {
-  href: '/admin/transactions',
+  href: '/transactions',
   name: 'Transactions',
   icon: AiOutlineTransaction
 },

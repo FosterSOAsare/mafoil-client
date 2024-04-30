@@ -14,8 +14,8 @@ const AdminTransactionRow = ({ index, type, desc, amount, createdAt, status, _id
 	return (
 		<div className={`w-full h-auto ${index % 2 == 0 && "bg-slate-100"} flex justify-start  items-stretch border-[1px] border-t-0`} key={index}>
 			<div className={"w-[15%] text-center py-4 flex items-center justify-center"}>
-				{type === "deposit" && <AiOutlinePlus className="text-green-500" />}
-				{type === "withdraw" && <AiOutlineMinus className="text-red-600" />}
+				{type?.toLowerCase() === "deposit" && <AiOutlinePlus className="text-green-500" />}
+				{type?.toLowerCase() === "withdraw" && <AiOutlineMinus className="text-red-600" />}
 			</div>
 			<p className="w-[30%] text-center py-4 border-l-[1px]">{desc}</p>
 			<p className="w-1/5 text-center py-4 border-l-[1px]">GH₵{amount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
@@ -26,9 +26,9 @@ const AdminTransactionRow = ({ index, type, desc, amount, createdAt, status, _id
 				{status === "cancelled" && <AiOutlineClose className="text-red-600" />}
 			</div>
 			<div className="w-[15%] flex items-center justify-center h-auto border-l-[1px] relative" ref={parentRef}>
-				{/* Adin should view only transactions about withdrawal */}
+				{/* Admin should view only pending transactions about withdrawal */}
 				{desc === "Withdrawal from account" && status === "pending" && (
-					<Link href={`/transactions/${_id}`} className="w-8 rounded-full flex items-center mx-auto justify-center hover:bg-slate-200 h-8" onClick={() => setShow(true)}>
+					<Link href={`/admin/transactions/${_id}`} className="w-8 rounded-full flex items-center mx-auto justify-center hover:bg-slate-200 h-8" onClick={() => setShow(true)}>
 						<AiFillEye />
 					</Link>
 				)}

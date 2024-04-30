@@ -1,5 +1,7 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useSearchParams } from "next/navigation";
 
 import { useUserSlice } from "@/slices/user.slice";
 import { useLazyFetchTransactionsQuery } from "@/apis/transactionsApi";
@@ -11,6 +13,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import Withdraw from "@/components/pages/Account/Withdraw";
 import Deposit from "@/components/pages/Account/Deposit";
 import Loading from "@/components/atom/Loading";
+import Status from "@/components/pages/Account/Status";
 
 import { AiOutlineLoading3Quarters, AiOutlineClose, AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { BsCheckLg } from "react-icons/bs";
@@ -20,6 +23,9 @@ const transactions = () => {
 	const [sort, setSort] = useState("all");
 	const [showWithdrawalModal, setShowWithdrawalModal] = useState(false);
 	const [showDepositModal, setShowDepositModal] = useState(false);
+	const searchParams = useSearchParams();
+	const status = searchParams.get("status"),
+		session_id = searchParams.get("session_id");
 
 	const [fetchTransaction, { data, error, isFetching: isLoading }]: any = useLazyFetchTransactionsQuery();
 
@@ -76,8 +82,8 @@ const transactions = () => {
 									{data.map((order: any, index: number) => (
 										<div className={`w-full h-auto ${index % 2 === 0 && "bg-slate-100"} flex justify-start  items-stretch border-b-[1px]`} key={index}>
 											<div className={"w-1/5 text-center py-4 border-l-[1px] flex items-center justify-center"}>
-												{order?.type === "deposit" && <AiOutlinePlus className="text-green-500" />}
-												{order?.type === "withdraw" && <AiOutlineMinus className="text-red-600" />}
+												{order?.type?.toLowerCase() === "deposit" && <AiOutlinePlus className="text-green-500" />}
+												{order?.type?.toLowerCase() === "withdraw" && <AiOutlineMinus className="text-red-600" />}
 											</div>
 											<p className="w-1/5 text-center py-4 border-l-[1px]">{order?.desc}</p>
 											<p className="w-1/5 text-center py-4 border-l-[1px]">GH₵{order?.amount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
@@ -101,6 +107,7 @@ const transactions = () => {
 				</div>
 				{showDepositModal && <Deposit closeModal={setShowDepositModal} />}
 				{showWithdrawalModal && <Withdraw closeModal={setShowWithdrawalModal} />}
+				{status && ((status == "deposit" && session_id) || status == "error") && <Status />}
 			</main>
 			<Footer />
 		</ProtectedRoute>
