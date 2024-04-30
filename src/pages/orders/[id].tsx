@@ -43,12 +43,12 @@ const OrderPage = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<Header />
-			<main className="w-full min-h-screen bg-white relative pb-6">
+			<main className="w-full min-h-screen px-4 bg-white relative pb-6">
 				<section className="w-full h-[30vh] flex items-center justify-center flex-col " id="hero">
 					<h1 className="text-4xl mb-6 font-bold">AN ORDER</h1>
 
 					{data?.status !== "cancelled" && !isLoading && (
-						<div className="flex items-center justify-between h-auto w-1/3 overflow-hidden rounded-[5px]">
+						<div className="flex items-center justify-between h-auto w-4/5 md:w-1/3 overflow-hidden rounded-[5px]">
 							{[1, 2, 3, 4, 5].map((item, index) => (
 								<span
 									key={index}
@@ -62,42 +62,43 @@ const OrderPage = () => {
 					{data?.status === "cancelled" && !isLoading && <p className="text-red-500 -mt-4 font-bold text-xl text-center">Order Cancelled</p>}
 				</section>
 
-				<section id="products" className="max-w-5xl mx-auto h-auto mt-4 w-full gap-6 justify-between">
+				<section id="products" className="max-w-5xl  mx-auto h-auto mt-4 w-full gap-6 justify-between">
 					{!isLoading && data?.cart?.length > 0 && (
 						<>
 							<h3 className="text-3xl font-bold mb-7">ORDERED ITEMS</h3>
 							<article className="w-full flex flex-col items-center max-w-5xl mx-auto justify-center">
-								<div className="w-full font-medium h-auto pb-3 flex items-center justify-between border-b-[1px]">
-									<p className="w-[40%]">PRODUCT</p>
-									<p className="w-[15%] text-center">QUANTITY</p>
-									<p className="w-[15%] text-center">TOTAL PRICE</p>
-									{/* {data?.status !== "cancelled" && (
+								<div className="w-full overflow-x-auto">
+									<div className="w-[150%] md:w-full font-medium h-auto pb-3 flex items-center justify-between border-b-[1px]">
+										<p className="w-[50%]">PRODUCT</p>
+										<p className="w-[25%] text-center">QUANTITY</p>
+										<p className="w-[25%] text-center">PRICE</p>
+										{/* {data?.status !== "cancelled" && (
 										<>
 											<p className="w-[15%] text-center">{data?.status == "complete" ? "TOTAL" : data?.status === "pending" ? "EXPECTED" : ""} PROFIT</p>
 											<p className="w-[15%] text-center">PROFIT PERCENT</p>
 										</>
 									)} */}
-								</div>
-								{data?.cart?.map((product: any, index: number) => {
-									const { count, price, totalItemsProfit, profitPercent } = product;
-									return (
-										<div key={index} className="w-full h-auto py-8 flex items-center justify-between border-b-[1px]">
-											<div className="w-[40%] h-full flex items-center gap-4">
-												<div className="w-28 h-20 relative">
-													<Image src={product?.image?.url} alt="product Image" fill />
+									</div>
+									{data?.cart?.map((product: any, index: number) => {
+										const { count, price, totalItemsProfit, profitPercent } = product;
+										return (
+											<div key={index} className="w-[150%]  md:w-full h-auto py-8 flex items-center justify-between border-b-[1px]">
+												<div className="w-[50%] h-full flex items-center gap-4">
+													<div className="w-28 h-20 relative">
+														<Image src={product?.image?.url} alt="product Image" fill />
+													</div>
+													<div className="">
+														<h3 className="text-[12px] md:text-sm text-bold text-black mb-2">{product?.name}</h3>
+														<p className="text-[12px]">GH₵{(product?.price).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+													</div>
 												</div>
-												<div>
-													<h3 className="text-sm text-bold text-black mb-2">{product?.name}</h3>
-													<p className="text-[12px]">GH₵{(product?.price).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-												</div>
-											</div>
-											<p className="w-[15%] flex flex-col items-center justify-center">{count}</p>
-											<p className="w-[15%] text-center text-sm font-medium">
-												GH₵{(price * count).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-											</p>
-											{/* Removed all stuff related to profit */}
+												<p className="w-[25%] flex flex-col items-center justify-center">{count}</p>
+												<p className="w-[25%] text-center text-sm font-medium">
+													GH₵{(price * count).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+												</p>
+												{/* Removed all stuff related to profit */}
 
-											{/* {data.status !== "cancelled" && (
+												{/* {data.status !== "cancelled" && (
 												<>
 													<p className={`w-[15%] ${data?.status === "complete" ? "text-green-500" : "text-slate-500"} font-bold text-center`}>
 														GH₵{totalItemsProfit.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -105,9 +106,10 @@ const OrderPage = () => {
 													<p className={`w-[15%] ${data?.status === "complete" ? "text-green-500" : "text-slate-500"} font-bold text-center`}>{profitPercent}%</p>
 												</>
 											)} */}
-										</div>
-									);
-								})}
+											</div>
+										);
+									})}
+								</div>
 								<article className="w-[45%] mr-auto mt-8">
 									<h3 className="font-bold">Subtotal: GH₵{data?.totalPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} </h3>
 									{/* {data?.status !== "cancelled" && (

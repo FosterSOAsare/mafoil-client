@@ -88,7 +88,7 @@ const Settings = () => {
 
 				<div className="w-full mt-6">
 					{active === "general" && (
-						<form action="" className="w-1/2" onSubmit={handleSubmit(updateUserGeneralData)}>
+						<form action="" className="w-full md:w-1/2" onSubmit={handleSubmit(updateUserGeneralData)}>
 							<PrimaryInput name="fullname" placeholder="John Doe" register={generalRegister} label="Fullname" />
 							<div className="w-full mb-6">
 								<p className="font-bold">
@@ -102,7 +102,7 @@ const Settings = () => {
 					)}
 
 					{active === "security" && (
-						<form action="" className="w-1/2" onSubmit={passwordSubmit(changeUserPassword)}>
+						<form action="" className="w-full md:w-1/2" onSubmit={passwordSubmit(changeUserPassword)}>
 							<PrimaryInput name="oldpassword" placeholder="*********" type="password" label="Current Password" register={passwordRegister} />
 							<PrimaryInput name="newpassword" placeholder="*********" type="password" label="New Password" register={passwordRegister} />
 							<PrimaryInput name="confirmpassword" placeholder="*********" type="password" label="Confirm New Password" register={passwordRegister} />
