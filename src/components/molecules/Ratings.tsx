@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
-const Ratings = ({ rating, totalRatings, sx = "" }: { rating: number; totalRatings?: number; sx?: string }) => {
+const Ratings = ({ rating = 0, totalRatings = 0, sx = "" }: { rating: number; totalRatings?: number; sx?: string }) => {
 	const [stars, setStars] = useState<string[]>([]);
 	useEffect(() => {
 		setStars([]);

@@ -38,7 +38,7 @@ const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: product
 
 	return (
 		<article className="w-full h-auto bg-white ">
-			<div className={`w-full h-[300px] lg:h-[200px] xl:h-[300px] ${sx} overflow-hidden`}>
+			<div className={`w-full h-[300px] lg:h-[180px] xl:h-[300px] ${sx} overflow-hidden`}>
 				<div className="w-full h-full relative overflow-hidden hover:cursor-pointer" onMouseEnter={() => setShowContent(true)} onMouseLeave={() => setShowContent(false)}>
 					<div className="w-full h-full bg-[#F5F2EC] relative">
 						<Image src={images[0]?.url} fill alt="product Image" />
@@ -76,7 +76,7 @@ const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: product
 				</div>
 			</div>
 			<div className="h-[150px] flex items-center shadow-md justify-center flex-col">
-				<Ratings rating={rating?.avgRating} totalRatings={rating.totalRatings} />
+				<Ratings rating={rating?.avgRating} totalRatings={rating?.totalRatings} />
 				<Link href={`/products/${slugname}`} className="text-sm my-2">
 					{name}
 				</Link>

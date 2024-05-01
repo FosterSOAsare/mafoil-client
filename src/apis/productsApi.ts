@@ -65,7 +65,9 @@ const productsApi = createApi({
         body: { recents }
       })
     }),
-
+    searchProduct: builder.query<any, { searchText: string }>({
+      query: ({ searchText }) => `/search?searchText=${searchText}`
+    })
   })
 })
 
@@ -79,6 +81,7 @@ export const {
   useGetCategoriesDataRequestQuery,
   useLazyGetProductRecommendationsRequestQuery,
   useGetRecentProductsRequestMutation,
+  useLazySearchProductQuery
 } = productsApi
 
 export default productsApi

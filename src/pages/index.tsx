@@ -60,7 +60,7 @@ export default function Home() {
 					</div>
 
 					<article id="products" className="flex flex-col items-center justify-center w-full border-b-[1px] pb-12 md:pb-36">
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-12 w-full h-auto">
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 w-full h-auto">
 							{products?.data.map((product, index) => {
 								return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} />;
 							})}
