@@ -38,11 +38,9 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 			setIsLoading(isLoading);
 			return;
 		}
-		// setTimeout(() => {
 		dispatch(setData({ ...data, accountVerified: data?.activated }));
 		dispatch(setIsLoading(false));
 		dispatch(setError(null));
-		// }, 1000);
 	}, [data, isLoading]);
 
 	useEffect(() => {
@@ -97,6 +95,7 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 			replace(pathname);
 		}
 	}, [query]);
+
 	return (
 		<main className="w-full h-auto relative">
 			{children}

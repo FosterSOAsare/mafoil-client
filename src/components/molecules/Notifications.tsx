@@ -11,24 +11,18 @@ import { AiOutlineClose } from "react-icons/ai";
 const Notifications = ({ setShowNotifications }: { setShowNotifications: React.Dispatch<React.SetStateAction<boolean>> }) => {
 	const notifications = useSelector(useNotificationsSelector);
 	const [markAsReadRequest, { error, data }]: any = useMarkNotificationAsReadRequestMutation();
-	const dispatch = useDispatch();
 	const router = useRouter();
 
-	const markAsRead = async (_id: string) => {
-		markAsReadRequest(_id);
+	const markAsRead = async (link: string, _id: string, isUnread: boolean) => {
+		if (isUnread) markAsReadRequest(_id);
+		router.push(`/${link}`);
+		setShowNotifications(false);
 	};
 
 	useEffect(() => {
 		if (!error) return;
 		toast.error(error?.data?.error, { autoClose: 1500 });
 	}, [error]);
-
-	useEffect(() => {
-		if (!data) return;
-		setShowNotifications(false);
-		dispatch(markNotificationAsRead({ _id: data?._id }));
-		router.push(`${data?.link}`);
-	}, [data]);
 
 	return (
 		<aside className="w-full md:w-2/3 lg:w-1/4 bg-white shadow-md  fixed right-0 flex items-center justify-start  flex-col top-0 md:top-[8vh] lg:top-[12.7vh] z-[12] h-screen px-2 lg:h-[88vh] overflow-y-auto">
@@ -47,7 +41,7 @@ const Notifications = ({ setShowNotifications }: { setShowNotifications: React.D
 						<button
 							key={index}
 							className="w-full flex items-center justify-start p-2 text-sm text-left border-b-[1px]  gap-2 hover:bg-slate-100"
-							onClick={() => markAsRead(notification._id)}>
+							onClick={() => markAsRead(notification.link, notification._id, notification.status == "unread")}>
 							{notification?.status === "unread" && <span className="w-[5px] h-[5px] bg-blue  rounded-full block"></span>}
 							<p className="w-[calc(100%-7px)]">{notification.desc}</p>
 						</button>
