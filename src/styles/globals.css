@@ -136,3 +136,9 @@ html {
 		@apply bg-[red];
 	}
 }
+
+.hero_image {
+	background-image: url("../assets/hero.webp");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}

@@ -43,7 +43,7 @@ const Footer = () => {
 			<div className="w-full h-auto md:h-48 mb-6 flex flex-col md:flex-row items-start justify-between">
 				<div className="w-full md:w-1/4">
 					<p>+233.550.529.015</p>
-					<p>support@mafoilcom</p>
+					<p>support@mafoil.com</p>
 				</div>
 				<article className="w-full md:w-1/2 flex mt-6 md:mt-0 items-start justify-start">
 					<div className="w-1/2">
