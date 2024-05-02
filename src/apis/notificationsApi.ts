@@ -5,15 +5,18 @@ const notificatonsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/notifications'
   }),
+  tagTypes: ['Notifications'],
   endpoints: (builder) => ({
     fetchUserNotificationsRequest: builder.query<any, void>({
-      query: () => ''
+      query: () => '',
+      providesTags: () => [{ type: 'Notifications' }]
     }),
     markNotificationAsReadRequest: builder.mutation({
       query: (notificationId) => ({
         method: 'PUT',
         url: `/${notificationId}/read`,
-      })
+      }),
+      invalidatesTags: [{ type: 'Notifications' }]
     }),
 
   })

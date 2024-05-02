@@ -124,6 +124,7 @@ const OrderPage = () => {
 										</>
 									)} */}
 
+									{/* You can only cancel an order when it is at step 1 */}
 									{data?.step === 1 && data?.status === "pending" && (
 										<div className="w-full mt-4">
 											<button

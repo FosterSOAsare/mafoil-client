@@ -113,6 +113,7 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 			replace(pathname);
 		}
 	}, [query]);
+
 	return (
 		<main className="w-full h-auto relative">
 			{children}

@@ -8,10 +8,10 @@ import { useUserSlice } from "@/slices/user.slice";
 import Header from "../molecules/Header";
 import Footer from "../molecules/Footer";
 import ProtectedRoute from "../ProtectedRoute";
-import adminNav from "@/data/admin-nav";
 import { useRouter } from "next/router";
+import Breadcrumb from "../molecules/Breadcrumb";
 
-const accountLinks = [
+export const accountLinks = [
 	{ name: "Dashboard", link: "" },
 	{ name: "My Orders", link: "/orders" },
 	{ name: "Transactions", link: "/transactions" },
@@ -43,17 +43,8 @@ const AccountLayout = ({ children, title }: { children: ReactNode; title: string
 						</Link>
 					))}
 				</div>
-				<div id="breadcrumbs" className="md:hidden w-full h-auto flex px-4 items-center gap-4">
-					{accountLinks.map((link, index) => (
-						<React.Fragment key={index}>
-							<Link
-								href={`/account${link?.link}`}
-								className={`font-medium ${pathname === `/account${link?.link}` ? "text-brown font-bold" : "hover:text-brown"} w-full text-[12px] md:text-md block}`}>
-								{link.name}
-							</Link>
-							{index !== accountLinks?.length - 1 && <p>/</p>}
-						</React.Fragment>
-					))}
+				<div className="px-4 w-full md:hidden">
+					<Breadcrumb />
 				</div>
 				<div className="w-full md:w-[70%] px-4 md:px-0">{children}</div>
 				<ToastContainer />
