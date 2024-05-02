@@ -42,7 +42,7 @@ const Footer = () => {
 			<h3 className="text-4xl font-playfair mr-auto md:mx-auto mb-12">Mafo.il</h3>
 			<div className="w-full h-auto md:h-48 mb-6 flex flex-col md:flex-row items-start justify-between">
 				<div className="w-full md:w-1/4">
-					<p>+866.597.2742</p>
+					<p>+233.550.529.015</p>
 					<p>support@mafoilcom</p>
 				</div>
 				<article className="w-full md:w-1/2 flex mt-6 md:mt-0 items-start justify-start">
@@ -100,7 +100,7 @@ const Footer = () => {
 					{user?.subscribed && <div className="w-full h-8 mt-6 border-b-[2px] bg-[#D4EDDA] text-[#155724] p-4 py-6 gap-4 flex items-center justify-between">Thanks for subscribing</div>}
 				</div>
 			</div>
-			<p className="text-sm">© 2023 - Shopify By Wpbingo</p>
+			<p className="text-sm">© {new Date().getFullYear()} - Shopify By Scholar </p>
 		</footer>
 	);
 };

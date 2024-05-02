@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,15 +13,29 @@ import { setData, setIsLoading, useUserSlice, setError } from "@/slices/user.sli
 import PrimaryInput from "@/components/atom/PrimaryInput";
 import PrimaryButton from "@/components/atom/PrimaryButton";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import Cookies from "@/components/molecules/Cookies";
 
 const login = () => {
 	const { register, handleSubmit, getValues } = useSelectedValuesFromHookForm(loginSchema);
 	const [loginRequest, { data, error, isLoading }]: any = useLoginRequestMutation();
 	const dispatch = useDispatch();
 	const { push } = useRouter();
-	const { user, isLoading: loading, error: userError } = useSelector(useUserSlice);
+	const [showCookies, setShowCookies] = useState(true);
+	useEffect(() => {
+		const cookie = localStorage.getItem("cookies");
+		if (cookie === "accepted") {
+			setShowCookies(false);
+		}
+	}, []);
 
 	function loginUser(data: any) {
+		// Check if cookies is set
+		const cookie = localStorage.getItem("cookies");
+		if (!cookie || cookie === "rejected") {
+			toast.error("You are required to allow cookies to perform this action", { autoClose: 1500 });
+			setShowCookies(true);
+			return;
+		}
 		loginRequest(data);
 	}
 
@@ -77,6 +91,8 @@ const login = () => {
 						</div>
 					</div>
 				</div>
+
+				{showCookies && <Cookies setShowCookies={setShowCookies} />}
 				<ToastContainer />
 			</main>
 		</ProtectedRoute>
