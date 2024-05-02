@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
@@ -15,10 +15,10 @@ import { useLazyFetchWishListRequestQuery, useUploadWishListRequestMutation } fr
 import { productType } from "@/types/product.type";
 
 import { BsArrowUp } from "react-icons/bs";
-
-const store = makeStore();
+import Cookies from "./molecules/Cookies";
 
 const InitialDispatch = ({ children }: { children: ReactNode }) => {
+	const [showCookies, setShowCookies] = useState(false);
 	const { isLoading, error, data }: any = useFetchLoggedInUserRequestQuery();
 	const [fetchCart, { error: cartError, data: cartData, isLoading: cartLoading }]: any = useLazyFetchCartRequestQuery();
 	const [fetchWishList, { data: wishListData, isLoading: wishListLoading }] = useLazyFetchWishListRequestQuery();
@@ -34,11 +34,25 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 	const { query, replace, pathname } = useRouter();
 
 	useEffect(() => {
+		if (typeof window !== "undefined") {
+			// Perform localStorage action
+			const cookies = localStorage.getItem("cookies");
+			setShowCookies(!cookies);
+		} else {
+			setShowCookies(true);
+		}
+	}, [pathname]);
+
+	useEffect(() => {
 		if (isLoading) {
 			setIsLoading(isLoading);
 			return;
 		}
-		dispatch(setData({ ...data, accountVerified: data?.activated }));
+		// Set cookies
+		const cookies = localStorage.getItem("cookies");
+		if (cookies === "accepted") {
+			dispatch(setData({ ...data, accountVerified: data?.activated }));
+		}
 		dispatch(setIsLoading(false));
 		dispatch(setError(null));
 	}, [data, isLoading]);
@@ -63,9 +77,13 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 	// Fetch cart  and wishlist from db. This is only done if user is loggedin
 	useEffect(() => {
 		if (!data?._id) return;
-		fetchCart();
-		fetchWishList();
-		fetchNotifications();
+		// Fetch cookies
+		const cookies = localStorage.getItem("cookies");
+		if (cookies == "accepted") {
+			fetchCart();
+			fetchWishList();
+			fetchNotifications();
+		}
 	}, [data]);
 
 	// Store cartdata in redux if user is logged in
@@ -99,9 +117,10 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 	return (
 		<main className="w-full h-auto relative">
 			{children}
+			{showCookies && <Cookies setShowCookies={setShowCookies} />}
 
 			<button
-				className={`w-10 h-10 bg-black flex items-center justify-center fixed transition-all duration-300 ${showScroll ? "scale-100" : "scale-0"} bottom-4 right-4 z-[4] text-white`}
+				className={`w-10 h-10 bg-black flex items-center justify-center fixed transition-all duration-300 ${showScroll ? "scale-100" : "scale-0"} bottom-8 right-4 z-[4] text-white`}
 				onClick={() => {
 					window.scrollTo(0, 0);
 				}}>

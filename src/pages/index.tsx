@@ -1,6 +1,7 @@
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
+import Link from "next/link";
 
 import filters from "@/data/productfilters";
 import { productType } from "@/types/product.type";
@@ -40,9 +41,22 @@ export default function Home() {
 			</Head>
 			<Header />
 			<main className="w-full min-h-screen bg-white relative">
-				<section className="w-full h-[50vh] lg:h-screen bg-[orange]" id="hero"></section>
+				<section className="w-full h-[50vh] lg:h-screen px-6 bg-white" id="hero">
+					<div className="w-full h-full hero_image relative">
+						<div className="w-[250px] absolute top-[30vh] right-8 h-auto">
+							<h3 className="text-right text-xl mb-3 Z uppercase tracking-[5px] text-brown">Big Sale !</h3>
+							<h1 className="text-5xl text-right font-medium leading-[65px]">TRENDING OUTFITS</h1>
+							<Link
+								href="/products"
+								className="bg-brown flex items-center justify-center text-white relative mt-8 md:w-[400px] lg:w-[250px] hover:border-white border-brown h-20 lg:h-16 group border-[1px] overflow-hidden">
+								<span className="w-full h-full bg-white absolute transition-all duration-200 top-0 group-hover:right-0 z-[1] -right-[100%]"></span>
+								<p className="relative z-[2] transition-all duration-75 group-hover:text-black uppercase  font-medium text-sm">Shop Now</p>
+							</Link>
+						</div>
+					</div>
+				</section>
 
-				<section id="products" className="px-4 md:px-10 w-full h-auto mt-8">
+				<section id="products" className="px-4 md:px-6 w-full h-auto mt-8">
 					<div id="breadcrumbs" className="w-full mb-8 h-auto flex items-center gap-4">
 						{filters.map((filter, index) => (
 							<React.Fragment key={index}>
@@ -60,7 +74,7 @@ export default function Home() {
 					</div>
 
 					<article id="products" className="flex flex-col items-center justify-center w-full border-b-[1px] pb-12 md:pb-36">
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-12 w-full h-auto">
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 w-full h-auto">
 							{products?.data.map((product, index) => {
 								return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} />;
 							})}

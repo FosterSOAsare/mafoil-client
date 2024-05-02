@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -13,6 +13,7 @@ import PrimaryInput from "@/components/atom/PrimaryInput";
 import PrimaryButton from "@/components/atom/PrimaryButton";
 import SecondaryButton from "@/components/atom/SecondaryButton";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import Cookies from "@/components/molecules/Cookies";
 
 const register = () => {
 	const { register, handleSubmit } = useSelectedValuesFromHookForm(registerSchema);
@@ -20,10 +21,25 @@ const register = () => {
 	const [registerUserRequest, { error, data, isLoading }] = useRegisterUserRequestMutation();
 	const { push } = useRouter();
 
+	const [showCookies, setShowCookies] = useState(true);
+	useEffect(() => {
+		const cookie = localStorage.getItem("cookies");
+		if (cookie === "accepted") {
+			setShowCookies(false);
+		}
+	}, []);
+
 	function storeNewUser(data: any) {
 		const { password, cpassword, email, fullname } = data;
 		if (password !== cpassword) {
 			toast.error("Passwords do not match", { autoClose: 1500 });
+			return;
+		}
+
+		const cookie = localStorage.getItem("cookies");
+		if (!cookie || cookie === "rejected") {
+			toast.error("You are required to allow cookies to perform this action", { autoClose: 1500 });
+			setShowCookies(true);
 			return;
 		}
 
@@ -61,6 +77,8 @@ const register = () => {
 					<PrimaryButton text="REGISTER" type="submit" disabled={isLoading} />
 					<SecondaryButton text="SIGN IN" href="/auth/login" disabled={isLoading} />
 				</form>
+
+				{showCookies && <Cookies setShowCookies={setShowCookies} />}
 				<ToastContainer />
 			</main>
 		</ProtectedRoute>

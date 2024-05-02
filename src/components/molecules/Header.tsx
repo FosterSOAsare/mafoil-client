@@ -71,7 +71,7 @@ const Header = () => {
 				<Link href="/" className={`text-sm font-medium ${pathname === "/" ? "text-brown" : "text-black hover:text-brown"}`}>
 					HOME
 				</Link>
-				<Link href="/products" className={`${pathname.startsWith("/products") ? "text-brown" : "text-black hover:text-brown"} text-sm font-medium `}>
+				<Link href="/products" className={`${pathname.startsWith("/products") || pathname.startsWith("/search") ? "text-brown" : "text-black hover:text-brown"} text-sm font-medium `}>
 					SHOP
 				</Link>
 				<Link href="/" className="font-playfair px-4 text-4xl font-medium">
@@ -80,12 +80,14 @@ const Header = () => {
 				<Link href="/faq" className={`${pathname.startsWith("/faq") ? "text-brown" : "text-black hover:text-brown"} text-sm font-medium`}>
 					FAQ
 				</Link>
-				<Link href="/about" className={`${pathname.startsWith("/about") ? "text-brown" : "text-black hover:text-brown"} text-sm font-medium`}>
-					ABOUT US
+				<Link href="/contact" className={`${pathname.startsWith("/contact") ? "text-brown" : "text-black hover:text-brown"} text-sm font-medium`}>
+					CONTACT US
 				</Link>
 			</nav>
 			<div className="hidden lg:flex items-center gap-4 text-2xl h-12 font-thin">
-				<BiSearch className="hover:cursor-pointer" />
+				<Link href="/search">
+					<BiSearch className="hover:cursor-pointer" />
+				</Link>
 				<div className="relative" ref={accountMenuComponentParentRef}>
 					<button className="w-full block" onClick={() => setShowAccountMenuComponent(true)}>
 						<AiOutlineUser className="hover:cursor-pointer" />

@@ -7,6 +7,7 @@ import { setData, useUserSlice } from "@/slices/user.slice";
 
 import { FiMail } from "react-icons/fi";
 import { useModerateNewsletterSubscriptionMutation } from "@/apis/newsletterApi";
+import PrimaryButton from "../atom/PrimaryButton";
 
 const Footer = () => {
 	const { user } = useSelector(useUserSlice);
@@ -41,8 +42,8 @@ const Footer = () => {
 			<h3 className="text-4xl font-playfair mr-auto md:mx-auto mb-12">Mafo.il</h3>
 			<div className="w-full h-auto md:h-48 mb-6 flex flex-col md:flex-row items-start justify-between">
 				<div className="w-full md:w-1/4">
-					<p>+866.597.2742</p>
-					<p>support@mafoilcom</p>
+					<p>+233.550.529.015</p>
+					<p>support@mafoil.com</p>
 				</div>
 				<article className="w-full md:w-1/2 flex mt-6 md:mt-0 items-start justify-start">
 					<div className="w-1/2">
@@ -71,11 +72,11 @@ const Footer = () => {
 							<Link href="/tcs" className="block hover:underline text-black hover:text-brown text-sm mb-2">
 								Terms and conditions
 							</Link>
+							<Link href="/privacy" className="block hover:underline text-black hover:text-brown text-sm mb-2">
+								Privacy Policy
+							</Link>
 							<Link href="/contact" className="block hover:underline text-black hover:text-brown text-sm mb-2">
 								Contact
-							</Link>
-							<Link href="/about" className="block hover:underline text-black hover:text-brown text-sm mb-2">
-								About us
 							</Link>
 						</nav>
 					</div>
@@ -85,18 +86,21 @@ const Footer = () => {
 					<p>New subscribers receive 10% off their first purchase</p>
 
 					{!user?.subscribed && (
-						<div className="w-full h-8 mt-6 border-b-[2px] border-black gap-4 flex items-center justify-between">
+						<>
 							<form action="" onSubmit={registerNewsLetter} className="w-full">
-								<input type="text" value={email} className="w-full h-full  bg-transparent focus:outline-0" placeholder="Your email" onChange={(e) => setEmail(e.target.value)} />
+								<div className="w-full h-auto mt-6 border-b-[2px] border-black gap-4 flex items-center justify-between">
+									<input type="text" value={email} className="w-full h-full  bg-transparent focus:outline-0" placeholder="Your email" onChange={(e) => setEmail(e.target.value)} />
+									<FiMail />
+								</div>
+								<PrimaryButton text="Register" sx="!mt-3" type="submit" disabled={isLoading} />
 							</form>
-							<FiMail />
-						</div>
+						</>
 					)}
 
 					{user?.subscribed && <div className="w-full h-8 mt-6 border-b-[2px] bg-[#D4EDDA] text-[#155724] p-4 py-6 gap-4 flex items-center justify-between">Thanks for subscribing</div>}
 				</div>
 			</div>
-			<p className="text-sm">© 2023 - Shopify By Wpbingo</p>
+			<p className="text-sm">© {new Date().getFullYear()} - Shopify By Scholar </p>
 		</footer>
 	);
 };

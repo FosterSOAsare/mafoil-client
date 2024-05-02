@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import userApi from './userApi';
 
 
 const authApi = createApi({
@@ -34,6 +35,10 @@ const authApi = createApi({
         method: 'POST',
         body: { email, password }
       }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        await queryFulfilled;
+        dispatch(userApi.util.invalidateTags(["User"]));
+      },
     }),
     logoutRequest: builder.query<{}, void>({
       query: () => '/logout'

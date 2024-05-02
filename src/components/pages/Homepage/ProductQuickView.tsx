@@ -35,7 +35,7 @@ const ProductQuickView = ({ setPreviewProduct, previewProduct }: { setPreviewPro
 						<AiOutlineClose />
 					</button>
 					<div className="border-r-[2px] border-black px-2">
-						<Ratings rating={rating.avgRating} totalRatings={rating.totalRatings} />
+						<Ratings rating={rating?.avgRating as number} totalRatings={rating?.totalRatings as number} />
 						<div className="w-full h-auto pb-6 border-b-[1px]  mt-4">
 							<h3 className="uppercase mb-2 text-xl font-medium">{name}</h3>
 							<p className="mb-2">
