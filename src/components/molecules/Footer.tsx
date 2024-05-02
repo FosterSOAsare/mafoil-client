@@ -72,11 +72,11 @@ const Footer = () => {
 							<Link href="/tcs" className="block hover:underline text-black hover:text-brown text-sm mb-2">
 								Terms and conditions
 							</Link>
+							<Link href="/privacy" className="block hover:underline text-black hover:text-brown text-sm mb-2">
+								Privacy Policy
+							</Link>
 							<Link href="/contact" className="block hover:underline text-black hover:text-brown text-sm mb-2">
 								Contact
-							</Link>
-							<Link href="/about" className="block hover:underline text-black hover:text-brown text-sm mb-2">
-								About us
 							</Link>
 						</nav>
 					</div>

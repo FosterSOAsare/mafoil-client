@@ -51,11 +51,6 @@ const login = () => {
 		dispatch(setData(data));
 		dispatch(setError(false));
 		dispatch(setIsLoading(false));
-
-		// Redirect;
-		setTimeout(() => {
-			window.location.href = "/";
-		}, 1500);
 	}, [data]);
 
 	useEffect(() => {
