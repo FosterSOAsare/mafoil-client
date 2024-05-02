@@ -111,3 +111,28 @@ html {
 .empty::before {
 	@apply bg-slate-200;
 }
+
+::-webkit-scrollbar-thumb {
+	@apply !bg-[#7f4227];
+}
+
+@media screen and (min-width: 768px) {
+	::selection {
+		@apply bg-sec !text-white opacity-100;
+	}
+	::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	::-webkit-scrollbar-track {
+		@apply bg-white !w-[1px] md:w-[10px];
+	}
+
+	::-webkit-scrollbar-thumb {
+		@apply rounded-[20px];
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		@apply bg-[red];
+	}
+}

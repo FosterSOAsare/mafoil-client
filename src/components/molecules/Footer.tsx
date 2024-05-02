@@ -7,6 +7,7 @@ import { setData, useUserSlice } from "@/slices/user.slice";
 
 import { FiMail } from "react-icons/fi";
 import { useModerateNewsletterSubscriptionMutation } from "@/apis/newsletterApi";
+import PrimaryButton from "../atom/PrimaryButton";
 
 const Footer = () => {
 	const { user } = useSelector(useUserSlice);
@@ -85,12 +86,15 @@ const Footer = () => {
 					<p>New subscribers receive 10% off their first purchase</p>
 
 					{!user?.subscribed && (
-						<div className="w-full h-8 mt-6 border-b-[2px] border-black gap-4 flex items-center justify-between">
+						<>
 							<form action="" onSubmit={registerNewsLetter} className="w-full">
-								<input type="text" value={email} className="w-full h-full  bg-transparent focus:outline-0" placeholder="Your email" onChange={(e) => setEmail(e.target.value)} />
+								<div className="w-full h-auto mt-6 border-b-[2px] border-black gap-4 flex items-center justify-between">
+									<input type="text" value={email} className="w-full h-full  bg-transparent focus:outline-0" placeholder="Your email" onChange={(e) => setEmail(e.target.value)} />
+									<FiMail />
+								</div>
+								<PrimaryButton text="Register" sx="!mt-3" type="submit" disabled={isLoading} />
 							</form>
-							<FiMail />
-						</div>
+						</>
 					)}
 
 					{user?.subscribed && <div className="w-full h-8 mt-6 border-b-[2px] bg-[#D4EDDA] text-[#155724] p-4 py-6 gap-4 flex items-center justify-between">Thanks for subscribing</div>}
