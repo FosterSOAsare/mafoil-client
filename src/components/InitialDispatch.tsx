@@ -18,7 +18,7 @@ import { BsArrowUp } from "react-icons/bs";
 import Cookies from "./molecules/Cookies";
 
 const InitialDispatch = ({ children }: { children: ReactNode }) => {
-	const [showCookies, setShowCookies] = useState(true);
+	const [showCookies, setShowCookies] = useState(false);
 	const { isLoading, error, data }: any = useFetchLoggedInUserRequestQuery();
 	const [fetchCart, { error: cartError, data: cartData, isLoading: cartLoading }]: any = useLazyFetchCartRequestQuery();
 	const [fetchWishList, { data: wishListData, isLoading: wishListLoading }] = useLazyFetchWishListRequestQuery();
