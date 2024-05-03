@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
 import { ToastContainer, toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -24,6 +25,7 @@ import ProductFormImageComponent from "@/components/pages/Product/ProductFormIma
 const NewProduct = () => {
 	const { register, handleSubmit, reset } = useSelectedValuesFromHookForm(productSchema);
 	const [postAProductRequest, { error, data, isLoading }] = usePostAProductRequestMutation();
+	const [title, setTitle] = useState("");
 	const { push } = useRouter();
 	const { user } = useSelector(useUserSlice);
 	const [images, setImages] = useState<{ url: string; public_id: string }[]>([]);
@@ -47,17 +49,18 @@ const NewProduct = () => {
 
 	useEffect(() => {
 		if (!user?.is_admin) {
+			setTitle("404 - Page Not Found");
 			setNotFound(true);
 			return;
 		}
+		setTitle("Mafo.il - Create New Product");
 		setNotFound(false);
 	}, [user]);
 
-	function deleteImage() {}
 	useEffect(() => {
 		if (!data) return;
 		reset();
-		toast("Prooduct Created Successfully");
+		toast("Product Created Successfully");
 		setTimeout(() => {
 			push(`/products/${data?.slugname}`);
 		}, 2000);
@@ -65,6 +68,9 @@ const NewProduct = () => {
 
 	return (
 		<MainPageLayout>
+			<Head>
+				<title>{title}</title>
+			</Head>
 			{!notFound && (
 				<>
 					<h1 className="text-2xl md:text-4xl uppercase font-medium">New Product</h1>

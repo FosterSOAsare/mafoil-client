@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head";
 
 import Header from "@/components/molecules/Header";
 import Footer from "@/components/molecules/Footer";
@@ -6,6 +7,9 @@ import Footer from "@/components/molecules/Footer";
 const tcs = () => {
 	return (
 		<div>
+			<Head>
+				<title>Mafo.il - Terms And Conditions</title>
+			</Head>
 			<Header />
 			<main className="mx-auto py-12 px-6 md:px-10">
 				<h3 className="font-medium text-center text-3xl underline">Terms And Conditions</h3>

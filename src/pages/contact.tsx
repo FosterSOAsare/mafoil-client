@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Head from "next/head";
 import { ToastContainer, toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
@@ -37,6 +38,9 @@ const contact = () => {
 	}, [user]);
 	return (
 		<div>
+			<Head>
+				<title>Mafo.il - Contact Us</title>
+			</Head>
 			<Header />
 			{
 				<div className="flex items-center justify-center flex-col pt-8">

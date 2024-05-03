@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head";
 
 import faqData from "@/data/faq";
 
@@ -39,6 +40,9 @@ const FaqItem = ({ index, question, answer }: faqType) => {
 const Faq = () => {
 	return (
 		<>
+			<Head>
+				<title>Mafo.il - Frequently Asked Questions </title>
+			</Head>
 			<Header />
 			<main className="w-full max-w-7xl mx-auto items-center md:px-4 justify-center py-8 flex flex-col">
 				<h1 className="text-4xl uppercase font-bold">Faq</h1>

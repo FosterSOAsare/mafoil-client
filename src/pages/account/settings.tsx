@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -72,6 +73,9 @@ const Settings = () => {
 	}, [userPassword]);
 	return (
 		<AccountLayout active="settings" title="ACCOUNT SETTINGS">
+			<Head>
+				<title>Mafo.il - Account Settings</title>
+			</Head>
 			<section className="w-full h-auto min-h-[50vh]">
 				<div className="w-full flex gap-6">
 					<button

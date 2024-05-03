@@ -25,6 +25,7 @@ import ProductFormImageComponent from "@/components/pages/Product/ProductFormIma
 
 const NewProduct = () => {
 	const { user } = useSelector(useUserSlice);
+	const [ttile, setTitle] = useState("");
 	const { query, push } = useRouter();
 	const [images, setImages] = useState<{ url: string; public_id: string }[]>([]);
 	const [notFound, setNotFound] = useState(false);
@@ -44,9 +45,11 @@ const NewProduct = () => {
 	useEffect(() => {
 		if (!user?.is_admin || productError) {
 			setNotFound(true);
+			setTitle("404 - Page Not Found");
 			return;
 		}
 		setNotFound(false);
+		setTitle("Mafo.il - Edit A Product");
 	}, [user?.is_admin, productError]);
 
 	useEffect(() => {
@@ -72,7 +75,6 @@ const NewProduct = () => {
 	useCreateErrorFromApiRequest(error);
 	useCreateErrorFromApiRequest(fileUploadError);
 
-	function deleteImage() {}
 	useEffect(() => {
 		if (!data) return;
 		reset();

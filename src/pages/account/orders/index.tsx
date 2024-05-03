@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
 
 import { useLazyFetchOrdersRequestQuery } from "@/apis/orderApi";
 import { useSelector } from "react-redux";
@@ -21,6 +22,9 @@ const orders = () => {
 
 	return (
 		<AccountLayout active="orders" title="MY ORDERS">
+			<Head>
+				<title>Mafo.il - Your orders</title>
+			</Head>
 			<div className="w-full h-full min-h-[50vh] mb-12">
 				<div className="w-1/2 mt-4 h-12 gap-4 flex items-center justify-between">
 					{["All", "Pending", "Completed", "Cancelled"].map((filter, index) => (

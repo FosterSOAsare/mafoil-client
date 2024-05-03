@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Head from "next/head";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -29,6 +30,9 @@ const index = () => {
 	}, [error]);
 	return (
 		<AccountLayout title="MY ACCOUNT">
+			<Head>
+				<title>Mafo.il - Account Dashboard</title>
+			</Head>
 			<div className="w-full h-auto pb-12 ">
 				<p>Hello {user?.fullname} </p>
 				<p>Email: {user?.email}</p>

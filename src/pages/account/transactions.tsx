@@ -1,4 +1,5 @@
 "use client";
+import Head from "next/head";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "next/navigation";
@@ -37,6 +38,9 @@ const transactions = () => {
 
 	return (
 		<ProtectedRoute loginRequired={true}>
+			<Head>
+				<title>Mafo.il - Account Transactions</title>
+			</Head>
 			<Header />
 			<main className="w-full py-4 md:py-12 px-4  min-h-screen max-w-7xl mx-auto  mb-12">
 				<div className="mb-6 md:mb-0 w-auto flex item-center  justify-end gap-4">
