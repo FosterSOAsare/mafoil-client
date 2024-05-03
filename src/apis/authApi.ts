@@ -46,7 +46,8 @@ const authApi = createApi({
       },
     }),
     logoutRequest: builder.query<{}, void>({
-      query: () => '/logout'
+      query: () => '/logout',
+
     }),
     changePassword: builder.mutation({
       query: () => ({

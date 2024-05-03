@@ -14,6 +14,7 @@ import PrimaryInput from "@/components/atom/PrimaryInput";
 import PrimaryButton from "@/components/atom/PrimaryButton";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Cookies from "@/components/molecules/Cookies";
+import { setCookie } from "@/utils/cookie";
 
 const login = () => {
 	const { register, handleSubmit, getValues } = useSelectedValuesFromHookForm(loginSchema);
@@ -46,8 +47,9 @@ const login = () => {
 		if (!data) return;
 		toast.success("Login was successful. Redirecting...", { autoClose: 1500 });
 
+		// Set cookie
+		setCookie("access_token", data.token, 30);
 		// Store data in redux
-
 		dispatch(setData(data));
 		dispatch(setError(false));
 		dispatch(setIsLoading(false));

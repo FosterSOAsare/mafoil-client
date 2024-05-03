@@ -19,7 +19,7 @@ const ProtectedRoute = ({ children, loginRequired = false }: ProtectedRouteProps
 			router.replace("/");
 		}
 		if (!isLoading && loginRequired && (!user?._id || error)) {
-			router.replace("/auth/login");
+			router.replace("/");
 		}
 	}, [router, isLoading, error, user?._id]);
 

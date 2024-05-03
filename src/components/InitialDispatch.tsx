@@ -10,7 +10,6 @@ import { insertWishLists, useWishListSelector } from "@/slices/wishlist.slice";
 import { useLazyFetchUserNotificationsRequestQuery } from "@/apis/notificationsApi";
 import { setNotificationsData } from "@/slices/notifications.slice";
 import useDebounce from "@/hooks/useDebounce";
-import makeStore from "@/store";
 import { useLazyFetchWishListRequestQuery, useUploadWishListRequestMutation } from "@/apis/wishListApi";
 import { productType } from "@/types/product.type";
 
