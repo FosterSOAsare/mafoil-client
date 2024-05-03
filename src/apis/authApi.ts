@@ -1,10 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import userApi from './userApi';
+import { createAuthorizationHeader } from '@/utils/cookie';
 
 
 const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '/api/auth' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: '/api/auth', prepareHeaders: (headers) => {
+      return createAuthorizationHeader(headers)
+    },
+  }),
   endpoints: (builder) => ({
     registerUserRequest: builder.mutation({
       query: (data) => ({

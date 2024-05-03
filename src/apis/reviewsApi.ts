@@ -1,10 +1,14 @@
+import { createAuthorizationHeader } from "@/utils/cookie";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 
 const reviewsApi = createApi({
   reducerPath: 'reviewsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: '/api/reviews'
+    baseUrl: '/api/reviews',
+    prepareHeaders: (headers) => {
+      return createAuthorizationHeader(headers)
+    },
   }),
   endpoints: (builder) => ({
     getProductReviewsRequest: builder.query<any, string>({

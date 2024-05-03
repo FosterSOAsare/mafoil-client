@@ -1,10 +1,13 @@
+import { createAuthorizationHeader } from '@/utils/cookie'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({
-    baseUrl:
-      '/api/user'
+    baseUrl: '/api/user',
+    prepareHeaders: (headers) => {
+      return createAuthorizationHeader(headers)
+    },
   }),
   tagTypes: ["User"],
   endpoints: (builder) => ({
