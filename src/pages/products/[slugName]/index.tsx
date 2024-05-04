@@ -28,8 +28,6 @@ const Product = () => {
 	const [getAProduct, { data: product, error, isLoading }] = useLazyGetAProductRequestQuery();
 	const [getRecommendations, { data: recommendationsData }] = useLazyGetProductRecommendationsRequestQuery();
 
-	console.log(product);
-
 	const [getReviews, { data: reviewsData }] = useLazyGetProductReviewsRequestQuery();
 	const [recommendations, setRecommendations] = useState<productType[]>([]);
 

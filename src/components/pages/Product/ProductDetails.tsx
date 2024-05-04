@@ -31,7 +31,7 @@ const ReviewCard = ({ rating, createdAt, name, comment, title }: { createdAt: st
 			<div className="w-full flex gap-4">
 				<div className="w-full">
 					<div className="w-full flex gap-2 items-center">
-						<Ratings rating={rating} />
+						<Ratings rating={rating} showTotal={false} />
 						<p className="text-slate-400 text-sm">
 							{name} on {createDateFromString(createdAt)}
 						</p>
@@ -208,7 +208,7 @@ const ProductDetails = ({ product, reviews }: { product: productType; reviews: a
 									{reviews?.length === 0 && <p className="text-sm opacity-80">No reviews yet</p>}
 									{reviews?.length > 0 && (
 										<p className="text-sm opacity-80 flex items-center gap-2">
-											<Ratings rating={product?.rating.avgRating} sx="!text-lg " /> Based on {product.rating.totalRatings} review
+											<Ratings rating={product?.rating?.avgRating} totalRatings={product.rating?.avgRating} sx="!text-lg " /> Based on {product.rating.totalRatings} review
 										</p>
 									)}
 
