@@ -41,14 +41,14 @@ export default function Home() {
 			</Head>
 			<Header />
 			<main className="w-full min-h-screen bg-white relative">
-				<section className="w-full h-[50vh] lg:h-screen px-6 bg-white" id="hero">
+				<section className="w-full h-[40vh] lg:h-screen px-6 bg-white" id="hero">
 					<div className="w-full h-full hero_image relative">
-						<div className="w-[250px] absolute top-[30vh] right-8 h-auto">
-							<h3 className="text-right text-xl mb-3 Z uppercase tracking-[5px] text-brown">Big Sale !</h3>
-							<h1 className="text-5xl text-right font-medium leading-[65px]">TRENDING OUTFITS</h1>
+						<div className="w-[120px] md:w-[250px] absolute top-[10vh] lg:top-[30vh] right-4 md:right-8 h-auto">
+							<h3 className="text-right text-sm md:text-xl mb-3 uppercase tracking-[5px] text-brown">Big Sale !</h3>
+							<h1 className="text-2xl md:text-5xl text-right font-medium md:leading-[65px]">TRENDING OUTFITS</h1>
 							<Link
 								href="/products"
-								className="bg-brown flex items-center justify-center text-white relative mt-8 md:w-[400px] lg:w-[250px] hover:border-white border-brown h-20 lg:h-16 group border-[1px] overflow-hidden">
+								className="bg-brown flex items-center justify-center text-white relative mt-4 md:mt-8 w-full hover:border-white border-brown h-12 md:h-20 lg:h-16 group border-[1px] overflow-hidden">
 								<span className="w-full h-full bg-white absolute transition-all duration-200 top-0 group-hover:right-0 z-[1] -right-[100%]"></span>
 								<p className="relative z-[2] transition-all duration-75 group-hover:text-black uppercase  font-medium text-sm">Shop Now</p>
 							</Link>
