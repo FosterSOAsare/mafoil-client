@@ -60,14 +60,14 @@ const register = () => {
 
 	return (
 		<ProtectedRoute>
-			<main className="w-full h-screen flex items-center justify-center px-4">
+			<main className="w-full py-12 md:py-0 md:h-screen flex items-center justify-center px-4">
 				<form action="" className="w-full max-w-[720px] h-auto flex flex-col items-center justify-center" onSubmit={handleSubmit(storeNewUser)}>
 					<h1 className="font-medium font-playfair text-5xl mb-16">CREATE ACCOUNT</h1>
-					<div className="w-full flex justify-between mb-6 gap-4 items-center">
+					<div className="w-full flex flex-col md:flex-row justify-between mb-6 gap-4 items-center">
 						<PrimaryInput name="email" placeholder="example@email.com" register={register} label="Email" />
 						<PrimaryInput name="fullname" placeholder="John Doe" register={register} label="Fullname" />
 					</div>
-					<div className="w-full flex justify-between gap-4 items-center">
+					<div className="w-full flex flex-col md:flex-row justify-between gap-4 items-center">
 						<PrimaryInput name="password" placeholder="*********" type="password" label="Password" register={register} />
 						<PrimaryInput name="cpassword" placeholder="*********" type="password" label="Confirm Password" register={register} />
 					</div>

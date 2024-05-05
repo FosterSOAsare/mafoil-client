@@ -66,9 +66,9 @@ const login = () => {
 
 	return (
 		<ProtectedRoute>
-			<main className="w-full h-screen px-4 flex items-center justify-center flex-col">
+			<main className="w-full md:h-screen py-12 md:py-0 px-4 flex items-center justify-center flex-col">
 				<h1 className="font-medium font-playfair text-5xl mb-16">ACCOUNT</h1>
-				<div className="max-w-6xl mx-auto flex items-start justify-center gap-16">
+				<div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start justify-center gap-16">
 					<form action="" className="w-full  h-auto flex flex-col items-start justify-center" onSubmit={handleSubmit(loginUser)}>
 						<h3 className="w-full text-2xl font-playfair mb-6 font-semibold ">Sign in</h3>
 						<PrimaryInput name="email" placeholder="example@gmail.com" label="Email" register={register} />

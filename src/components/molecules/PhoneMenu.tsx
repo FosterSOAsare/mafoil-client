@@ -6,27 +6,43 @@ import { useUserSlice } from "@/slices/user.slice";
 
 import { AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/router";
+import useLogoutUser from "@/hooks/useLogoutUser";
 
 const phoneMenuLinks = [
 	{
 		name: "Home",
 		link: "/",
+		isDefault: true,
 	},
 	{
 		name: "SHOP",
 		link: "/products",
+		isDefault: true,
 	},
 	{
 		name: "Faq",
 		link: "/faq",
+		isDefault: true,
 	},
-	{
-		name: "About Us",
-		link: "/about",
-	},
+	// {
+	// 	name: "About Us",
+	// 	link: "/about",
+	// 	isDefault: true,
+	// },
 	{
 		name: "Contact Us",
 		link: "/contact",
+		isDefault: true,
+	},
+	{
+		name: "Register",
+		link: "/auth/register",
+		loginRequired: false,
+	},
+	{
+		name: "Login in",
+		link: "/auth/login",
+		loginRequired: false,
 	},
 	{
 		name: "Account",
@@ -48,6 +64,7 @@ const phoneMenuLinks = [
 const PhoneMenu = ({ setShowMenu }: { setShowMenu: React.Dispatch<React.SetStateAction<boolean>> }) => {
 	const { pathname } = useRouter();
 	const { user } = useSelector(useUserSlice);
+	const logout = useLogoutUser();
 
 	return (
 		<aside className="w-full h-screen flex flex-col  overflow-y-auto bg-white fixed top-0 left-0 p-4 md:hidden z-[10]">
@@ -63,7 +80,7 @@ const PhoneMenu = ({ setShowMenu }: { setShowMenu: React.Dispatch<React.SetState
 			<nav className="text-black mt-6 w-auto gap-2 flex flex-col items-start justify-between">
 				{phoneMenuLinks.map((link, index) => (
 					<>
-						{(!link.loginRequired || (user?._id && link.loginRequired)) && (
+						{(link.isDefault || (user?._id && link?.loginRequired) || (!user?._id && !link?.loginRequired)) && (
 							<Link
 								href={link?.link}
 								onClick={() => {
@@ -77,6 +94,12 @@ const PhoneMenu = ({ setShowMenu }: { setShowMenu: React.Dispatch<React.SetState
 						)}
 					</>
 				))}
+
+				{user?._id && (
+					<button onClick={() => logout()} className={`uppercase w-full py-4 text-left text-sm font-medium hover:bg-slate-200 text-red-500 px-4`}>
+						Sign out
+					</button>
+				)}
 			</nav>
 		</aside>
 	);

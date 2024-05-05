@@ -69,7 +69,7 @@ const verifiy = () => {
 	useCreateErrorFromApiRequest(resendEmailError);
 
 	return (
-		<main className="w-full h-screen flex items-center mx-auto max-w-[600px] justify-center">
+		<main className="w-full px-4 h-screen flex items-center mx-auto max-w-[600px] justify-center">
 			<article className="mt-16 flex w-full py-12 items-center flex-col justify-between text-center">
 				<div className="icon w-14 h-14 rounded-full bg-[#210590] flex items-center bg-opacity-[0.1] justify-center">
 					<div className="icon w-10 h-10 rounded-full bg-black flex items-center justify-center opacity-[1]">
