@@ -47,7 +47,10 @@ const authApi = createApi({
     }),
     logoutRequest: builder.query<{}, void>({
       query: () => '/logout',
-
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        await queryFulfilled;
+        dispatch(userApi.util.invalidateTags(["User"]));
+      },
     }),
     changePassword: builder.mutation({
       query: () => ({
