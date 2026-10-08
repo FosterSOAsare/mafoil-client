@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { ToastContainer } from "react-toastify";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -73,7 +72,6 @@ const products = () => {
 					)}
 				</section>
 
-				<ToastContainer />
 			</main>
 		</AdminLayout>
 	);

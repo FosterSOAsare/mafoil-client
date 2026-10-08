@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
 import { markNotificationAsRead, notificationType, useNotificationsSelector } from "@/slices/notifications.slice";
@@ -54,7 +54,6 @@ const Notifications = ({ setShowNotifications }: { setShowNotifications: React.D
 				)}
 			</div>
 
-			<ToastContainer />
 		</aside>
 	);
 };

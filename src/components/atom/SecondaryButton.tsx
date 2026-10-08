@@ -6,14 +6,19 @@ type secondaryButtonType = {
 	handleClick?: any;
 	href?: any;
 	disabled?: boolean;
+	sx?: string;
 };
 
-const SecondaryButton = ({ text, handleClick, href, disabled = false }: secondaryButtonType) => {
+// Outlined secondary style that pairs with PrimaryButton
+const baseClasses =
+	"w-full h-12 mb-4 flex items-center justify-center border border-black text-black text-sm font-medium uppercase tracking-[2px] transition-colors duration-200 hover:bg-black hover:text-white";
+
+const SecondaryButton = ({ text, handleClick, href, disabled = false, sx = "" }: secondaryButtonType) => {
 	return (
 		<>
 			{!href && (
 				<button
-					className="w-full h-12 border-black border mb-4 text-black hover:bg-black hover:text-white"
+					className={`${baseClasses} ${disabled ? "opacity-60 cursor-not-allowed" : ""} ${sx}`}
 					onClick={() => {
 						if (handleClick) handleClick();
 					}}
@@ -23,7 +28,7 @@ const SecondaryButton = ({ text, handleClick, href, disabled = false }: secondar
 				</button>
 			)}
 			{href && (
-				<Link href={href} className="w-full h-12 flex items-center justify-center hover:bg-black hover:text-white border-black mb-4 border text-black">
+				<Link href={href} className={`${baseClasses} ${sx}`}>
 					{text}
 				</Link>
 			)}

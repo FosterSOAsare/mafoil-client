@@ -1,9 +1,7 @@
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-import { ToastContainer } from "react-toastify";
 import Link from "next/link";
 
-import filters from "@/data/productfilters";
 import { productType } from "@/types/product.type";
 import { useLazyGetProductsRequestQuery } from "@/apis/productsApi";
 
@@ -13,6 +11,7 @@ import Testimonials from "@/components/pages/Homepage/Testimonials";
 import Footer from "@/components/molecules/Footer";
 import ProductQuickView from "@/components/pages/Homepage/ProductQuickView";
 import Loading from "@/components/atom/Loading";
+import CategoryFilter from "@/components/molecules/CategoryFilter";
 
 export default function Home() {
 	const [selectedFilter, setSelectedFilter] = useState("all");
@@ -41,11 +40,11 @@ export default function Home() {
 			</Head>
 			<Header />
 			<main className="w-full min-h-screen bg-white relative">
-				<section className="w-full h-[40vh] lg:h-screen px-6 bg-white" id="hero">
+				<section className="w-full h-[45vh] md:h-[60vh] lg:h-[70vh] max-h-[720px] bg-white" id="hero">
 					<div className="w-full h-full hero_image relative">
-						<div className="w-[120px] md:w-[250px] absolute top-[10vh] lg:top-[30vh] right-4 md:right-8 h-auto">
-							<h3 className="text-right text-sm md:text-xl mb-3 uppercase tracking-[5px] text-brown">Big Sale !</h3>
-							<h1 className="text-2xl md:text-5xl text-right font-medium md:leading-[65px]">TRENDING OUTFITS</h1>
+						<div className="w-[150px] md:w-[250px] absolute top-1/2 -translate-y-1/2 right-4 lg:right-10 h-auto">
+							<h3 className="text-right text-sm md:text-xl mb-3 uppercase tracking-[5px] text-brown">Big Sale!</h3>
+							<h1 className="text-2xl md:text-5xl text-right font-medium md:leading-[65px] uppercase">Trending Outfits</h1>
 							<Link
 								href="/products"
 								className="bg-brown flex items-center justify-center text-white relative mt-4 md:mt-8 w-full hover:border-white border-brown h-12 md:h-20 lg:h-16 group border overflow-hidden">
@@ -56,25 +55,17 @@ export default function Home() {
 					</div>
 				</section>
 
-				<section id="products" className="px-4 md:px-6 w-full h-auto mt-8">
-					<div id="breadcrumbs" className="w-full mb-8 h-auto flex items-center gap-4">
-						{filters.map((filter, index) => (
-							<React.Fragment key={index}>
-								<button
-									className={`font-medium text-[12px] md:text-md block  hover:text-brown ${selectedFilter === filter.option ? "text-brown" : ""}`}
-									onClick={() => {
-										setSelectedFilter(filter.option);
-										setPage(1);
-									}}>
-									{filter.name}
-								</button>
-								{index !== filters?.length - 1 && <p>/</p>}
-							</React.Fragment>
-						))}
-					</div>
+				<section id="products" className="px-4 lg:px-10 w-full h-auto mt-10">
+					<CategoryFilter
+						selected={selectedFilter}
+						onSelect={(option) => {
+							setSelectedFilter(option);
+							setPage(1);
+						}}
+					/>
 
 					<article id="products" className="flex flex-col items-center justify-center w-full border-b pb-12 md:pb-36">
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 w-full h-auto">
+						<div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8 w-full h-auto">
 							{products?.data.map((product, index) => {
 								return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} />;
 							})}
@@ -95,7 +86,6 @@ export default function Home() {
 				{previewProduct && <ProductQuickView setPreviewProduct={setPreviewProduct} previewProduct={previewProduct} />}
 
 				<Testimonials />
-				<ToastContainer />
 			</main>
 			<Footer />
 		</>

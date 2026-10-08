@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { forgotPasswordSchema } from "@/libs/hookform";
 import useSelectedValuesFromHookForm from "@/hooks/useSelectedValuesFromHookForm";
@@ -76,7 +76,6 @@ const login = () => {
 						</div>
 					</div>
 				</div>
-				<ToastContainer />
 			</main>
 		</ProtectedRoute>
 	);

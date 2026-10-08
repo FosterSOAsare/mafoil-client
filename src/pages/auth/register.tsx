@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
@@ -79,7 +79,6 @@ const register = () => {
 				</form>
 
 				{showCookies && <Cookies setShowCookies={setShowCookies} />}
-				<ToastContainer />
 			</main>
 		</ProtectedRoute>
 	);

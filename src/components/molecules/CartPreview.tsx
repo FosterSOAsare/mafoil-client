@@ -11,7 +11,6 @@ import { Loading1 } from "../atom/Loading";
 
 import { AiOutlineClose } from "react-icons/ai";
 import { productType } from "@/types/product.type";
-import { ToastContainer } from "react-toastify";
 
 const CartPreview = ({ setShowCart }: { setShowCart: React.Dispatch<React.SetStateAction<boolean>> }) => {
 	const cart = useSelector(useCartSelector);
@@ -85,7 +84,6 @@ const CartPreview = ({ setShowCart }: { setShowCart: React.Dispatch<React.SetSta
 					</div>
 				</>
 			)}
-			<ToastContainer />
 		</aside>
 	);
 };

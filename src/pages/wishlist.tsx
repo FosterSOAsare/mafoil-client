@@ -2,7 +2,6 @@ import Head from "next/head";
 import React, { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import { ToastContainer } from "react-toastify";
 
 import { useWishListSelector } from "@/slices/wishlist.slice";
 import { productType } from "@/types/product.type";
@@ -59,7 +58,6 @@ const WishList = () => {
 					</section>
 
 					{previewProduct && <ProductQuickView setPreviewProduct={setPreviewProduct} previewProduct={previewProduct} />}
-					<ToastContainer />
 				</main>
 			</ProtectedRoute>
 			<Footer />

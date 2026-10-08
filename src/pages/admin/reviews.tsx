@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { useLazyGetPendingProductReviewsRequestQuery, useModerateProductReviewRequestMutation } from "@/apis/reviewsApi";
 import { createDateFromString } from "@/utils/createDate";
@@ -81,7 +81,6 @@ const Reviews = () => {
 					<p className="text-slate-400"> There is nothing here ...</p>
 				</div>
 			)}
-			<ToastContainer />
 		</main>
 	);
 };

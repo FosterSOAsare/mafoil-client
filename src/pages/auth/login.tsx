@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
@@ -90,7 +90,6 @@ const login = () => {
 				</div>
 
 				{showCookies && <Cookies setShowCookies={setShowCookies} />}
-				<ToastContainer />
 			</main>
 		</ProtectedRoute>
 	);

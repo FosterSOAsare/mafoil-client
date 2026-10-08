@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
@@ -110,7 +110,6 @@ const NewProduct = () => {
 
 						<PrimaryButton text="Create Product" type="submit" sx="mt-4 max-w-[400px] h-16 md:h-20" disabled={isLoading} />
 					</form>
-					<ToastContainer />
 				</>
 			)}
 

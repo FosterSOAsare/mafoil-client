@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React, { useEffect } from "react";
 import Image from "next/image";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
 import { useLazyFetchAnOrderRequestQuery, useCancelOrderRequestMutation } from "@/apis/orderApi";
@@ -146,7 +146,6 @@ const OrderPage = () => {
 											</button>
 										</div>
 									)}
-									<ToastContainer />
 								</article>
 							</article>
 						</>

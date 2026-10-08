@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import useSelectedValuesFromHookForm from "@/hooks/useSelectedValuesFromHookForm";
 import { withdrawSchema } from "@/libs/hookform";
@@ -45,7 +45,6 @@ const Withdraw = ({ closeModal }: { closeModal: React.Dispatch<React.SetStateAct
 					</div>
 				</form>
 			</div>
-			<ToastContainer />
 		</aside>
 	);
 };

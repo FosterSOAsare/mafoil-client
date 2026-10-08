@@ -11,13 +11,16 @@ type primaryButtonType = {
 	disabled?: boolean;
 };
 
+// Solid primary style shared by every main call-to-action: black, brown on hover
+const baseClasses = "w-full h-12 mb-4 flex items-center justify-center bg-black text-white text-sm font-medium uppercase tracking-[2px] transition-colors duration-200";
+
 const PrimaryButton = ({ text, handleClick, href, sx = "", type = "button", disabled = false }: primaryButtonType) => {
 	return (
 		<>
 			{!href && (
 				<button
 					type={type}
-					className={`${sx} ${disabled ? "opacity-40" : "opacity-80 hover:opacity-100 hover:bg-brown"} flex items-center justify-center  w-full h-12 bg-black mb-4  text-white`}
+					className={`${baseClasses} ${disabled ? "opacity-60 cursor-not-allowed" : "hover:bg-brown"} ${sx}`}
 					onClick={() => {
 						if (handleClick) handleClick();
 					}}
@@ -27,7 +30,7 @@ const PrimaryButton = ({ text, handleClick, href, sx = "", type = "button", disa
 				</button>
 			)}
 			{href && (
-				<Link href={href} className={`${sx} hover:bg-brown w-full h-12 flex items-center justify-center bg-black mb-4 opacity-90 hover:opacity-100 text-white`}>
+				<Link href={href} className={`${baseClasses} hover:bg-brown ${sx}`}>
 					{text}
 				</Link>
 			)}

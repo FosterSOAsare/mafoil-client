@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 
@@ -125,7 +125,6 @@ const NewProduct = () => {
 
 						<PrimaryButton text="Edit Product" type="submit" sx="mt-4 max-w-[400px] h-16 md:h-20" disabled={isLoading} />
 					</form>
-					<ToastContainer />
 				</>
 			)}
 			{productIsLoading && (

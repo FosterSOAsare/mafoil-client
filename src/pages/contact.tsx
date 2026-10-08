@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
 import { contactSchema } from "@/libs/hookform";
@@ -57,7 +57,6 @@ const contact = () => {
 
 						<PrimaryButton text="Send Contact" type="submit" sx="mt-4 max-w-[400px] h-16 md:h-20" disabled={isLoading} />
 					</form>
-					<ToastContainer />
 				</div>
 			}
 		</div>

@@ -1,5 +1,5 @@
 import React, { FormEvent, useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import PrimaryButton from "@/components/atom/PrimaryButton";
 import { AiOutlineClose } from "react-icons/ai";
@@ -66,7 +66,6 @@ const Status = () => {
 					</>
 				)}
 			</div>
-			<ToastContainer />
 		</aside>
 	);
 };

@@ -4,7 +4,6 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import SwiperCore from "swiper";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { ToastContainer } from "react-toastify";
 
 import filters from "@/data/productfilters";
 import { productType } from "@/types/product.type";
@@ -86,7 +85,6 @@ const Product = () => {
 									</div>
 								</article>
 							</section>
-							<ToastContainer />
 							<RecentViews setPreviewProduct={setPreviewProduct} product={product} />
 							{previewProduct && <ProductQuickView setPreviewProduct={setPreviewProduct} previewProduct={previewProduct} />}
 						</section>

@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import { ToastContainer } from "react-toastify";
 
 import { useUserSlice } from "@/slices/user.slice";
 
@@ -47,7 +46,6 @@ const AccountLayout = ({ children, title }: { children: ReactNode; title: string
 					<Breadcrumb />
 				</div>
 				<div className="w-full md:w-[70%] px-4 md:px-0">{children}</div>
-				<ToastContainer />
 			</div>
 			<Footer />
 		</>

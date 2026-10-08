@@ -1,5 +1,5 @@
 import React, { FormEvent, useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 // import { BiCopyAlt } from "react-icons/bi";
 // import { BsCheckLg } from "react-icons/bs";
@@ -72,7 +72,6 @@ const Deposit = ({ closeModal }: { closeModal: React.Dispatch<React.SetStateActi
 					<PrimaryButton text="Deposit" type="submit" sx="mt-6! w-1/2!" disabled={isLoading} />
 				</form>
 			</div>
-			<ToastContainer />
 		</aside>
 	);
 };

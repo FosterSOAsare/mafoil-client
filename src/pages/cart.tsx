@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import Image from "next/image";
-import { ToastContainer } from "react-toastify";
 
 import { cartItemType, useCartSelector, removeItem } from "@/slices/cart.slice";
 import useCheckoutCart from "@/hooks/useCheckoutCart";
@@ -130,7 +129,6 @@ const Cart = () => {
 										{!isLoading && <p className="relative z-2 transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Checkout</p>}
 									</button>
 								</div>
-								<ToastContainer />
 							</article>
 						</article>
 					)}

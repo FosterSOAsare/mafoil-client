@@ -7,7 +7,7 @@ export type productFilterType = {
 
 const filters: productFilterType[] = [
   { option: "all", name: "All" },
-  { option: "cloth", name: "Clothings" },
+  { option: "cloth", name: "Clothing" },
   { option: "shoe", name: "Shoes" },
   { option: "bag", name: "Bags" },
   { option: "accessories", name: "Accessories" },

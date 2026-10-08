@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { useResendEmailRequestMutation, useVerifyUserEmailRequestMutation } from "@/apis/authApi";
 import useCreateErrorFromApiRequest from "@/hooks/useCreateErrorFromApiRequest";
@@ -121,7 +121,6 @@ const verifiy = () => {
 					</>
 				)}
 			</article>
-			<ToastContainer />
 		</main>
 	);
 };
