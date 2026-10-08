@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { UseFormRegister, FieldValues } from "react-hook-form/dist/types";
+import { UseFormRegister, FieldValues } from "react-hook-form";
 
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 

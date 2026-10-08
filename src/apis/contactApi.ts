@@ -1,5 +1,5 @@
 import { createAuthorizationHeader } from "@/utils/cookie";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const contactApi = createApi({
   reducerPath: 'contactApi',

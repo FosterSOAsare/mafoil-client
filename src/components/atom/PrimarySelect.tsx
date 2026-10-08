@@ -1,5 +1,5 @@
 import React from "react";
-import { UseFormRegister, FieldValues } from "react-hook-form/dist/types";
+import { UseFormRegister, FieldValues } from "react-hook-form";
 
 type primarySelectType = {
 	label?: string;

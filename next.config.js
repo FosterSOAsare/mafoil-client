@@ -9,7 +9,10 @@ const nextConfig = {
 		];
 	},
 	images: {
-		domains: ["res.cloudinary.com", "procvcreator.s3.eu-north-1.amazonaws.com"],
+		remotePatterns: [
+			{ protocol: "https", hostname: "res.cloudinary.com" },
+			{ protocol: "https", hostname: "procvcreator.s3.eu-north-1.amazonaws.com" },
+		],
 	},
 };
 
