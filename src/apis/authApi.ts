@@ -37,15 +37,23 @@ const authApi = createApi({
         body: { email, password }
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        await queryFulfilled;
-        dispatch(userApi.util.invalidateTags(["User"]));
+        try {
+          await queryFulfilled;
+          dispatch(userApi.util.invalidateTags(["User"]));
+        } catch {
+          // The error is shown by the component through the hook's `error`
+        }
       },
     }),
     logoutRequest: builder.query<{}, void>({
-      query: () => '/logout',
+      query: () => ({ url: '/logout', method: 'POST' }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        await queryFulfilled;
-        dispatch(userApi.util.invalidateTags(["User"]));
+        try {
+          await queryFulfilled;
+          dispatch(userApi.util.invalidateTags(["User"]));
+        } catch {
+          // The error is shown by the component through the hook's `error`
+        }
       },
     }),
     changePassword: builder.mutation({

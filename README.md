@@ -91,7 +91,7 @@ baseQuery: createBaseQuery("/products")   // → ${NEXT_PUBLIC_API_URL}/api/prod
 | Local dev   | `http://localhost:8000` (default when unset) |
 | Vercel      | `https://mafoil-server-2575.onrender.com` |
 
-Because requests are cross-origin, the server's CORS settings must allow the site's origin. In development the server allows every origin; in production it allows `https://mafoil.vercel.app` (see [`src/app.js`](https://github.com/FosterSOAsare/mafoil-server/blob/master/src/app.js) in the server repo). The variable is inlined at build time, so changing it on Vercel needs a redeploy.
+Because requests are cross-origin, the server's CORS settings must allow the site's origin. In development the server allows every origin; in production it allows the origins in the server's `CORS_ORIGINS` env var (default `https://mafoil.vercel.app`). The variable is inlined at build time, so changing it on Vercel needs a redeploy.
 
 To add a new API, create a file in `src/apis` and pass `createBaseQuery("/<resource>")` as its `baseQuery`.
 
@@ -222,7 +222,7 @@ The client is deployed on **Vercel**:
 
 1. Import the `client` folder as a Vercel project (framework preset: Next.js).
 2. Set `NEXT_PUBLIC_API_URL=https://mafoil-server-2575.onrender.com` in the project's environment variables, then redeploy.
-3. Make sure the server's CORS allow-list and `CLIENT_URL` match the Vercel domain.
+3. Make sure the server's `CORS_ORIGINS` and `CLIENT_URL` env vars match the Vercel domain.
 4. Set the Node.js version to **24.x** in the project settings.
 
 ### CI
@@ -234,7 +234,7 @@ The client is deployed on **Vercel**:
 | Problem | Fix |
 | ------- | --- |
 | API calls fail with `ERR_CONNECTION_REFUSED` in development | Start the server on port 8000, or set `NEXT_PUBLIC_API_URL` to where it runs. |
-| API calls fail with a CORS error | Add the site's origin to the CORS allow-list in the server's [`src/app.js`](https://github.com/FosterSOAsare/mafoil-server/blob/master/src/app.js) (production only). |
+| API calls fail with a CORS error | Add the site's origin to the server's `CORS_ORIGINS` env var (production only). |
 | `Cannot find module '@/assets/…webp'` from `tsc` | Run `npm run dev` or `npm run build` once to generate `next-env.d.ts`. |
 | Remote image fails with "hostname is not configured" | Add the host to `images.remotePatterns` in `next.config.js`. |
 | Login says cookies must be allowed | Accept the cookie banner; the choice is stored in localStorage. |

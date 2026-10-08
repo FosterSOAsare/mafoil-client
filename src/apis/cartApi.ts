@@ -21,10 +21,15 @@ const cartApi = createApi({
     checkoutCartRequest: builder.query<any, void>({
       query: () => ({
         url: "/checkout",
+        method: "POST",
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        await queryFulfilled;
-        dispatch(userApi.util.invalidateTags(["User"]));
+        try {
+          await queryFulfilled;
+          dispatch(userApi.util.invalidateTags(["User"]));
+        } catch {
+          // The error is shown by the component through the hook's `error`
+        }
       },
     })
   })

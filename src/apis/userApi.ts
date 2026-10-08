@@ -15,6 +15,7 @@ const userApi = createApi({
     activateUserAccountRequest: builder.query<any, void>({
       query: () => ({
         url: "/activate",
+        method: "POST",
       }),
     }),
     withdrawFundRequest: builder.mutation({
