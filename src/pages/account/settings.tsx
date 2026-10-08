@@ -9,6 +9,7 @@ import { useUpdateUserDetailsRequestMutation, useUpdateUserPasswordRequestMutati
 import useCreateErrorFromApiRequest from "@/hooks/useCreateErrorFromApiRequest";
 import { useUserSlice } from "@/slices/user.slice";
 import { setData } from "@/slices/user.slice";
+import { setCookie } from "@/utils/cookie";
 
 import PrimaryInput from "@/components/atom/PrimaryInput";
 import AccountLayout from "@/components/layouts/account.layout";
@@ -64,6 +65,8 @@ const Settings = () => {
 
 	useEffect(() => {
 		if (!userPassword) return;
+		// Changing the password logs out every session; keep this one signed in with the new token
+		if (userPassword.token) setCookie("access_token", userPassword.token, 30);
 		toast.success("User password successfully changed", { autoClose: 1500 });
 
 		setTimeout(() => {

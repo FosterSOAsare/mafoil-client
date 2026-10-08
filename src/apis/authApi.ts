@@ -56,11 +56,6 @@ const authApi = createApi({
         }
       },
     }),
-    changePassword: builder.mutation({
-      query: () => ({
-        url: '/changePassword'
-      })
-    }),
     requestPasswordResetRequest: builder.mutation({
       query: (email) => ({
         method: 'POST',
@@ -69,10 +64,10 @@ const authApi = createApi({
       })
     }),
     confirmPasswordResetRequest: builder.mutation({
-      query: ({ code, newPassword, email }) => ({
+      query: ({ token, newPassword, email }) => ({
         method: 'POST',
         url: '/confirmReset',
-        body: { code, newPassword, email }
+        body: { token, newPassword, email }
       })
     }),
 

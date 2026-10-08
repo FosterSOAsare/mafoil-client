@@ -19,18 +19,15 @@ const login = () => {
 	const [requestPasswordResetRequest, { data, isLoading, error }] = useRequestPasswordResetRequestMutation();
 
 	const { isReady, query, push } = useRouter();
-	const [details, setDetails] = useState({ code: "", email: "" });
+	const [details, setDetails] = useState({ token: "", email: "" });
 	useEffect(() => {
-		if (!isReady || !query) return;
-		let queryCode = query?.code as string,
-			email = query?.email as string;
-
-		if (!queryCode || !email) {
-			// Redirect to /login page
-			push("/auth/resetpassword");
-		}
-		setDetails({ code: queryCode, email });
-	}, [isReady]);
+		if (!isReady || query?.step !== "new") return;
+		// The verify page stores the single-use reset token in sessionStorage (never in the URL)
+		try {
+			const saved = JSON.parse(sessionStorage.getItem("passwordReset") || "null");
+			if (saved?.token && saved?.email) setDetails({ token: saved.token, email: saved.email });
+		} catch {}
+	}, [isReady, query?.step]);
 
 	// Create error message from api
 	useCreateErrorFromApiRequest(error);
@@ -53,7 +50,7 @@ const login = () => {
 			<main className="w-full py-12 md:h-screen px-4 flex items-center justify-center flex-col">
 				<h1 className="font-medium font-playfair text-5xl mb-16">ACCOUNT</h1>
 				<div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start justify-center gap-16">
-					{!details?.code && (
+					{!details?.token && (
 						<form action="" className="w-full  h-auto flex flex-col items-start justify-center" onSubmit={handleSubmit(resetPassword)}>
 							<h3 className="w-full text-2xl font-playfair mb-2  font-semibold ">Reset your password</h3>
 							<p className="opacity-80 mb-4 text-sm">We will send you an email to reset your password.</p>
@@ -67,7 +64,7 @@ const login = () => {
 							</div>
 						</form>
 					)}
-					{details?.code && <NewPassword details={details} />}
+					{details?.token && <NewPassword details={details} />}
 					<div className="w-full h-auto">
 						<h3 className="text-2xl font-playfair font-semibold mb-6">New customer?</h3>
 						<p className="text-md opacity-80 text-xl mb-4">Sign up for early Sale access plus tailored new arrivals, trends and promotions. To opt out, click unsubscribe in our emails.</p>

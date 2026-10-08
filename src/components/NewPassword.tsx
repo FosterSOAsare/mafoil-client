@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
@@ -12,9 +11,8 @@ import useCreateErrorFromApiRequest from "@/hooks/useCreateErrorFromApiRequest";
 
 import PrimaryInput from "@/components/atom/PrimaryInput";
 import PrimaryButton from "@/components/atom/PrimaryButton";
-import { sendStatusCode } from "next/dist/server/api-utils";
 
-const NewPassword = ({ details }: { details: { code: string; email: string } }) => {
+const NewPassword = ({ details }: { details: { token: string; email: string } }) => {
 	const { register, handleSubmit } = useSelectedValuesFromHookForm(resetPasswordSchema);
 	const [confirmPasswordResetRequest, { data, isLoading, error }] = useConfirmPasswordResetRequestMutation();
 	const { replace } = useRouter();
@@ -34,6 +32,10 @@ const NewPassword = ({ details }: { details: { code: string; email: string } }) 
 	useEffect(() => {
 		if (!data) return;
 		toast.success("Password was successfully reset. Proceeding to login", { autoClose: 1500 });
+		// The reset token is single-use; remove it
+		try {
+			sessionStorage.removeItem("passwordReset");
+		} catch {}
 		setTimeout(() => {
 			replace(`/auth/login`);
 		}, 1500);

@@ -50,9 +50,16 @@ const verifiy = () => {
 
 	useEffect(() => {
 		if (!verifyEmailData) return;
-		toast.success(`Email verification was successful. ${verifyEmailData?.code ? "Continuing to creating new password" : "Redirecting to login"}`, { autoClose: 1500 });
+		const resetToken = verifyEmailData?.token;
+		toast.success(`Email verification was successful. ${resetToken ? "Continuing to creating new password" : "Redirecting to login"}`, { autoClose: 1500 });
+		if (resetToken) {
+			// Kept in sessionStorage (this tab only) rather than the URL
+			try {
+				sessionStorage.setItem("passwordReset", JSON.stringify({ email, token: resetToken }));
+			} catch {}
+		}
 		setTimeout(() => {
-			replace(`${verifyEmailData?.code ? `/auth/resetpassword?email=${email}&code=${verifyEmailData?.code}` : "/auth/login"}`);
+			replace(resetToken ? "/auth/resetpassword?step=new" : "/auth/login");
 		}, 1500);
 	}, [verifyEmailData]);
 
