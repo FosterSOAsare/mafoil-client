@@ -2,7 +2,7 @@
 
 Frontend for **Mafo.il**, an e-commerce store with a built-in wallet. Shoppers browse products, manage a cart and wishlist, deposit funds through Stripe, check out with their wallet balance and track their orders. Admins manage products, moderate reviews and review all orders and transactions.
 
-The app is built with **Next.js 16 using the Pages Router** and talks to the Express API in [`../server`](../server/README.md).
+The app is built with **Next.js 16 using the Pages Router** and talks to the Express API in a separate repository: [FosterSOAsare/mafoil-server](https://github.com/FosterSOAsare/mafoil-server).
 
 ---
 
@@ -43,19 +43,22 @@ The app is built with **Next.js 16 using the Pages Router** and talks to the Exp
 ## Requirements
 
 - **Node.js 24** — pinned in `.nvmrc` and `package.json` `engines` (run `nvm use` in this folder). Next.js 16 needs at least 20.9.
-- The [server](../server/README.md) running locally on port `8000` for development
+- The [API server](https://github.com/FosterSOAsare/mafoil-server) running locally on port `8000` for development
 
 ## Getting started
 
 ```bash
-# 1. Start the API (in another terminal)
-cd server
+# 1. Start the API (in another terminal) — see its README for the .env setup
+git clone https://github.com/FosterSOAsare/mafoil-server.git
+cd mafoil-server
 npm install
 npm run dev               # http://localhost:8000
 
 # 2. Start the client
-cd client
+git clone https://github.com/FosterSOAsare/mafoil-client.git
+cd mafoil-client
 npm install
+cp .env.example .env
 npm run dev               # http://localhost:3000
 ```
 
@@ -69,29 +72,28 @@ Copy `.env.example` to `client/.env` and fill it in:
 
 | Variable              | Description |
 | --------------------- | ----------- |
-| `API_URL`             | Backend that `/api/*` is proxied to, without `/api` — e.g. `http://localhost:8000` (the default) or `https://mafoil-server-2575.onrender.com` in production. Server-side only; read at **build time**. |
-| `NEXT_PUBLIC_API_URL` | Base URL of the API, e.g. `http://localhost:8000`. Exposed to the browser. |
+| `NEXT_PUBLIC_API_URL` | Base URL of the API server, without `/api` — `http://localhost:8000` (the default) locally, `https://mafoil-server-2575.onrender.com` in production. Exposed to the browser and fixed at **build time**. |
 
 Only variables prefixed with `NEXT_PUBLIC_` are available in the browser, so never put secrets in this file.
 
-> Requests are routed by `API_URL` (see below), not by `NEXT_PUBLIC_API_URL`. Currently the variable is only attached as a `domain` request header in `src/utils/cookie.ts`.
-
 ## How the client reaches the API
 
-Every RTK Query API uses a relative base URL such as `/api/products`. Requests go to the Next.js origin and are forwarded to the server by a single rewrite in [`next.config.js`](next.config.js):
+The browser calls the API server directly — there is no proxy or rewrite. Every RTK Query API is created with the shared base query in [`src/libs/baseQuery.ts`](src/libs/baseQuery.ts):
 
-```
-/api/:path*  →  ${API_URL}/api/:path*
+```ts
+baseQuery: createBaseQuery("/products")   // → ${NEXT_PUBLIC_API_URL}/api/products
 ```
 
-| Environment | `API_URL` |
-| ----------- | --------- |
+`createBaseQuery` builds the absolute URL from `NEXT_PUBLIC_API_URL` and attaches the auth header, so the API address is configured in one place.
+
+| Environment | `NEXT_PUBLIC_API_URL` |
+| ----------- | --------------------- |
 | Local dev   | `http://localhost:8000` (default when unset) |
 | Vercel      | `https://mafoil-server-2575.onrender.com` |
 
-Because the browser only ever talks to its own origin, there are no CORS issues. To point the client at a different backend, change `API_URL` and rebuild — the rewrite is fixed at build time, so changing the variable on Vercel needs a redeploy.
+Because requests are cross-origin, the server's CORS settings must allow the site's origin. In development the server allows every origin; in production it allows `https://mafoil.vercel.app` (see [`src/app.js`](https://github.com/FosterSOAsare/mafoil-server/blob/master/src/app.js) in the server repo). The variable is inlined at build time, so changing it on Vercel needs a redeploy.
 
-> Note: `src/pages/api/hello.ts` is shadowed by the `/api/*` rewrite in practice and is not used by the app.
+To add a new API, create a file in `src/apis` and pass `createBaseQuery("/<resource>")` as its `baseQuery`.
 
 ## npm scripts
 
@@ -124,14 +126,14 @@ client/
 │   │   └── ProtectedRoute.tsx   # Redirects based on login state
 │   ├── hooks/                # Reusable hooks (checkout, logout, image upload, debounce, …)
 │   ├── libs/
-│   │   ├── axios.ts          # Axios instance with baseURL "/api"
+│   │   ├── baseQuery.ts      # Shared RTK Query base query (API URL + auth header)
 │   │   └── hookform.ts       # zod schemas for every form
 │   ├── data/                 # Static content: FAQ, testimonials, filters, admin nav
 │   ├── types/                # Shared TypeScript types
 │   ├── utils/                # Cookies, image compression, dates, Swiper helpers
 │   ├── assets/               # Product images imported by static data
 │   └── styles/globals.css    # Tailwind import, theme tokens and custom CSS
-├── next.config.js            # API rewrite (uses API_URL), allowed image hosts
+├── next.config.js            # Allowed remote image hosts
 ├── .env.example              # Template for client/.env
 ├── postcss.config.js         # Tailwind CSS 4 PostCSS plugin
 └── tsconfig.json             # "@/*" → "./src/*" path alias
@@ -169,7 +171,7 @@ User and admin restrictions on the client only control what is shown. The server
 ## State management and data fetching
 
 - **Store:** [`src/store.ts`](src/store.ts) combines four slices (`user`, `cart`, `wishlist`, `notifications`) with twelve RTK Query APIs from [`src/apis`](src/apis).
-- **API slices:** each file in `src/apis` targets one server resource (`authApi` → `/api/auth`, `productsApi` → `/api/products`, …). They all use `createAuthorizationHeader` to attach the user's token.
+- **API slices:** each file in `src/apis` targets one server resource (`authApi` → `/api/auth`, `productsApi` → `/api/products`, …). They all use `createBaseQuery` from `src/libs/baseQuery.ts`, which sets the base URL and attaches the user's token with `createAuthorizationHeader`.
 - **Startup:** [`InitialDispatch.tsx`](src/components/InitialDispatch.tsx) fetches the logged-in user and, if cookies are accepted, the cart, wishlist and notifications.
 - **Syncing:** cart and wishlist changes are kept in Redux and uploaded to the server after 3 seconds of inactivity (debounced).
 - **Forms:** every form uses a zod schema from [`src/libs/hookform.ts`](src/libs/hookform.ts) through `useSelectedValuesFromHookForm`. API errors are shown as toasts by `useCreateErrorFromApiRequest`.
@@ -219,7 +221,7 @@ Add an entry to `images.remotePatterns` to allow another host. Images are compre
 The client is deployed on **Vercel**:
 
 1. Import the `client` folder as a Vercel project (framework preset: Next.js).
-2. Set `API_URL=https://mafoil-server-2575.onrender.com` (and `NEXT_PUBLIC_API_URL`) in the project's environment variables, then redeploy.
+2. Set `NEXT_PUBLIC_API_URL=https://mafoil-server-2575.onrender.com` in the project's environment variables, then redeploy.
 3. Make sure the server's CORS allow-list and `CLIENT_URL` match the Vercel domain.
 4. Set the Node.js version to **24.x** in the project settings.
 
@@ -231,7 +233,8 @@ The client is deployed on **Vercel**:
 
 | Problem | Fix |
 | ------- | --- |
-| API calls return 404 or `ECONNREFUSED` in development | Start the server on port 8000, or update the rewrite in `next.config.js`. |
+| API calls fail with `ERR_CONNECTION_REFUSED` in development | Start the server on port 8000, or set `NEXT_PUBLIC_API_URL` to where it runs. |
+| API calls fail with a CORS error | Add the site's origin to the CORS allow-list in the server's [`src/app.js`](https://github.com/FosterSOAsare/mafoil-server/blob/master/src/app.js) (production only). |
 | `Cannot find module '@/assets/…webp'` from `tsc` | Run `npm run dev` or `npm run build` once to generate `next-env.d.ts`. |
 | Remote image fails with "hostname is not configured" | Add the host to `images.remotePatterns` in `next.config.js`. |
 | Login says cookies must be allowed | Accept the cookie banner; the choice is stored in localStorage. |
