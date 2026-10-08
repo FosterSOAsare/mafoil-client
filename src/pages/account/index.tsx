@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { setData, useUserSlice } from "@/slices/user.slice";
+import { useUserSlice } from "@/slices/user.slice";
 
 import AccountLayout from "@/components/layouts/account.layout";
-import { useLazyActivateUserAccountRequestQuery } from "@/apis/userApi";
+import userApi, { useLazyActivateUserAccountRequestQuery } from "@/apis/userApi";
 
 const index = () => {
 	const { user } = useSelector(useUserSlice);
@@ -18,10 +18,8 @@ const index = () => {
 	useEffect(() => {
 		if (!data) return;
 		toast.success("Account has been successfully activated", { autoClose: 1500 });
-
-		setTimeout(() => {
-			dispatch(setData({ accountVerified: true, balance: user?.balance - 40 }));
-		}, 2000);
+		// Refetch the user so the balance and activation status come from the server
+		dispatch(userApi.util.invalidateTags(["User"]));
 	}, [data]);
 
 	useEffect(() => {
@@ -41,7 +39,7 @@ const index = () => {
 					<div className="mt-6 w-full md:w-3/4 bg-slate-200 p-4">
 						<h3 className="text-red-500 mb-4">Your account hasn't been activated</h3>
 						<p>
-							To unlock full access to the website's features and functionalities, a $40 deposit is necessary. Please refer to our {""}
+							To place orders, activate your account with a one-time GH₵40 fee, paid from your wallet balance. Please refer to our {""}
 							<Link href="/faq" className="text-brown underline hover:no-underline">
 								FAQ page
 							</Link>{" "}
@@ -65,7 +63,7 @@ const index = () => {
 							<Link href="/faq" className="text-brown underline hover:no-underline">
 								FAQ page
 							</Link>{" "}
-							to discover the full range of actions available on this web application.for additional information.
+							to discover the full range of actions available on this web application.
 						</p>
 					</div>
 				)}

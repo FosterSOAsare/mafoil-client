@@ -20,7 +20,7 @@ const Withdraw = ({ closeModal }: { closeModal: React.Dispatch<React.SetStateAct
 
 	useEffect(() => {
 		if (!data) return;
-		toast.success("Withdrawal request completed", { autoClose: 1500 });
+		toast.success("Withdrawal request received. It will be processed once approved.", { autoClose: 3000 });
 
 		setTimeout(() => {
 			reset();

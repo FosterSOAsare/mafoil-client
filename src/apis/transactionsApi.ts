@@ -11,12 +11,16 @@ const transactionApi = createApi({
     adminFetchTransactions: builder.query<string, any>({
       query: (sort) => `/admin?filter=${sort}`
     }),
-    getATransactionRequest: builder.query<string, any>({
+    getATransactionRequest: builder.query<any, any>({
       query: (id) => `/${id}`
+    }),
+    // Admin decision on a pending withdrawal
+    decideWithdrawalRequest: builder.mutation<{ success: boolean; status: string }, { id: string; decision: "approve" | "reject" }>({
+      query: ({ id, decision }) => ({ url: `/${id}/${decision}`, method: 'PUT' })
     }),
   })
 
 })
 
-export const { useLazyFetchTransactionsQuery, useLazyAdminFetchTransactionsQuery, useLazyGetATransactionRequestQuery } = transactionApi
+export const { useLazyFetchTransactionsQuery, useLazyAdminFetchTransactionsQuery, useLazyGetATransactionRequestQuery, useDecideWithdrawalRequestMutation } = transactionApi
 export default transactionApi
