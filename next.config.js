@@ -1,10 +1,13 @@
+// Backend that /api/* requests are proxied to. Read at build time, so set API_URL before `next build`.
+const API_URL = (process.env.API_URL || "http://localhost:8000").replace(/\/+$/, "");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	async rewrites() {
 		return [
 			{
 				source: "/api/:path*",
-				destination: "http://localhost:8000/api/:path*", // Replace with your backend API URL
+				destination: `${API_URL}/api/:path*`,
 			},
 		];
 	},

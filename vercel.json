@@ -1,8 +1,0 @@
-{
-	"rewrites": [
-		{
-			"source": "/api/:path*",
-			"destination": "https://mafoil-server.onrender.com/api/:path*"
-		}
-	]
-}

@@ -65,26 +65,31 @@ The first `npm run dev` or `npm run build` generates `next-env.d.ts`, which decl
 
 ## Environment variables
 
-Create `client/.env` (see `env.example`):
+Copy `.env.example` to `client/.env` and fill it in:
 
 | Variable              | Description |
 | --------------------- | ----------- |
+| `API_URL`             | Backend that `/api/*` is proxied to, without `/api` — e.g. `http://localhost:8000` (the default) or `https://mafoil-server-2575.onrender.com` in production. Server-side only; read at **build time**. |
 | `NEXT_PUBLIC_API_URL` | Base URL of the API, e.g. `http://localhost:8000`. Exposed to the browser. |
 
 Only variables prefixed with `NEXT_PUBLIC_` are available in the browser, so never put secrets in this file.
 
-> The API target used for requests is configured by the rewrites below, not by `NEXT_PUBLIC_API_URL`. Currently the variable is only attached as a `domain` request header in `src/utils/cookie.ts`.
+> Requests are routed by `API_URL` (see below), not by `NEXT_PUBLIC_API_URL`. Currently the variable is only attached as a `domain` request header in `src/utils/cookie.ts`.
 
 ## How the client reaches the API
 
-Every RTK Query API uses a relative base URL such as `/api/products`. Requests go to the Next.js origin and are forwarded to the server by rewrites:
+Every RTK Query API uses a relative base URL such as `/api/products`. Requests go to the Next.js origin and are forwarded to the server by a single rewrite in [`next.config.js`](next.config.js):
 
-| Environment      | Config file                        | `/api/:path*` is forwarded to |
-| ---------------- | ---------------------------------- | ----------------------------- |
-| Local dev        | [`next.config.js`](next.config.js) | `http://localhost:8000/api/:path*` |
-| Vercel           | [`vercel.json`](vercel.json)       | `https://mafoil-server.onrender.com/api/:path*` |
+```
+/api/:path*  →  ${API_URL}/api/:path*
+```
 
-Because the browser only ever talks to its own origin, there are no CORS issues in development. To point the client at a different backend, update the destination in the matching file.
+| Environment | `API_URL` |
+| ----------- | --------- |
+| Local dev   | `http://localhost:8000` (default when unset) |
+| Vercel      | `https://mafoil-server-2575.onrender.com` |
+
+Because the browser only ever talks to its own origin, there are no CORS issues. To point the client at a different backend, change `API_URL` and rebuild — the rewrite is fixed at build time, so changing the variable on Vercel needs a redeploy.
 
 > Note: `src/pages/api/hello.ts` is shadowed by the `/api/*` rewrite in practice and is not used by the app.
 
@@ -126,8 +131,8 @@ client/
 │   ├── utils/                # Cookies, image compression, dates, Swiper helpers
 │   ├── assets/               # Product images imported by static data
 │   └── styles/globals.css    # Tailwind import, theme tokens and custom CSS
-├── next.config.js            # API rewrite for development, allowed image hosts
-├── vercel.json               # API rewrite for production
+├── next.config.js            # API rewrite (uses API_URL), allowed image hosts
+├── .env.example              # Template for client/.env
 ├── postcss.config.js         # Tailwind CSS 4 PostCSS plugin
 └── tsconfig.json             # "@/*" → "./src/*" path alias
 ```
@@ -214,8 +219,8 @@ Add an entry to `images.remotePatterns` to allow another host. Images are compre
 The client is deployed on **Vercel**:
 
 1. Import the `client` folder as a Vercel project (framework preset: Next.js).
-2. Set `NEXT_PUBLIC_API_URL` in the project's environment variables.
-3. Make sure `vercel.json` points at the deployed API, and that the API's CORS allow-list and `CLIENT_URL` match the Vercel domain.
+2. Set `API_URL=https://mafoil-server-2575.onrender.com` (and `NEXT_PUBLIC_API_URL`) in the project's environment variables, then redeploy.
+3. Make sure the server's CORS allow-list and `CLIENT_URL` match the Vercel domain.
 4. Set the Node.js version to **24.x** in the project settings.
 
 ### CI
