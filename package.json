@@ -15,7 +15,6 @@
     "@types/node": "20.5.9",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "axios": "^1.5.0",
     "client": "file:",
     "compressorjs": "^1.2.1",
     "next": "^16.4.0",
