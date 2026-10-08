@@ -23,7 +23,7 @@ const ReviewCard = ({ rating, name, createdAt, comment, title, _id }: any) => {
 		}, 2000);
 	}, [data]);
 	return (
-		<div className="w-full border-[1px] mb-6 min-h-36 p-6">
+		<div className="w-full border mb-6 min-h-36 p-6">
 			<div className="w-full flex gap-2">
 				<Ratings rating={rating} />
 				<p className="text-slate-400 text-sm">

@@ -119,7 +119,7 @@ const InitialDispatch = ({ children }: { children: ReactNode }) => {
 			{showCookies && <Cookies setShowCookies={setShowCookies} />}
 
 			<button
-				className={`w-10 h-10 bg-black flex items-center justify-center fixed transition-all duration-300 ${showScroll ? "scale-100" : "scale-0"} bottom-8 right-4 z-[4] text-white`}
+				className={`w-10 h-10 bg-black flex items-center justify-center fixed transition-all duration-300 ${showScroll ? "scale-100" : "scale-0"} bottom-8 right-4 z-4 text-white`}
 				onClick={() => {
 					window.scrollTo(0, 0);
 				}}>

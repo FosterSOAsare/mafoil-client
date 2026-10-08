@@ -57,20 +57,20 @@ const ProductCard = ({ product, setPreviewProduct, sx = "" }: { product: product
 								addingToCart ? "bg-black" : "bg-white"
 							} transition-all duration-300 delay-100 hover:bg-brown hover:text-white text-black flex items-center justify-center`}>
 							{!addingToCart && <AiOutlineShoppingCart className="group-hover:opacity-100 group-hover:text-white text-xl" />}
-							{addingToCart && <Loading1 sx="!w-5 !h-5" />}
+							{addingToCart && <Loading1 sx="w-5! h-5!" />}
 						</button>
 					</aside>
 					<aside
 						className={`absolute ${
-							showContent ? "bottom-4" : "-bottom-[20%]"
+							showContent ? "bottom-4" : "bottom-[-20%]"
 						} transition-all duration-300 w-[93%] left-0 gap-4 right-0 mx-auto flex items-center justify-center h-16 md:h-12`}>
 						<Link href={`/products/${slugname}`} className="bg-[white] flex items-center justify-center  text-black relative w-2/3 md:w-1/2 group h-full overflow-hidden">
-							<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
-							<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">View Product</p>
+							<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-1 -left-full"></span>
+							<p className="relative z-2 transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">View Product</p>
 						</Link>
 						<button className="bg-[white] hidden lg:block text-black relative w-1/2 group h-full overflow-hidden" onClick={() => setPreviewProduct(product)}>
-							<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
-							<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Quickview</p>
+							<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-1 -left-full"></span>
+							<p className="relative z-2 transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Quickview</p>
 						</button>
 					</aside>
 				</div>

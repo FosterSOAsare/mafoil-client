@@ -58,7 +58,7 @@ const Cart = () => {
 				<section id="products" className="px-4 md:px-10 md:py-4 h-auto mt-8 w-full gap-6 justify-between">
 					{cart?.length > 0 && (
 						<article className="w-full flex  flex-col items-center max-w-5xl mx-auto justify-center">
-							<div className="w-full font-medium h-auto pb-3 flex items-center justify-between border-b-[1px]">
+							<div className="w-full font-medium h-auto pb-3 flex items-center justify-between border-b">
 								<p className="w-1/3 md:w-1/3">PRODUCT</p>
 								<p className="w-1/4 md:w-1/5 text-center">QUANTITY</p>
 
@@ -67,7 +67,7 @@ const Cart = () => {
 							{cart?.map((product: cartItemType, index: number) => {
 								const { count, ...rest } = product;
 								return (
-									<div key={index} className="w-full h-auto py-8 flex items-center justify-between border-b-[1px]">
+									<div key={index} className="w-full h-auto py-8 flex items-center justify-between border-b">
 										<div className="w-1/3 md:w-1/3 h-full flex items-center gap-2 md:gap-4">
 											<div className="w-28 md:block hidden h-20 relative">
 												<Image src={product?.images[0]?.url} alt="product Image" fill />
@@ -78,7 +78,7 @@ const Cart = () => {
 											</div>
 										</div>
 										<div className="w-1/4 md:w-1/5 flex flex-col items-center justify-center">
-											<div className="w-24 mx-auto h-8 border-[1px] px-2">
+											<div className="w-24 mx-auto h-8 border px-2">
 												<CartItemNumberModerator itemCount={count} product={rest} />
 											</div>
 											<button className="text-[12px] underline hover:no-underline hover:text-[red] uppercase mt-2" onClick={() => dispatch(removeItem({ _id: product?._id }))}>
@@ -124,10 +124,10 @@ const Cart = () => {
 										<div
 											className={`w-full h-full bg-brown absolute transition-all flex items-center justify-center duration-300 top-0 ${
 												agreeToTerms && "group-hover:left-0"
-											} z-[1] ${isLoading ? "left-0" : "-left-[100%]"}`}>
+											} z-1 ${isLoading ? "left-0" : "-left-full"}`}>
 											{isLoading && <Loading1 />}
 										</div>
-										{!isLoading && <p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Checkout</p>}
+										{!isLoading && <p className="relative z-2 transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Checkout</p>}
 									</button>
 								</div>
 								<ToastContainer />

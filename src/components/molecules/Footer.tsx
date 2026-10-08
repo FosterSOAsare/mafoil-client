@@ -88,16 +88,16 @@ const Footer = () => {
 					{!user?.subscribed && (
 						<>
 							<form action="" onSubmit={registerNewsLetter} className="w-full">
-								<div className="w-full h-auto mt-6 border-b-[2px] border-black gap-4 flex items-center justify-between">
+								<div className="w-full h-auto mt-6 border-b-2 border-black gap-4 flex items-center justify-between">
 									<input type="text" value={email} className="w-full h-full  bg-transparent focus:outline-0" placeholder="Your email" onChange={(e) => setEmail(e.target.value)} />
 									<FiMail />
 								</div>
-								<PrimaryButton text="Register" sx="!mt-3" type="submit" disabled={isLoading} />
+								<PrimaryButton text="Register" sx="mt-3!" type="submit" disabled={isLoading} />
 							</form>
 						</>
 					)}
 
-					{user?.subscribed && <div className="w-full h-8 mt-6 border-b-[2px] bg-[#D4EDDA] text-[#155724] p-4 py-6 gap-4 flex items-center justify-between">Thanks for subscribing</div>}
+					{user?.subscribed && <div className="w-full h-8 mt-6 border-b-2 bg-[#D4EDDA] text-[#155724] p-4 py-6 gap-4 flex items-center justify-between">Thanks for subscribing</div>}
 				</div>
 			</div>
 			<p className="text-sm">© {new Date().getFullYear()} - Shopify By Scholar </p>

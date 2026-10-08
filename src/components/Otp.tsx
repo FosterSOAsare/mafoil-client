@@ -15,7 +15,7 @@ const Otp = ({ handleChange, code }: OtpState) => {
 				{[1, 2, 3, 4, 5, 6].map((field, index) => (
 					<div
 						key={index}
-						className={`w-12 relative flex items-center justify-center h-12 rounded-[5px] border-[2px] ${
+						className={`w-12 relative flex items-center justify-center h-12 rounded-[5px] border-2 ${
 							index < innerCode.length ? "border-sec" : "border-desc"
 						} flex items-end justify-center text-sec text-3xl font-bold`}>
 						{innerCode.substring(index, index + 1)}

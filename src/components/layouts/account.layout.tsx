@@ -38,7 +38,7 @@ const AccountLayout = ({ children, title }: { children: ReactNode; title: string
 							key={index}
 							className={`w-full ${
 								pathname === `/account${link?.link}` ? "bg-brown text-white" : index !== accountLinks.length - 1 ? "border-black" : "text-black bg-transparent hover:text-brown"
-							} p-3 border-b-[1px]`}>
+							} p-3 border-b`}>
 							{link?.name}
 						</Link>
 					))}

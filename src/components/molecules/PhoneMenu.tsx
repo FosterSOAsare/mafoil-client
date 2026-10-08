@@ -67,8 +67,8 @@ const PhoneMenu = ({ setShowMenu }: { setShowMenu: React.Dispatch<React.SetState
 	const logout = useLogoutUser();
 
 	return (
-		<aside className="w-full h-screen flex flex-col  overflow-y-auto bg-white fixed top-0 left-0 p-4 md:hidden z-[10]">
-			<div className="flex items-center sticky bg-white top-0 left-0 z-[10]">
+		<aside className="w-full h-screen flex flex-col  overflow-y-auto bg-white fixed top-0 left-0 p-4 md:hidden z-10">
+			<div className="flex items-center sticky bg-white top-0 left-0 z-10">
 				<Link href="/" className="lg:hidden font-playfair text-3xl font-medium">
 					Mafo.il
 				</Link>

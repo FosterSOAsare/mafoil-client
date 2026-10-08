@@ -40,7 +40,7 @@ const RecentViews = ({ setPreviewProduct, product }: { setPreviewProduct: any; p
 					<article className="w-full flex flex-col items-center justify-center pb-12">
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full h-auto">
 							{recentlyViewed.map((product, index) => {
-								return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} sx="!h-[300px]" />;
+								return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} sx="h-[300px]!" />;
 							})}
 						</div>
 					</article>

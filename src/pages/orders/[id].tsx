@@ -68,7 +68,7 @@ const OrderPage = () => {
 							<h3 className="text-3xl font-bold mb-7">ORDERED ITEMS</h3>
 							<article className="w-full flex flex-col items-center max-w-5xl mx-auto justify-center">
 								<div className="w-full overflow-x-auto">
-									<div className="w-[150%] md:w-full font-medium h-auto pb-3 flex items-center justify-between border-b-[1px]">
+									<div className="w-[150%] md:w-full font-medium h-auto pb-3 flex items-center justify-between border-b">
 										<p className="w-[50%]">PRODUCT</p>
 										<p className="w-[25%] text-center">QUANTITY</p>
 										<p className="w-[25%] text-center">PRICE</p>
@@ -82,7 +82,7 @@ const OrderPage = () => {
 									{data?.cart?.map((product: any, index: number) => {
 										const { count, price, totalItemsProfit, profitPercent } = product;
 										return (
-											<div key={index} className="w-[150%]  md:w-full h-auto py-8 flex items-center justify-between border-b-[1px]">
+											<div key={index} className="w-[150%]  md:w-full h-auto py-8 flex items-center justify-between border-b">
 												<div className="w-[50%] h-full flex items-center gap-4">
 													<div className="w-28 h-20 relative">
 														<Image src={product?.image?.url} alt="product Image" fill />
@@ -133,15 +133,15 @@ const OrderPage = () => {
 													// Implement cancel order
 													cancelOrder(query?.id);
 												}}
-												className={`mt-4 !w-[180px] flex items-center justify-center bg-black text-white relative group h-12 overflow-hidden`}>
+												className={`mt-4 w-[180px]! flex items-center justify-center bg-black text-white relative group h-12 overflow-hidden`}>
 												<div
-													className={`w-full h-full bg-brown absolute flex items-center justify-center transition-all duration-300 top-0 group-hover:-left-0 z-[1] ${
-														cancelOrderLoading ? "left-0" : "-left-[100%]"
+													className={`w-full h-full bg-brown absolute flex items-center justify-center transition-all duration-300 top-0 group-hover:left-0 z-1 ${
+														cancelOrderLoading ? "left-0" : "-left-full"
 													}`}>
 													{cancelOrderLoading && <Loading1 />}
 												</div>
 												{!cancelOrderLoading && (
-													<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Cancel Order</p>
+													<p className="relative z-2 transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Cancel Order</p>
 												)}
 											</button>
 										</div>

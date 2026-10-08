@@ -50,10 +50,10 @@ const contact = () => {
 
 						<div className="flex flex-col md:flex-row justify-between w-full md:gap-4">
 							<PrimaryInput name="email" placeholder="username@email.com" register={register} label="Email" />
-							<PrimaryInput name="ticket" placeholder="" register={register} label="Ticket ID(optional)" labelsx="!text-slate-500" />
+							<PrimaryInput name="ticket" placeholder="" register={register} label="Ticket ID(optional)" labelsx="text-slate-500!" />
 						</div>
 
-						<PrimaryTextArea name="message" placeholder="Enter your message" label="Contact Msg" register={register} sx="!h-64" />
+						<PrimaryTextArea name="message" placeholder="Enter your message" label="Contact Msg" register={register} sx="h-64!" />
 
 						<PrimaryButton text="Send Contact" type="submit" sx="mt-4 max-w-[400px] h-16 md:h-20" disabled={isLoading} />
 					</form>

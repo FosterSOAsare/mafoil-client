@@ -48,9 +48,9 @@ export default function Home() {
 							<h1 className="text-2xl md:text-5xl text-right font-medium md:leading-[65px]">TRENDING OUTFITS</h1>
 							<Link
 								href="/products"
-								className="bg-brown flex items-center justify-center text-white relative mt-4 md:mt-8 w-full hover:border-white border-brown h-12 md:h-20 lg:h-16 group border-[1px] overflow-hidden">
-								<span className="w-full h-full bg-white absolute transition-all duration-200 top-0 group-hover:right-0 z-[1] -right-[100%]"></span>
-								<p className="relative z-[2] transition-all duration-75 group-hover:text-black uppercase  font-medium text-sm">Shop Now</p>
+								className="bg-brown flex items-center justify-center text-white relative mt-4 md:mt-8 w-full hover:border-white border-brown h-12 md:h-20 lg:h-16 group border overflow-hidden">
+								<span className="w-full h-full bg-white absolute transition-all duration-200 top-0 group-hover:right-0 z-1 -right-full"></span>
+								<p className="relative z-2 transition-all duration-75 group-hover:text-black uppercase  font-medium text-sm">Shop Now</p>
 							</Link>
 						</div>
 					</div>
@@ -73,7 +73,7 @@ export default function Home() {
 						))}
 					</div>
 
-					<article id="products" className="flex flex-col items-center justify-center w-full border-b-[1px] pb-12 md:pb-36">
+					<article id="products" className="flex flex-col items-center justify-center w-full border-b pb-12 md:pb-36">
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 w-full h-auto">
 							{products?.data.map((product, index) => {
 								return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} />;
@@ -81,12 +81,12 @@ export default function Home() {
 						</div>
 						{products?.nextPage && (
 							<button
-								className="bg-[white]  text-black relative mt-16 md:w-[400px] lg:w-[200px] hover:border-brown border-black h-20 lg:h-16 group border-[1px] overflow-hidden"
+								className="bg-[white]  text-black relative mt-16 md:w-[400px] lg:w-[200px] hover:border-brown border-black h-20 lg:h-16 group border overflow-hidden"
 								disabled={isLoading}
 								onClick={() => setPage((prev) => ++prev)}>
-								<span className="w-full h-full bg-brown absolute transition-all duration-200 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
-								{!isLoading && <p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase  font-medium text-sm">load more</p>}
-								{isLoading && <Loading sx="!w-8 !h-8 mx-auto" />}
+								<span className="w-full h-full bg-brown absolute transition-all duration-200 top-0 group-hover:left-0 z-1 -left-full"></span>
+								{!isLoading && <p className="relative z-2 transition-all duration-75 group-hover:text-white uppercase  font-medium text-sm">load more</p>}
+								{isLoading && <Loading sx="w-8! h-8! mx-auto" />}
 							</button>
 						)}
 					</article>

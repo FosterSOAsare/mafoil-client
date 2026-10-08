@@ -1,75 +1,119 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap')
+layer(base);
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap')
+layer(base);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-* {
-	@apply font-jost;
-}
+@theme {
+  --color-blue: #14009f;
+  --color-sec: #000000;
+  --color-brown: #7f4227;
+  --color-border: #e5e7eb;
 
-html {
-	scroll-behavior: smooth;
-}
+  --font-playfair: 'Playfair Display', serif;
+  --font-jost: 'Jost', serif;
 
-.product-hero {
-	background: url("/product-herobg.webp");
-	background-size: cover;
-	background-repeat: no-repeat;
-}
-.custom-loader1 {
-	@apply w-6 h-6 rounded-full border-[6px] border-[#0000] border-r-[#ffffff97] relative;
-	animation: s4 1s infinite linear;
-}
-.custom-loader {
-	@apply w-12 h-12 rounded-full border-[8px] border-[#0000] border-r-[#00000097] relative;
-	animation: s4 1s infinite linear;
-}
-.custom-loader:before,
-.custom-loader:after,
-.custom-loader1:before,
-.custom-loader1:after {
-	@apply absolute rounded-full;
-	content: "";
-	inset: -6px;
-	border: inherit;
-	animation: inherit;
-	animation-duration: 2s;
-}
-.custom-loader:before,
-.custom-loader:after {
-	inset: -8px;
-}
-.custom-loader:after,
-.custom-loader1:after {
-	animation-duration: 4s;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  --container-6xl: 1024px;
+  --container-7xl: 1224px;
 }
 
-@keyframes s4 {
-	100% {
-		transform: rotate(1turn);
-	}
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  /* Buttons use `cursor: default` in Tailwind CSS v4; keep the v3 pointer cursor. */
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
 }
-@keyframes s2 {
-	to {
-		transform: rotate(1turn);
-	}
+
+@utility active-tab {
+  &:after {
+    content: '';
+    @apply absolute w-0 h-px bg-black -bottom-px left-0;
+    animation: fullWidth 0.35s forwards linear;
+  }
 }
+
+@utility bounce {
+  animation: bounce 2s infinite linear;
+}
+
 @layer utilities {
-	.active-tab:after {
-		content: "";
-		@apply absolute w-0 h-[1px] bg-black -bottom-[1px] left-0;
-		animation: fullWidth 0.35s forwards linear;
-	}
-	.bounce {
-		animation: bounce 2s infinite linear;
-	}
+  * {
+    @apply font-jost;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .product-hero {
+    background: url('/product-herobg.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .custom-loader1 {
+    @apply w-6 h-6 rounded-full border-[6px] border-[#0000] border-r-[#ffffff97] relative;
+    animation: s4 1s infinite linear;
+  }
+  .custom-loader {
+    @apply w-12 h-12 rounded-full border-8 border-[#0000] border-r-[#00000097] relative;
+    animation: s4 1s infinite linear;
+  }
+  .custom-loader:before,
+  .custom-loader:after,
+  .custom-loader1:before,
+  .custom-loader1:after {
+    @apply absolute rounded-full;
+    content: '';
+    inset: -6px;
+    border: inherit;
+    animation: inherit;
+    animation-duration: 2s;
+  }
+  .custom-loader:before,
+  .custom-loader:after {
+    inset: -8px;
+  }
+  .custom-loader:after,
+  .custom-loader1:after {
+    animation-duration: 4s;
+  }
+
+  @keyframes s4 {
+    100% {
+      transform: rotate(1turn);
+    }
+  }
+  @keyframes s2 {
+    to {
+      transform: rotate(1turn);
+    }
+  }
 }
 
 .active-tab:after {
 	content: "";
-	@apply absolute w-0 h-[1px] -bottom-[1px] left-0 bg-brown;
+	@apply absolute w-0 h-px -bottom-px left-0 bg-brown;
 	animation: fullWidth 0.35s forwards linear;
 }
 
@@ -91,17 +135,17 @@ html {
 }
 
 .newProduct label {
-	@apply !font-medium;
+	@apply font-medium!;
 }
 .normallabel label {
-	@apply !font-normal;
+	@apply font-normal!;
 }
 .progress {
 	@apply relative;
 }
 .progress::before {
 	content: "";
-	@apply w-[85px] h-[3px] absolute right-[100%] top-0 bottom-0 my-auto;
+	@apply w-[85px] h-[3px] absolute right-full top-0 bottom-0 my-auto;
 }
 .filled,
 .filled::before {
@@ -113,19 +157,19 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-	@apply !bg-[#7f4227];
+	@apply bg-[#7f4227]!;
 }
 
 @media screen and (min-width: 768px) {
 	::selection {
-		@apply bg-sec !text-white opacity-100;
+		@apply bg-sec text-white! opacity-100;
 	}
 	::-webkit-scrollbar {
 		width: 8px;
 	}
 
 	::-webkit-scrollbar-track {
-		@apply bg-white !w-[1px] md:w-[10px];
+		@apply bg-white w-px! md:w-[10px];
 	}
 
 	::-webkit-scrollbar-thumb {

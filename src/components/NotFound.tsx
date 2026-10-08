@@ -10,7 +10,7 @@ const NotFound = () => {
 			<p className="w-[350px] text-center opacity-60">We're really sorry but we can't seem to find the page you were looking for.</p>
 			<Link
 				href="/"
-				className="flex justify-between items-center hover:bg-transparent gap-2 bg-black border-[2px] font-medium border-black hover:text-black py-4 px-12 tracking-[2px] uppercase text-white mt-6">
+				className="flex justify-between items-center hover:bg-transparent gap-2 bg-black border-2 font-medium border-black hover:text-black py-4 px-12 tracking-[2px] uppercase text-white mt-6">
 				Back To Homepage
 				<BsArrowRight />
 			</Link>

@@ -13,7 +13,7 @@ const SecondaryButton = ({ text, handleClick, href, disabled = false }: secondar
 		<>
 			{!href && (
 				<button
-					className="w-full h-12 border-black border-[1px] mb-4 text-black hover:bg-black hover:text-white"
+					className="w-full h-12 border-black border mb-4 text-black hover:bg-black hover:text-white"
 					onClick={() => {
 						if (handleClick) handleClick();
 					}}
@@ -23,7 +23,7 @@ const SecondaryButton = ({ text, handleClick, href, disabled = false }: secondar
 				</button>
 			)}
 			{href && (
-				<Link href={href} className="w-full h-12 flex items-center justify-center hover:bg-black hover:text-white border-black mb-4 border-[1px] text-black">
+				<Link href={href} className="w-full h-12 flex items-center justify-center hover:bg-black hover:text-white border-black mb-4 border text-black">
 					{text}
 				</Link>
 			)}

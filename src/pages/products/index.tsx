@@ -111,18 +111,18 @@ const Products = () => {
 						))}
 					</div>
 					{!isLoading && (
-						<article className="w-full lg:w-4/5 flex flex-col items-center justify-center  border-b-[1px] pb-8 lg:pb-36">
+						<article className="w-full lg:w-4/5 flex flex-col items-center justify-center  border-b pb-8 lg:pb-36">
 							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full h-auto">
 								{products?.data.map((product, index) => {
-									return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} sx="!h-[320px]" />;
+									return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} sx="h-[320px]!" />;
 								})}
 							</div>
 							{products?.nextPage && (
 								<button
-									className="bg-[white] w-full text-black relative mt-16 md:w-[400px] lg:w-[200px] hover:border-brown border-black h-16 group border-[1px] overflow-hidden"
+									className="bg-[white] w-full text-black relative mt-16 md:w-[400px] lg:w-[200px] hover:border-brown border-black h-16 group border overflow-hidden"
 									onClick={() => setPage((prev) => ++prev)}>
-									<span className="w-full h-full bg-brown absolute transition-all duration-200 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
-									<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase  font-medium text-sm">load more</p>
+									<span className="w-full h-full bg-brown absolute transition-all duration-200 top-0 group-hover:left-0 z-1 -left-full"></span>
+									<p className="relative z-2 transition-all duration-75 group-hover:text-white uppercase  font-medium text-sm">load more</p>
 								</button>
 							)}
 						</article>

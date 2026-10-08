@@ -28,8 +28,8 @@ const CartPreview = ({ setShowCart }: { setShowCart: React.Dispatch<React.SetSta
 		});
 	}, [cart]);
 	return (
-		<aside className="w-1/4 bg-white shadow-md  fixed right-0 flex items-center justify-start pb-6 flex-col top-[12.7vh] z-[2] h-[88vh] overflow-y-auto ">
-			<div className="w-full bg-white sticky top-0 left-0 z-[2] shadow-sm">
+		<aside className="w-1/4 bg-white shadow-md  fixed right-0 flex items-center justify-start pb-6 flex-col top-[12.7vh] z-2 h-[88vh] overflow-y-auto ">
+			<div className="w-full bg-white sticky top-0 left-0 z-2 shadow-xs">
 				<button className="w-8 mx-4 my-4 h-8 hover:bg-slate-200 ml-auto flex items-center justify-center" onClick={() => setShowCart(false)}>
 					<AiOutlineClose />
 				</button>
@@ -38,14 +38,14 @@ const CartPreview = ({ setShowCart }: { setShowCart: React.Dispatch<React.SetSta
 
 			{cart?.length > 0 && (
 				<>
-					<div className="w-full h-[50vh] overflow-auto px-2 border-b-[1px] border-black pb-2">
+					<div className="w-full h-[50vh] overflow-auto px-2 border-b border-black pb-2">
 						{cartItems.map((item: productType, index: number) => (
 							<PreviewCartItemCard key={index} product={item} index={index} />
 						))}
 					</div>
 
 					<div className="px-6 w-full h-[38vh]">
-						<div className="w-full pb-2 border-b-[1px] border-dashed">
+						<div className="w-full pb-2 border-b border-dashed">
 							<div className="w-full text-medium mt-4 flex items-center justify-between">
 								<p>SUBTOTAL:</p>
 								<p className="font-bold">GH₵{subtotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
@@ -69,17 +69,17 @@ const CartPreview = ({ setShowCart }: { setShowCart: React.Dispatch<React.SetSta
 								onClick={() => checkOut()}
 								className={`mt-4 w-[150px] flex items-center justify-center bg-black ${!agreeToTerms && "opacity-70"} text-white relative w-full group h-12 overflow-hidden`}>
 								<div
-									className={`w-full h-full bg-brown absolute transition-all flex items-center justify-center duration-300 top-0 ${agreeToTerms && "group-hover:left-0"} z-[1] ${
-										isLoading ? "left-0" : "-left-[100%]"
+									className={`w-full h-full bg-brown absolute transition-all flex items-center justify-center duration-300 top-0 ${agreeToTerms && "group-hover:left-0"} z-1 ${
+										isLoading ? "left-0" : "-left-full"
 									}`}>
 									{isLoading && <Loading1 />}
 								</div>
-								{!isLoading && <p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Checkout</p>}
+								{!isLoading && <p className="relative z-2 transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Checkout</p>}
 							</button>
 
-							<Link href="/cart" className={`mt-4 flex items-center justify-center border-black text-black hover:border-brown border-[1px] relative w-full group h-12 overflow-hidden`}>
-								<span className={`w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-[1] -left-[100%]`}></span>
-								<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">View Cart</p>
+							<Link href="/cart" className={`mt-4 flex items-center justify-center border-black text-black hover:border-brown border relative w-full group h-12 overflow-hidden`}>
+								<span className={`w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-1 -left-full`}></span>
+								<p className="relative z-2 transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">View Cart</p>
 							</Link>
 						</div>
 					</div>

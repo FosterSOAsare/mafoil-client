@@ -14,7 +14,7 @@ const AdminProductCard = ({ images, name, rating, price, slugname }: productType
 	useCheckClickOutsideParent({ parentRef, setShow });
 
 	return (
-		<div className="w-full h-auto py-4 flex items-center justify-between border-b-[1px]">
+		<div className="w-full h-auto py-4 flex items-center justify-between border-b">
 			<div className="w-1/3 h-full flex items-center gap-4">
 				<div className="w-28 h-20 relative">
 					<Image src={images[0]?.url} alt="product Image" fill />
@@ -34,8 +34,8 @@ const AdminProductCard = ({ images, name, rating, price, slugname }: productType
 				</button>
 
 				{show && (
-					<div className="options w-24 flex flex-col absolute z-[3] top-[100%] rounded-[5px] right-[20%] h-auto overflow-hidden border-[1px]">
-						<Link href={`/products/${slugname}/edit`} className="p-2 px-3 hover:bg-blue hover:text-white border-b-[1px] bg-slate-100 shadow-md text-sm">
+					<div className="options w-24 flex flex-col absolute z-3 top-full rounded-[5px] right-[20%] h-auto overflow-hidden border">
+						<Link href={`/products/${slugname}/edit`} className="p-2 px-3 hover:bg-blue hover:text-white border-b bg-slate-100 shadow-md text-sm">
 							{" "}
 							Edit{" "}
 						</Link>

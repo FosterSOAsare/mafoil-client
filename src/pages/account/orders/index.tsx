@@ -36,13 +36,13 @@ const orders = () => {
 
 				{data && !isLoading && data?.length > 0 && (
 					<div className="w-full overflow-x-auto">
-						<div className="w-[150%] md:w-full h-auto flex justify-start mt-6 border-y-[1px] items-stretch gap-4">
-							<p className="w-1/3 text-center py-3 font-bold border-l-[1px]">Status</p>
-							<p className="w-1/3 text-center py-3 font-bold border-l-[1px]">Date</p>
-							<p className="w-1/3 text-center py-3 font-bold border-l-[1px]">Total Price</p>
-							{/* <p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Total Profit</p>
-						<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Average Profit(%)</p> */}
-							<button className="w-12 block border-l-[1px]"></button>
+						<div className="w-[150%] md:w-full h-auto flex justify-start mt-6 border-y items-stretch gap-4">
+							<p className="w-1/3 text-center py-3 font-bold border-l">Status</p>
+							<p className="w-1/3 text-center py-3 font-bold border-l">Date</p>
+							<p className="w-1/3 text-center py-3 font-bold border-l">Total Price</p>
+							{/* <p className="w-1/5 text-center py-3 font-bold border-l">Total Profit</p>
+						<p className="w-1/5 text-center py-3 font-bold border-l">Average Profit(%)</p> */}
+							<button className="w-12 block border-l"></button>
 						</div>
 						<main className="w-[150%] md:w-full h-auto  block">
 							{data.map((order: any, index: number) => (
@@ -58,7 +58,7 @@ const orders = () => {
 				)}
 				{isLoading && (
 					<div className="w-1/2 h-[40vh] flex items-center justify-center">
-						<Loading sx="!h-8 !w-8" />
+						<Loading sx="h-8! w-8!" />
 					</div>
 				)}
 			</div>

@@ -7,7 +7,7 @@ const Cookies = ({ setShowCookies }: { setShowCookies: React.Dispatch<React.SetS
 		setShowCookies(false);
 	};
 	return (
-		<aside className="w-full h-auto md:h-16 shadow-2xl border-t-[1px] flex flex-col md:flex-row md:items-center justify-between p-5 bg-white fixed bottom-0 left-0">
+		<aside className="w-full h-auto md:h-16 shadow-2xl border-t flex flex-col md:flex-row md:items-center justify-between p-5 bg-white fixed bottom-0 left-0">
 			<p className="text-sm">
 				This website uses cookies to ensure you get the best experience on our website.{" "}
 				<Link href="/privacy" className="underline text-brown">

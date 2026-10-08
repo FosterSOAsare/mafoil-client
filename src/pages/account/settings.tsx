@@ -79,12 +79,12 @@ const Settings = () => {
 			<section className="w-full h-auto min-h-[50vh]">
 				<div className="w-full flex gap-6">
 					<button
-						className={`w-1/5 font-bold h-10 border-sec flex items-center justify-center border-b-[4px] ${active === "general" ? "" : "border-transparent"}`}
+						className={`w-1/5 font-bold h-10 border-sec flex items-center justify-center border-b-4 ${active === "general" ? "" : "border-transparent"}`}
 						onClick={() => setActive("general")}>
 						General
 					</button>
 					<button
-						className={`w-1/5 font-bold h-10  flex items-center justify-center border-b-[4px] ${active === "security" ? " border-sec" : "border-transparent"}`}
+						className={`w-1/5 font-bold h-10  flex items-center justify-center border-b-4 ${active === "security" ? " border-sec" : "border-transparent"}`}
 						onClick={() => setActive("security")}>
 						Security
 					</button>{" "}

@@ -12,7 +12,7 @@ const AccountComponent = () => {
 		<aside className="absolute top-[105%] right-[00%] bg-white shadow-md w-[170px] h-auto py-2">
 			{user?._id && (
 				<>
-					<div className="border-b-[1px] pb-2 px-4">
+					<div className="border-b pb-2 px-4">
 						<p className="text-[12px]">
 							Hello{" "}
 							<Link href="/account" className="text-sm text-brown underline">
@@ -41,7 +41,7 @@ const AccountComponent = () => {
 			)}
 			{!user?._id && (
 				<>
-					<p className="text-sm border-b-[1px] pb-2 px-4">Welcome to Mafo.il</p>
+					<p className="text-sm border-b pb-2 px-4">Welcome to Mafo.il</p>
 
 					<Link href="/auth/register" className="block px-4 pt-2 p-[4px] text-sm text-black hover:text-brown">
 						Sign up

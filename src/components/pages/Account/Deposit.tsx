@@ -47,7 +47,7 @@ const Deposit = ({ closeModal }: { closeModal: React.Dispatch<React.SetStateActi
 	}, [sessionData]);
 
 	return (
-		<aside className="w-full h-screen bg-slate-400 bg-opacity-40 fixed top-0 left-0 right-0 bottom-0 m-auto flex items-center justify-center z-[6] p-4">
+		<aside className="w-full h-screen bg-slate-400 bg-opacity-40 fixed top-0 left-0 right-0 bottom-0 m-auto flex items-center justify-center z-6 p-4">
 			<div className="w-full md:w-2/5 h-auto p-6 shadow-md bg-white">
 				<button className="w-8 h-8 ml-auto flex items-center justify-center hover:bg-slate-200 text-red-600" onClick={() => closeModal(false)}>
 					<AiOutlineClose />
@@ -55,7 +55,7 @@ const Deposit = ({ closeModal }: { closeModal: React.Dispatch<React.SetStateActi
 				<h3 className="text-2xl font-medium rounded-[5px">Deposit Funds</h3>
 				{/* <p className="text-red-500 text-[12px] mb-6">Please make sure to deposit only using TRC-20 chain to avoid money loss</p> */}
 
-				{/* <div className="flex justify-center items-center border-[1px] pl-2 rounded-[5px]">
+				{/* <div className="flex justify-center items-center border pl-2 rounded-[5px]">
 					<p className="w-full h-auto">{depositAddress}</p>
 					<button className="w-12 hover:cursor-pointer flex items-center justify-center h-12" onClick={handleCopiedClipboard}>
 						{!copied && <BiCopyAlt className="text-slate-300  hover:text-black text-2xl " />}
@@ -67,9 +67,9 @@ const Deposit = ({ closeModal }: { closeModal: React.Dispatch<React.SetStateActi
 					<label htmlFor="amount" className="mt-4 w-full block">
 						Enter the amount you want to deposit
 					</label>
-					<input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} className="w-full block border-black border-[1px] p-3" id="amount" placeholder="2500.00" />
+					<input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} className="w-full block border-black border p-3" id="amount" placeholder="2500.00" />
 
-					<PrimaryButton text="Deposit" type="submit" sx="!mt-6 !w-1/2" disabled={isLoading} />
+					<PrimaryButton text="Deposit" type="submit" sx="mt-6! w-1/2!" disabled={isLoading} />
 				</form>
 			</div>
 			<ToastContainer />

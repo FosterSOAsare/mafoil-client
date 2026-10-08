@@ -19,8 +19,8 @@ const PrimaryTextArea = ({ name, label, placeholder, register, sx = "", labelsx 
 					{label}
 				</label>
 			)}
-			<div className={`w-full h-auto overflow-hidden flex items-center py-[2px] mb-4 px-2 pl-3 justify-between border-[1px] border-[#000000c2] ${divsx}`}>
-				<textarea id={name} className={`w-full py-[2px] h-24 resize-none focus:outline-none  text-black ${sx}`} placeholder={placeholder || ""} {...register(name)}></textarea>
+			<div className={`w-full h-auto overflow-hidden flex items-center py-[2px] mb-4 px-2 pl-3 justify-between border border-[#000000c2] ${divsx}`}>
+				<textarea id={name} className={`w-full py-[2px] h-24 resize-none focus:outline-hidden  text-black ${sx}`} placeholder={placeholder || ""} {...register(name)}></textarea>
 			</div>
 		</div>
 	);

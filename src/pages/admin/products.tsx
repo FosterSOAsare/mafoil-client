@@ -38,16 +38,16 @@ const products = () => {
 
 					<Link
 						href="/products/new"
-						className="border-black flex items-center justify-center ml-auto mt-4 border-[1px] hover:border-brown text-black hover:text-white relative group h-12 px-5 overflow-hidden">
-						<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
-						<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">New Product</p>
+						className="border-black flex items-center justify-center ml-auto mt-4 border hover:border-brown text-black hover:text-white relative group h-12 px-5 overflow-hidden">
+						<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-1 -left-full"></span>
+						<p className="relative z-2 transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">New Product</p>
 					</Link>
 				</section>
 
 				<section id="products" className="px-10 py-4 h-auto mt-8 w-full gap-6 justify-between">
 					{isLoading && (
 						<div className="w-full h-[60vh] flex items-center justify-center">
-							<Loading sx="!w-8 !h-8" />
+							<Loading sx="w-8! h-8!" />
 						</div>
 					)}
 
@@ -55,7 +55,7 @@ const products = () => {
 						<>
 							{products?.length > 0 && (
 								<article className="w-full flex flex-col items-center max-w-5xl mx-auto justify-center">
-									<div className="w-full font-medium h-auto pb-3 flex items-center justify-between border-b-[1px]">
+									<div className="w-full font-medium h-auto pb-3 flex items-center justify-between border-b">
 										<p className="w-1/3">PRODUCT</p>
 										<p className="w-1/5 text-center">PRICE</p>
 

@@ -25,8 +25,8 @@ const Notifications = ({ setShowNotifications }: { setShowNotifications: React.D
 	}, [error]);
 
 	return (
-		<aside className="w-full md:w-2/3 lg:w-1/4 bg-white shadow-md  fixed right-0 flex items-center justify-start  flex-col top-0 md:top-[8vh] lg:top-[12.7vh] z-[12] h-screen px-2 lg:h-[88vh] overflow-y-auto">
-			<div className="w-full bg-white sticky top-0 left-0 z-[2] shadow-sm">
+		<aside className="w-full md:w-2/3 lg:w-1/4 bg-white shadow-md  fixed right-0 flex items-center justify-start  flex-col top-0 md:top-[8vh] lg:top-[12.7vh] z-12 h-screen px-2 lg:h-[88vh] overflow-y-auto">
+			<div className="w-full bg-white sticky top-0 left-0 z-2 shadow-xs">
 				<div className="flex items-center justify-between">
 					<h3 className="text-xl font-bold text-center mx-auto">Notifications</h3>
 					<button className="w-8 mx-4 my-4 h-8 hover:bg-slate-200  flex items-center justify-center" onClick={() => setShowNotifications(false)}>
@@ -40,7 +40,7 @@ const Notifications = ({ setShowNotifications }: { setShowNotifications: React.D
 					notifications?.map((notification: notificationType, index: number) => (
 						<button
 							key={index}
-							className="w-full flex items-center justify-start p-2 text-sm text-left border-b-[1px]  gap-2 hover:bg-slate-100"
+							className="w-full flex items-center justify-start p-2 text-sm text-left border-b  gap-2 hover:bg-slate-100"
 							onClick={() => markAsRead(notification.link, notification._id, notification.status == "unread")}>
 							{notification?.status === "unread" && <span className="w-[5px] h-[5px] bg-blue  rounded-full block"></span>}
 							<p className="w-[calc(100%-7px)]">{notification.desc}</p>

@@ -60,7 +60,7 @@ const login = () => {
 							<PrimaryInput name="email" placeholder="example@gmail.com" label="Email" register={register} />
 
 							<div className="flex items-center justify-between mt-4 gap-12 w-full">
-								<PrimaryButton text="SUBMIT" type="submit" sx="!m-0" disabled={isLoading} />
+								<PrimaryButton text="SUBMIT" type="submit" sx="m-0!" disabled={isLoading} />
 								<Link href="/auth/login" className="h-12 flex items-center justify-center w-full underline">
 									Cancel
 								</Link>

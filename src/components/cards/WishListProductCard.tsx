@@ -52,7 +52,7 @@ const WishListProductCard = ({ wishlistItem, setPreviewProduct, sx = "" }: { wis
 					</aside>
 					<aside className={`gap-4 mt-6 mx-auto flex items-center justify-center h-10`}>
 						<button
-							className={`border-border border-[1px] hover:border-brown ${
+							className={`border-border border hover:border-brown ${
 								addingToCart ? "bg-brown" : "bg-white"
 							} flex items-center justify-center hover:bg-brown  text-black relative w-10 h-10 group`}
 							onClick={() => produceError(user?._id, addToCart)}
@@ -62,11 +62,11 @@ const WishListProductCard = ({ wishlistItem, setPreviewProduct, sx = "" }: { wis
 						</button>
 						<Link
 							href={`/products/${slugname}`}
-							className="border-border border-[1px] hover:border-brown flex items-center justify-center hover:bg-brown  text-black relative w-10 h-10 group">
+							className="border-border border hover:border-brown flex items-center justify-center hover:bg-brown  text-black relative w-10 h-10 group">
 							<FiExternalLink className="opacity-50 group-hover:opacity-100 group-hover:text-white text-xl" />
 						</Link>
 						<button
-							className="border-border border-[1px] hover:border-brown flex items-center justify-center hover:bg-brown  text-black relative w-10 h-10 group"
+							className="border-border border hover:border-brown flex items-center justify-center hover:bg-brown  text-black relative w-10 h-10 group"
 							onClick={() => setPreviewProduct(wishlistItem)}>
 							<AiOutlineEye className="opacity-50 group-hover:opacity-100 group-hover:text-white text-xl" />
 						</button>

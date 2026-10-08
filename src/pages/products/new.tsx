@@ -83,7 +83,7 @@ const NewProduct = () => {
 							<PrimarySelect name="store" label="Store" register={register} options={stores} />
 						</div>
 						<PrimaryTextArea name="short_desc" placeholder="" label="Short Description (255 characters max) " register={register} />
-						<PrimaryTextArea name="long_desc" placeholder="" label="Long Description(optional)" register={register} sx="!h-64" />
+						<PrimaryTextArea name="long_desc" placeholder="" label="Long Description(optional)" register={register} sx="h-64!" />
 
 						<div className="w-full h-16 md:h-28 mb-4 grid gap-8 grid-cols-4">
 							{images.map((image, index) => (

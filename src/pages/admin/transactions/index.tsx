@@ -36,7 +36,7 @@ const transactions = () => {
 
 				{isLoading && (
 					<div className="w-full h-[60vh] flex items-center justify-center">
-						<Loading sx="!w-8 !h-8" />
+						<Loading sx="w-8! h-8!" />
 					</div>
 				)}
 				<div className="w-full min-h-[50vh]">
@@ -44,13 +44,13 @@ const transactions = () => {
 						<>
 							{data && data?.length > 0 && (
 								<div className="w-full">
-									<div className="w-full h-auto flex justify-between mt-6 border-[1px] items-stretch">
+									<div className="w-full h-auto flex justify-between mt-6 border items-stretch">
 										<p className="w-[15%] text-center py-3 font-bold">Txn Type</p>
-										<p className="w-[30%] text-center py-3 font-bold border-l-[1px]">Desc</p>
-										<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Amount</p>
-										<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Date</p>
-										<p className="w-[10%] text-center py-3 font-bold border-l-[1px]">Status</p>
-										<div className="w-[15%] text-center py-3 font-bold border-l-[1px]"></div>
+										<p className="w-[30%] text-center py-3 font-bold border-l">Desc</p>
+										<p className="w-1/5 text-center py-3 font-bold border-l">Amount</p>
+										<p className="w-1/5 text-center py-3 font-bold border-l">Date</p>
+										<p className="w-[10%] text-center py-3 font-bold border-l">Status</p>
+										<div className="w-[15%] text-center py-3 font-bold border-l"></div>
 									</div>
 								</div>
 							)}

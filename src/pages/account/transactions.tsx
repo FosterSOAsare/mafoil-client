@@ -45,12 +45,12 @@ const transactions = () => {
 			<main className="w-full py-4 md:py-12 px-4  min-h-screen max-w-7xl mx-auto  mb-12">
 				<div className="mb-6 md:mb-0 w-auto flex item-center  justify-end gap-4">
 					<button className="bg-black text-white relative group h-12 px-5 overflow-hidden" onClick={() => setShowDepositModal(true)}>
-						<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
-						<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Deposit Funds</p>
+						<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-1 -left-full"></span>
+						<p className="relative z-2 transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Deposit Funds</p>
 					</button>
-					<button className="border-black border-[1px] hover:border-brown text-black hover:text-white relative group h-12 px-5 overflow-hidden" onClick={() => setShowWithdrawalModal(true)}>
-						<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
-						<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Withdraw Funds</p>
+					<button className="border-black border hover:border-brown text-black hover:text-white relative group h-12 px-5 overflow-hidden" onClick={() => setShowWithdrawalModal(true)}>
+						<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-1 -left-full"></span>
+						<p className="relative z-2 transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">Withdraw Funds</p>
 					</button>
 				</div>
 
@@ -66,7 +66,7 @@ const transactions = () => {
 
 				{isLoading && (
 					<div className="w-1/4 h-[20vh] flex items-center justify-center">
-						<Loading sx="!w-8 !h-8" />
+						<Loading sx="w-8! h-8!" />
 					</div>
 				)}
 				<div className="w-full min-h-[50vh]">
@@ -74,12 +74,12 @@ const transactions = () => {
 						<div className="w-full overflow-x-auto">
 							{data && data?.length > 0 && (
 								<div className="w-[200%] md:w-full">
-									<div className="w-full h-auto flex justify-between mt-6 border-y-[1px] items-stretch">
-										<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Txn Type</p>
-										<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Desc</p>
-										<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Amount</p>
-										<p className="w-1/5 text-center py-3 font-bold border-l-[1px]">Date</p>
-										<p className="w-1/5 text-center py-3 font-bold border-l-[1px] border-r-[1px]">Status</p>
+									<div className="w-full h-auto flex justify-between mt-6 border-y items-stretch">
+										<p className="w-1/5 text-center py-3 font-bold border-l">Txn Type</p>
+										<p className="w-1/5 text-center py-3 font-bold border-l">Desc</p>
+										<p className="w-1/5 text-center py-3 font-bold border-l">Amount</p>
+										<p className="w-1/5 text-center py-3 font-bold border-l">Date</p>
+										<p className="w-1/5 text-center py-3 font-bold border-l border-r">Status</p>
 									</div>
 								</div>
 							)}
@@ -87,15 +87,15 @@ const transactions = () => {
 							{data && data?.length > 0 && (
 								<main className="w-[200%] md:w-full h-auto  block">
 									{data.map((order: any, index: number) => (
-										<div className={`w-full h-auto ${index % 2 === 0 && "bg-slate-100"} flex justify-start  items-stretch border-b-[1px]`} key={index}>
-											<div className={"w-1/5 text-center py-4 border-l-[1px] flex items-center justify-center"}>
+										<div className={`w-full h-auto ${index % 2 === 0 && "bg-slate-100"} flex justify-start  items-stretch border-b`} key={index}>
+											<div className={"w-1/5 text-center py-4 border-l flex items-center justify-center"}>
 												{order?.type?.toLowerCase() === "deposit" && <AiOutlinePlus className="text-green-500" />}
 												{order?.type?.toLowerCase() === "withdraw" && <AiOutlineMinus className="text-red-600" />}
 											</div>
-											<p className="w-1/5 text-center py-4 border-l-[1px]">{order?.desc}</p>
-											<p className="w-1/5 text-center py-4 border-l-[1px]">GH₵{order?.amount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-											<p className="w-1/5 text-center py-4 border-l-[1px]">{createDateFromString(order?.createdAt)}</p>
-											<div className="w-1/5 text-center py-4 border-l-[1px]  flex items-center justify-center border-r-[1px]">
+											<p className="w-1/5 text-center py-4 border-l">{order?.desc}</p>
+											<p className="w-1/5 text-center py-4 border-l">GH₵{order?.amount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+											<p className="w-1/5 text-center py-4 border-l">{createDateFromString(order?.createdAt)}</p>
+											<div className="w-1/5 text-center py-4 border-l  flex items-center justify-center border-r">
 												{order?.status === "pending" && <AiOutlineLoading3Quarters className="text-[grey]" />}
 												{order?.status === "completed" && <BsCheckLg className="text-green-500" />}
 												{order?.status === "cancelled" && <AiOutlineClose className="text-red-600" />}

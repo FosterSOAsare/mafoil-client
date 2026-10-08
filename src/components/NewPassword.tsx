@@ -47,7 +47,7 @@ const NewPassword = ({ details }: { details: { code: string; email: string } }) 
 				<PrimaryInput name="confirmpassword" placeholder="********" label="Confirm new password" type="password" register={register} />
 
 				<div className="flex items-center justify-between mt-4 gap-12 w-full">
-					<PrimaryButton text="SAVE PASSWORD" type="submit" sx="!m-0" disabled={isLoading} />
+					<PrimaryButton text="SAVE PASSWORD" type="submit" sx="m-0!" disabled={isLoading} />
 				</div>
 			</form>
 		</>

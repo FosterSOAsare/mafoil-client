@@ -28,7 +28,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
 			{!notFound && (
 				<main className="w-full h-auto min-h-screen relative">
 					<div className="w-full h-full max-w-7xl mx-auto flex justify-between items-stretch">
-						<aside className="w-1/4 py-6 flex flex-col h-screen sticky top-0 left-0 px-8 border-r-[1px] border-sec">
+						<aside className="w-1/4 py-6 flex flex-col h-screen sticky top-0 left-0 px-8 border-r border-sec">
 							<Link href="/" className="text-3xl px-2 font-bold font-playfair mb-6">
 								Mafo.il
 							</Link>

@@ -24,7 +24,7 @@ const search = () => {
 	return (
 		<MainPageLayout>
 			<>
-				<div className="w-4/5 md:w-full md:max-w-2xl mx-auto rounded-full hover:border-black  overflow-hidden h-12 border-[2px]">
+				<div className="w-4/5 md:w-full md:max-w-2xl mx-auto rounded-full hover:border-black  overflow-hidden h-12 border-2">
 					<input
 						type="text"
 						value={search}
@@ -36,10 +36,10 @@ const search = () => {
 
 				<section id="products" className="px-4 md:px-10 py-4 lg:py-12 h-auto mt-8 w-full flex flex-col lg:flex-row items-start gap-6 justify-between">
 					{!isLoading && (
-						<article className={`w-full flex max-w-4xl mx-auto flex-col items-center justify-center  ${products ? "border-b-[1px]" : ""} pb-8 lg:pb-36`}>
+						<article className={`w-full flex max-w-4xl mx-auto flex-col items-center justify-center  ${products ? "border-b" : ""} pb-8 lg:pb-36`}>
 							<div className="grid grid-cols-1 md:grid-cols-2 justify-center items-center lg:grid-cols-3 gap-6 w-full h-auto">
 								{products?.map((product: productType, index: number) => {
-									return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} sx="!h-[320px]" />;
+									return <ProductCard key={index} product={product} setPreviewProduct={setPreviewProduct} sx="h-[320px]!" />;
 								})}
 							</div>
 							{previewProduct && <ProductQuickView setPreviewProduct={setPreviewProduct} previewProduct={previewProduct} />}

@@ -56,26 +56,26 @@ const ReviewForm = ({ slugname, setShowReviewForm }: { slugname: string; setShow
 					))}
 				</div>
 			</div>
-			<PrimaryInput name="title" placeholder="Give your review a title" register={register} label="Review Title" sx="!py-2 mt-2 !border-slate-200 !text-sm" labelsx="!font-[400]" />
+			<PrimaryInput name="title" placeholder="Give your review a title" register={register} label="Review Title" sx="py-2! mt-2 border-slate-200! text-sm!" labelsx="font-normal!" />
 			<PrimaryTextArea
 				name="comment"
 				placeholder="Write your comment here"
 				register={register}
 				label={`Body Of Review`}
-				divsx="mt-2 !py-2 !border-slate-200 !text-sm"
+				divsx="mt-2 py-2! border-slate-200! text-sm!"
 				sx="h-[200px] lg:h-[400px]"
-				labelsx="!font-[400]"
+				labelsx="font-normal!"
 			/>
 
 			<button
 				type="submit"
 				disabled={isLoading}
-				className={`mt-4 !w-[220px] flex items-center justify-center bg-transparent  ${
+				className={`mt-4 w-[220px]! flex items-center justify-center bg-transparent  ${
 					isLoading ? "border-brown" : "border-black"
-				} hover:border-brown text-black border-[1px] mx-auto relative group h-16 overflow-hidden`}>
-				<span className={`w-full h-full bg-brown ${isLoading ? "left-0" : "-left-[100%]"}  absolute transition-all duration-300 top-0 group-hover:-left-0 z-[1] `}></span>
-				{!isLoading && <p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-sm font-medium">Submit Review</p>}
-				{isLoading && <Loading1 sx="!w-8 !h-8 z-[5]" />}
+				} hover:border-brown text-black border mx-auto relative group h-16 overflow-hidden`}>
+				<span className={`w-full h-full bg-brown ${isLoading ? "left-0" : "-left-full"}  absolute transition-all duration-300 top-0 group-hover:left-0 z-1 `}></span>
+				{!isLoading && <p className="relative z-2 transition-all duration-75 group-hover:text-white uppercase text-sm font-medium">Submit Review</p>}
+				{isLoading && <Loading1 sx="w-8! h-8! z-5" />}
 			</button>
 		</form>
 	);

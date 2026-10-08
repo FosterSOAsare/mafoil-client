@@ -25,7 +25,7 @@ const ProductQuickView = ({ setPreviewProduct, previewProduct }: { setPreviewPro
 		}, 200);
 	}, []);
 	return (
-		<aside className={`${show ? "w-[70%]" : "w-[35%]"} flex transition-all duration-300 items-start shadow-md z-[3] justify-between h-[70vh] bg-white fixed top-0 bottom-0 m-auto left-0 right-0`}>
+		<aside className={`${show ? "w-[70%]" : "w-[35%]"} flex transition-all duration-300 items-start shadow-md z-3 justify-between h-[70vh] bg-white fixed top-0 bottom-0 m-auto left-0 right-0`}>
 			<article className={`${!show ? "w-full max-w-[500px]" : "w-1/2 min-w-[450px]"} h-full relative`}>
 				<Image src={images[0]?.url} alt="Product Image" fill />
 			</article>
@@ -34,9 +34,9 @@ const ProductQuickView = ({ setPreviewProduct, previewProduct }: { setPreviewPro
 					<button className="w-8 h-8 bg-white flex items-center justify-center shadow-lg ml-auto mb-2 text-black rounded-full" onClick={close}>
 						<AiOutlineClose />
 					</button>
-					<div className="border-r-[2px] border-black px-2">
+					<div className="border-r-2 border-black px-2">
 						<Ratings rating={rating?.avgRating as number} totalRatings={rating?.totalRatings as number} />
-						<div className="w-full h-auto pb-6 border-b-[1px]  mt-4">
+						<div className="w-full h-auto pb-6 border-b  mt-4">
 							<h3 className="uppercase mb-2 text-xl font-medium">{name}</h3>
 							<p className="mb-2">
 								By <span className="underline hover:text-brown hover:cursor-pointer text-sm"> {store}</span>
@@ -55,8 +55,8 @@ const ProductQuickView = ({ setPreviewProduct, previewProduct }: { setPreviewPro
 					</div> */}
 
 					<Link href={`/products/${slugname}`} className="bg-black flex items-center justify-center  text-white  mt-6  relative w-1/2  group h-12 overflow-hidden">
-						<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-[1] -left-[100%]"></span>
-						<p className="relative z-[2] transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">View Product</p>
+						<span className="w-full h-full bg-brown absolute transition-all duration-300 top-0 group-hover:left-0 z-1 -left-full"></span>
+						<p className="relative z-2 transition-all duration-75 group-hover:text-white uppercase text-[12px] font-medium">View Product</p>
 					</Link>
 				</article>
 			)}
