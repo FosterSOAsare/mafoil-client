@@ -1,14 +1,9 @@
-import { createAuthorizationHeader } from '@/utils/cookie'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
+import createBaseQuery from '@/libs/baseQuery'
 
 const notificatonsApi = createApi({
   reducerPath: 'notificatonsApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: '/api/notifications',
-    prepareHeaders: (headers) => {
-      return createAuthorizationHeader(headers)
-    },
-  }),
+  baseQuery: createBaseQuery('/notifications'),
   tagTypes: ['Notifications'],
   endpoints: (builder) => ({
     fetchUserNotificationsRequest: builder.query<any, void>({

@@ -1,14 +1,9 @@
-import { createAuthorizationHeader } from '@/utils/cookie'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
+import createBaseQuery from '@/libs/baseQuery'
 
 const orderApi = createApi({
   reducerPath: 'orderApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: '/api/orders',
-    prepareHeaders: (headers) => {
-      return createAuthorizationHeader(headers)
-    },
-  }),
+  baseQuery: createBaseQuery('/orders'),
   tagTypes: ['Order', 'Orders'],
   endpoints: (builder) => ({
     fetchOrdersRequest: builder.query<any, string>({

@@ -1,15 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
+import createBaseQuery from '@/libs/baseQuery'
 import userApi from './userApi';
-import { createAuthorizationHeader } from '@/utils/cookie';
 
 const cartApi = createApi({
   reducerPath: 'cartApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: '/api/cart',
-    prepareHeaders: (headers) => {
-      return createAuthorizationHeader(headers)
-    },
-  }),
+  baseQuery: createBaseQuery('/cart'),
   endpoints: (builder) => ({
     fetchCartRequest: builder.query<any, void>({
       query: () => ({

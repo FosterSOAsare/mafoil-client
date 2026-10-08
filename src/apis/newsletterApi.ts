@@ -1,14 +1,9 @@
-import { createAuthorizationHeader } from '@/utils/cookie'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
+import createBaseQuery from '@/libs/baseQuery'
 
 const newsletterApi = createApi({
   reducerPath: 'newsletterApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: '/api/newsletters',
-    prepareHeaders: (headers) => {
-      return createAuthorizationHeader(headers)
-    },
-  }),
+  baseQuery: createBaseQuery('/newsletters'),
   endpoints: (builder) => ({
     fetchNewsletterSubscriptionsRequest: builder.query<any, void>({
       query: () => '/all'

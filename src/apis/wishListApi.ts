@@ -1,14 +1,9 @@
-import { createAuthorizationHeader } from '@/utils/cookie'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
+import createBaseQuery from '@/libs/baseQuery'
 
 const wishlistApi = createApi({
   reducerPath: 'wishlistApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: '/api/wishlist',
-    prepareHeaders: (headers) => {
-      return createAuthorizationHeader(headers)
-    },
-  }),
+  baseQuery: createBaseQuery('/wishlist'),
   endpoints: (builder) => ({
     fetchWishListRequest: builder.query<any, void>({
       query: () => ''

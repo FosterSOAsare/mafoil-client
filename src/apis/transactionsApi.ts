@@ -1,14 +1,9 @@
-import { createAuthorizationHeader } from '@/utils/cookie'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
+import createBaseQuery from '@/libs/baseQuery'
 
 const transactionApi = createApi({
   reducerPath: 'transactionApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: '/api/transactions',
-    prepareHeaders: (headers) => {
-      return createAuthorizationHeader(headers)
-    },
-  }),
+  baseQuery: createBaseQuery('/transactions'),
   endpoints: (builder) => ({
     fetchTransactions: builder.query<string, any>({
       query: (sort) => `?filter=${sort}`

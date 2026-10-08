@@ -1,15 +1,10 @@
-import { createAuthorizationHeader } from "@/utils/cookie";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import createBaseQuery from "@/libs/baseQuery";
 
 
 const filesApi = createApi({
   reducerPath: 'filesApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: '/api/files',
-    prepareHeaders: (headers) => {
-      return createAuthorizationHeader(headers)
-    },
-  }),
+  baseQuery: createBaseQuery('/files'),
   endpoints: (builder) => ({
     uploadAFileRequest: builder.mutation({
       query: ({ file }) => {

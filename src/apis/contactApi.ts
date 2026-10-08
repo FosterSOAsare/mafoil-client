@@ -1,14 +1,9 @@
-import { createAuthorizationHeader } from "@/utils/cookie";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import createBaseQuery from "@/libs/baseQuery";
 
 const contactApi = createApi({
   reducerPath: 'contactApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: '/api/contact',
-    prepareHeaders: (headers) => {
-      return createAuthorizationHeader(headers)
-    },
-  }),
+  baseQuery: createBaseQuery('/contact'),
   endpoints: (builder) => ({
     postContactMsgMutation: builder.mutation<any, { message: string, title: string, email: string, ticket: string }>({
       query: ({ message, title, email, ticket }) => ({
